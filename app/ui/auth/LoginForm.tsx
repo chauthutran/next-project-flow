@@ -61,12 +61,12 @@ export default function LoginForm() {
 					<div className="relative flex flex-col space-y-1 col-span-2 ">
 						<div className="flex flex-row space-y-4">
 							<div>
-								<div className="text-4xl font-bold text-royal-blue">Project</div>
+								<div className="text-4xl font-bold text-royal-blue mb-2">Project</div>
 								<div className="text-4xl font-bold text-royal-blue">FlowMaster</div>
 							</div>
 							<div className="m-auto justify-end"><RiBubbleChartFill className="size-20 opacity-25 text-sky-blue" /></div>
 						</div>
-						<div className="text-md border-l-4 border-slate-800 px-3 text-balance">
+						<div className="text-md border-l-4 m-1 border-slate-800 px-3 text-balance">
 							FlowMaster is a comprehensive project management tool designed to streamline workflows. It allows teams to visualize project timelines, track milestones, and manage tasks efficiently. With features like real-time collaboration and customizable dashboards, FlowMaster ensures that every step of your project is organized and transparent.
 						</div>
 					</div>
@@ -131,6 +131,11 @@ export default function LoginForm() {
 							</div>
 						</div>
 					</div>
+				</div>
+
+				
+				<div className="absolute inset-0 flex items-end justify-end w-full">
+					<RiBubbleChartFill className="text-pale-blue size-32 opacity-65" />
 				</div>
 			</div>
 		</div>
