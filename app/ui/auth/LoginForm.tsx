@@ -59,7 +59,7 @@ export default function LoginForm() {
 
 				<div className="m-4 grid grid-cols-3 h-fit">
 					<div className="relative flex flex-col space-y-1 col-span-2 ">
-						<div className="flex flex-row space-y-4">
+						<div className="flex flex-row space-y-8">
 							<div>
 								<div className="text-4xl font-bold text-royal-blue mb-2">Project</div>
 								<div className="text-4xl font-bold text-royal-blue">FlowMaster</div>
@@ -71,7 +71,7 @@ export default function LoginForm() {
 						</div>
 					</div>
 
-					<div className="flex flex-col rounded-xl border-gray-300 border-2 bg-white w-full">
+					<div className="flex flex-col rounded-xl border-gray-300 border-2 bg-white w-full z-10">
 
 						<div className="relative w-full h-64 px-5 py-5 ">
 
@@ -134,7 +134,7 @@ export default function LoginForm() {
 				</div>
 
 				
-				<div className="absolute inset-0 flex items-end justify-end w-full">
+				<div className="absolute inset-0 flex items-end justify-end w-full z-10">
 					<RiBubbleChartFill className="text-pale-blue size-32 opacity-65" />
 				</div>
 			</div>
