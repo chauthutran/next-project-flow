@@ -1,3 +1,5 @@
+'use server';
+
 import mongoose from "mongoose";
 import Project from "../schemas/Project.schema";
 import { JSONObject } from "../definations";
@@ -11,8 +13,11 @@ import * as Encrypt from "./encryptPassword";
 export async function login({email, password}: JSONObject): Promise<JSONObject> {
 
 	try {
+		console.log("========= login ");
 		await connectToDatabase();
+		console.log(" --- connected DB ");
 		const searchResult = await User.find({ email });
+		console.log("searchResult", searchResult);
 
 		// Find the users with the password if there is password in parametters
 		let matchedUser: Document | null = null;

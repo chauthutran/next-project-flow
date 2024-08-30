@@ -50,6 +50,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 		else {
 			setUser(response.data);
 		}
+
+		setLoading(false);
 	};
 
 	const logout = () => {

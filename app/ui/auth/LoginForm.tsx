@@ -71,10 +71,7 @@ export default function LoginForm() {
 						</div>
 					</div>
 
-					<div className="flex flex-col rounded-xl border-gray-300 border-2 bg-white w-full z-10">
-
-						<div className="relative w-full h-64 px-5 py-5 ">
-
+					<div className="flex flex-col rounded-xl border-gray-300 border-2 bg-white w-full z-10 px-5 py-5 justify-center">
 							<div className="mb-4">
 								<label
 									className="block text-xs font-medium"
@@ -120,7 +117,7 @@ export default function LoginForm() {
 							</div>
 
 							<div className="mb-4">
-								<button className="flex w-full flex-row bg-gold px-4 py-2 rounded hover:bg-yellow-300" onClick={(e) => handleLoginBtn(e)} >
+								<button className="flex w-full flex-row bg-blue-navy px-4 py-2 rounded hover:bg-blue-800 text-white cursor-pointer" onClick={(e) => handleLoginBtn(e)} >
 									<span className="flex-1">Log in</span>
 									{loading && <FaSpinner className="ml-auto h-5" size={20} />}
 								</button>
@@ -130,11 +127,10 @@ export default function LoginForm() {
 								{error != null && <p>{error}</p>}
 							</div>
 						</div>
-					</div>
 				</div>
 
 				
-				<div className="absolute inset-0 flex items-end justify-end w-full z-10">
+				<div className="absolute inset-0 flex items-end justify-end w-full">
 					<RiBubbleChartFill className="text-pale-blue size-32 opacity-65" />
 				</div>
 			</div>
