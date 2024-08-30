@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { MainUiProvider } from "./contexts/MainUiContext";
 import { AuthProvider } from "./contexts/AuthContext";
@@ -9,13 +9,13 @@ import Footer from "./ui/layout/Footer";
 export default function Home() {
 	return (
 		<MainUiProvider>
-			<AuthProvider>
+		 	 <AuthProvider>
 				<div className="h-screen flex flex-col">
 					<Header />
 					<AppWrapper />
-					<Footer />
+					<Footer /> 
 				</div>
-			</AuthProvider>
-		</MainUiProvider>
+		 	</AuthProvider> 
+		 </MainUiProvider>
 	);
 }

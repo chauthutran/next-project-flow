@@ -1,6 +1,6 @@
 declare namespace NodeJS {
     interface ProcessEnv {
-        MONGO_DB_URL: string;
+        MONGODB_URI: string;
         // Add other environment variables here as needed
     }
 }

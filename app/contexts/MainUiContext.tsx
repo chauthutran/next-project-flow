@@ -19,6 +19,7 @@ const MainUiContext = createContext<MainUiContextProps>({
 
 export const useMainUi = (): MainUiContextProps => {
 	const context = useContext(MainUiContext);
+	
 	if (!context) {
 	  throw new Error('useMainUi must be used within an MainUiProvider');
 	}
