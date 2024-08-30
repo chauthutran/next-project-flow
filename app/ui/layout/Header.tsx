@@ -6,7 +6,10 @@ import { useAuth } from "@/contexts/AuthContext";
 import { FcTimeline } from "react-icons/fc";
 import { CiWavePulse1 } from "react-icons/ci";
 import { LuGanttChart } from "react-icons/lu";
-
+import { RiBarChartHorizontalLine } from "react-icons/ri";
+import { FaRegUser } from "react-icons/fa";
+import { FaUser } from "react-icons/fa6";
+import { FaUserCircle } from "react-icons/fa";
 
 export default function Header() {
 
@@ -26,14 +29,29 @@ export default function Header() {
 			{/* <div><FcTimeline className="size-8" /></div> */}
 
 			<div className="flex-1 flex">
-				<div className={`uppercase ${mainPage === Constant.PAGE_LOGIN && "border-b-4 border-light-sky-blue"} font-semibold pr-5 mr-5`}>Login</div>
-				<div className={`uppercase ${mainPage === Constant.PAGE_ABOUT && "border-b-4 border-light-sky-blue"} font-semibold pr-5`}>About</div>
+				{user !== null && <>
+					<div className={`uppercase font-semibold pr-5 mr-5 ${mainPage === Constant.PAGE_DASHBOARD && "border-b-4 border-light-sky-blue"}`}>Home</div>
+				</>}
+				
+				{user === null && <div className={`uppercase font-semibold pr-5 mr-5 ${mainPage === Constant.PAGE_LOGIN && "border-b-4 border-light-sky-blue"}`}>Login</div>}
+				<div className={`uppercase font-semibold pr-5 mr-5 ${mainPage === Constant.PAGE_ABOUT && "border-b-4 border-light-sky-blue"}`}>About</div>
 			</div>
 
-			<div className="ml-auto items-center justify-center flex flex-row space-x-2 uppercase">
-				<LuGanttChart />
-				<div>Register</div>
-			</div>
+			{mainPage === Constant.PAGE_LOGIN && <div className="ml-auto items-center justify-center flex flex-row space-x-1 uppercase">
+				<LuGanttChart className="text-torch-red"/>
+				<div className="cursor-pointer" onClick={() => setMainPage(Constant.PAGE_USER_REGISTRATION)}>Register</div>
+				<RiBarChartHorizontalLine className="text-torch-red" />
+			</div>}
+
+			{mainPage === Constant.PAGE_USER_REGISTRATION && <div className="ml-auto items-center justify-center flex flex-row space-x-1 uppercase">
+				<LuGanttChart className="text-torch-red"/>
+				<div className="cursor-pointer" onClick={() => setMainPage(Constant.PAGE_LOGIN)}>Login</div>
+				<RiBarChartHorizontalLine className="text-torch-red" />
+			</div>}
+
+			{user !== null && <div className="ml-auto items-center justify-center flex flex-row space-x-1">
+				<FaUserCircle className=" size-7 text-blue-navy"/>
+			</div>}
 		</header>
 	)
 }

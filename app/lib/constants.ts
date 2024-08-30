@@ -16,6 +16,6 @@ export const SET_MAIN_PAGE = "SET_MAIN_PAGE";
 export const PAGE_LOGIN = "PAGE_LOGIN";
 export const PAGE_ABOUT = "PAGE_ABOUT";
 export const PAGE_USER_REGISTRATION = "PAGE_USER_REGISTRATION";
-export const PAGE_EXPENSE = "PAGE_EXPENSE";
+export const PAGE_DASHBOARD = "PAGE_DASHBOARD";
 
 

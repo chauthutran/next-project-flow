@@ -31,13 +31,13 @@ export default function LoginForm() {
 	const { setMainPage, setSubPage } = useMainUi();
 	const { user, login, loading, error } = useAuth();
 
-	const [email, setEmail] = useState("test1@gmail.com");
+	const [email, setEmail] = useState("manager1@example.com");
 	const [password, setPassword] = useState("1234");
 
 
 	useEffect(() => {
 		if (user != null) {
-			setMainPage(Constant.PAGE_EXPENSE);
+			setMainPage(Constant.PAGE_DASHBOARD);
 			setSubPage(null);
 		}
 	}, [user])
@@ -61,8 +61,8 @@ export default function LoginForm() {
 					<div className="relative flex flex-col space-y-1 col-span-2 ">
 						<div className="flex flex-row space-y-8">
 							<div>
-								<div className="text-4xl font-bold text-royal-blue mb-2">Project</div>
-								<div className="text-4xl font-bold text-royal-blue">FlowMaster</div>
+								<div className="text-4xl font-bold text-blue-navy mb-2">Project</div>
+								<div className="text-4xl font-bold text-blue-navy">FlowMaster</div>
 							</div>
 							<div className="m-auto justify-end"><RiBubbleChartFill className="size-20 opacity-25 text-sky-blue" /></div>
 						</div>
@@ -71,7 +71,7 @@ export default function LoginForm() {
 						</div>
 					</div>
 
-					<div className="flex flex-col rounded-xl border-gray-300 border-2 bg-white w-full z-10 px-5 py-5 justify-center">
+					<div className="flex flex-col rounded-lg border-gray-300 border-2 bg-white w-full z-10 px-5 py-5 justify-center">
 							<div className="mb-4">
 								<label
 									className="block text-xs font-medium"
