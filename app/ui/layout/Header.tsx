@@ -10,6 +10,9 @@ import { RiBarChartHorizontalLine } from "react-icons/ri";
 import { FaRegUser } from "react-icons/fa";
 import { FaUser } from "react-icons/fa6";
 import { FaUserCircle } from "react-icons/fa";
+import * as AppStore from "@/lib/appStore";
+import { IoMdArrowDropright } from "react-icons/io";
+
 
 export default function Header() {
 
@@ -24,18 +27,23 @@ export default function Header() {
 		}
 	}
 
-	return (
-		<header className="mx-6 pt-10 mb-10 pr-4 flex flex-row items-center space-x-8 text-sm">
-			{/* <div><FcTimeline className="size-8" /></div> */}
+	const showDashboard = () => {
+		AppStore.setProject(null);
+		setMainPage(Constant.PAGE_DASHBOARD)
+	}
 
-			<div className="flex-1 flex">
-				{user !== null && <>
-					<div className={`uppercase font-semibold pr-5 mr-5 ${mainPage === Constant.PAGE_DASHBOARD && "border-b-4 border-light-sky-blue"}`}>Home</div>
-				</>}
-				
-				{user === null && <div className={`uppercase font-semibold pr-5 mr-5 ${mainPage === Constant.PAGE_LOGIN && "border-b-4 border-light-sky-blue"}`}>Login</div>}
-				<div className={`uppercase font-semibold pr-5 mr-5 ${mainPage === Constant.PAGE_ABOUT && "border-b-4 border-light-sky-blue"}`}>About</div>
-			</div>
+	return (
+		<header className={`flex flex-row items-center space-x-8 text-sm bg-white z-10 ${user !== null ? "px-6 py-2" : "px-6 pt-10 pb-3 pr-4"}`}>
+			{user !== null && <div className={`text-xl flex-1 flex space-x-3 items-center`} >
+				<div className="cursor-pointer" style={{letterSpacing: "3px"}} onClick={() => showDashboard()}>Project FlowMaster</div>
+			</div>}
+			{mainPage === Constant.PAGE_PROJECT_DETAILS && <>
+				<div className="flex space-x-1 uppercase">
+					<LuGanttChart className="text-torch-red"/>
+					<div className="cursor-pointer">{AppStore.getProject() !== null && AppStore.getProject()!.name}</div>
+					<RiBarChartHorizontalLine className="text-torch-red" />
+				</div>
+			</>}
 
 			{mainPage === Constant.PAGE_LOGIN && <div className="ml-auto items-center justify-center flex flex-row space-x-1 uppercase">
 				<LuGanttChart className="text-torch-red"/>
@@ -49,8 +57,8 @@ export default function Header() {
 				<RiBarChartHorizontalLine className="text-torch-red" />
 			</div>}
 
-			{user !== null && <div className="ml-auto items-center justify-center flex flex-row space-x-1">
-				<FaUserCircle className=" size-7 text-blue-navy"/>
+			{user !== null && <div className="m-auto items-center justify-center flex flex-row space-x-1">
+				<FaUserCircle className=" size-8 text-blue-navy" onClick={() => handleLogout()}/>
 			</div>}
 		</header>
 	)

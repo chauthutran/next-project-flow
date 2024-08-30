@@ -17,7 +17,7 @@ const config: Config = {
         "very-light-blue": "#dceaf4",
         "sunray": "#ebbe79",
         "torch-red": "#fc3441",
-        "blue-navy": "#1d3a82"
+        "blue-navy": "#1d3a82",
       },
       rotate: {
         '-15': '-5deg',

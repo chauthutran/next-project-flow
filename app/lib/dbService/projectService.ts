@@ -1,28 +1,39 @@
-import mongoose from 'mongoose';
-import Project from '../schemas/Project.schema';
-import { JSONObject } from '../definations';
-import connectToDatabase from './db';
-import Metting from '../schemas/Meeting.schema';
-import Milestone from '../schemas/Milestone.schema';
-import Task from '../schemas/Task.schema';
+"use server";
 
-export async function fetchProjectsByUserId(userId: string): Promise<JSONObject[]> {
+import mongoose from "mongoose";
+import Project from "../schemas/Project.schema";
+import { JSONObject } from "../definations";
+import connectToDatabase from "./db";
+import Metting from "../schemas/Meeting.schema";
+import Milestone from "../schemas/Milestone.schema";
+import Task from "../schemas/Task.schema";
+import * as Utils from "@/lib/utils";
 
-    const userIdObj = new mongoose.Types.ObjectId( userId );
-	await connectToDatabase();
-    const projects = await Project.find({ managedBy: userIdObj });
+export async function fetchProjectsByUserId(
+  userId: string
+): Promise<JSONObject> {
+  try {
+    await connectToDatabase();
+    const userIdObj = new mongoose.Types.ObjectId(userId);
+    const projects: JSONObject[] = await Project.find({ managedBy: userIdObj });
 
-    return projects;
+    return { status: "success", data: Utils.cloneJSONObject(projects) };
+  } catch (error: any) {
+    return { status: "error", message: error.message };
+  }
 }
 
 export async function fetchProjectById(projectId: string): Promise<JSONObject> {
+  try {
+    const projectIdObj = new mongoose.Types.ObjectId(projectId);
 
-    const projectIdObj = new mongoose.Types.ObjectId( projectId );
-
-	await connectToDatabase();
+    await connectToDatabase();
     const mettings = await Metting.find({ projectId: projectIdObj });
     const milestones = await Milestone.find({ projectId: projectIdObj });
     const tasks = await Task.find({ projectId: projectIdObj });
 
-    return { mettings, milestones, tasks };
+    return ({ status: "success", data: Utils.cloneJSONObject({ mettings, milestones, tasks }) });
+  } catch (error: any) {
+    return { status: "error", message: error.message };
+  }
 }

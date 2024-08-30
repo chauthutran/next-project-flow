@@ -51,11 +51,7 @@ export default function LoginForm() {
 
 	return (
 		<div className="justify-center">
-			<div className="relative w-full bg-opacity-20 bg-royal-blue h-full py-10">
-
-				<div className="absolute inset-0 flex m-95 ">
-					<GiThreeLeaves className="text-pale-blue size-96" />
-				</div>
+			<div className="relative w- h-full py-10">
 
 				<div className="m-4 grid grid-cols-3 h-fit">
 					<div className="relative flex flex-col space-y-1 col-span-2 ">
@@ -128,7 +124,6 @@ export default function LoginForm() {
 							</div>
 						</div>
 				</div>
-
 				
 				<div className="absolute inset-0 flex items-end justify-end w-full">
 					<RiBubbleChartFill className="text-pale-blue size-32 opacity-65" />

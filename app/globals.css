@@ -26,3 +26,13 @@ body {
   }
 }
 
+.timeline-container {
+  height: 100vh; /* or any appropriate height */
+  width: 100%;
+  overflow: auto; /* Ensure the content can be scrolled if necessary */
+}
+
+.vertical-timeline--animate .vertical-timeline-element-content {
+  opacity: 1 !important;
+  transform: none !important;
+}
