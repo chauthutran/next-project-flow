@@ -46,7 +46,7 @@ const ProjectTimeline = ({ data }:{data: JSONObject}) => {
                 </VerticalTimelineElement>
             ))}
 
-            {data.meetings && data.meetings.map((meeting: JSONObject, index: number) => (
+            {data.mettings && data.mettings.map((meeting: JSONObject, index: number) => (
                 <VerticalTimelineElement
                     key={meeting._id}
                     date={new Date(meeting.date).toLocaleDateString()}
