@@ -18,6 +18,8 @@ const config: Config = {
         "sunray": "#ebbe79",
         "torch-red": "#fc3441",
         "blue-navy": "#1d3a82",
+        "gold": "#FFD700",
+        "sea-green": "#00A36C"
       },
       rotate: {
         '-15': '-5deg',

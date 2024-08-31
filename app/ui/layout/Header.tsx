@@ -34,16 +34,15 @@ export default function Header() {
 
 	return (
 		<header className={`flex flex-row items-center space-x-8 text-sm bg-white z-10 ${user !== null ? "px-6 py-2" : "px-6 pt-10 pb-3 pr-4"}`}>
-			{user !== null && <div className={`text-xl flex-1 flex space-x-3 items-center`} >
-				<div className="cursor-pointer" style={{letterSpacing: "3px"}} onClick={() => showDashboard()}>Project FlowMaster</div>
-			</div>}
-			{mainPage === Constant.PAGE_PROJECT_DETAILS && <>
-				<div className="flex space-x-1 uppercase">
-					<LuGanttChart className="text-torch-red"/>
+			{user !== null && <div className={`flex-1 flex space-x-3 items-center my-3`} >
+				<div className={`uppercase cursor-pointer ${mainPage === Constant.PAGE_DASHBOARD && "border-b-2 border-light-sky-blue pr-5"}`} onClick={() => showDashboard()}>Dashboard</div>
+				{mainPage === Constant.PAGE_PROJECT_DETAILS && <>
+					<IoMdArrowDropright />
+					<div className="flex space-x-1 uppercase">
 					<div className="cursor-pointer">{AppStore.getProject() !== null && AppStore.getProject()!.name}</div>
-					<RiBarChartHorizontalLine className="text-torch-red" />
 				</div>
-			</>}
+				</>}
+			</div>}
 
 			{mainPage === Constant.PAGE_LOGIN && <div className="ml-auto items-center justify-center flex flex-row space-x-1 uppercase">
 				<LuGanttChart className="text-torch-red"/>

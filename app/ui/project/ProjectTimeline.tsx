@@ -5,11 +5,80 @@ import { VerticalTimeline, VerticalTimelineElement } from 'react-vertical-timeli
 import 'react-vertical-timeline-component/style.min.css';
 import { FaTasks, FaCalendarCheck, FaClipboardList } from 'react-icons/fa';
 import { JSONObject } from '@/lib/definations';
+import * as Utils from "@/lib/utils";
+import { FaMeetup } from "react-icons/fa";
+import { LuMilestone } from "react-icons/lu";
 
 
 const ProjectTimeline = ({ data }:{data: JSONObject}) => {
     
     console.log(data);
+
+    const convertData = (): JSONObject[] => {
+        let list: JSONObject[] = [];
+
+        // milestones
+        if( data.milestones !== undefined) {
+            for( var i=0; i<data.milestones.length; i++ ) {
+                const milestone = data.milestones[i];
+                const item = { 
+                    _id: milestone._id,
+                    date: Utils.formatDateTime(milestone.dueDate),
+                    dateDb: milestone.dueDate,
+                    name: milestone.name,
+                    description: milestone.description,
+                    status: milestone.status,
+                    bgColor: "rgb(233, 30, 99)",
+                    textColor: "#fff",
+                    icon: <LuMilestone />
+                }
+
+                list.push(item);
+            }
+        }
+        
+        // tasks
+        if( data.tasks !== undefined) {
+            for( var i=0; i<data.tasks.length; i++ ) {
+                const task = data.tasks[i];
+                const item = { 
+                    _id: task._id,
+                    date: `${Utils.formatDateTime(task.startDate)} - ${Utils.formatDateTime(task.endDate)}`,
+                    dateDb: task.startDate,
+                    name: task.name,
+                    description: task.description,
+                    status: task.status,
+                    bgColor: "rgb(33, 150, 243)",
+                    textColor: "#fff",
+                    icon: <FaTasks />
+                }
+
+                list.push(item);
+            }
+        }
+
+        // mettings
+        if( data.mettings !== undefined) {
+            for( var i=0; i<data.mettings.length; i++ ) {
+                const metting = data.mettings[i];
+                const date: any = Utils.formatDateTime(metting.date);
+                const item = { 
+                    _id: metting._id,
+                    date: date,
+                    dateDb: metting.date,
+                    name: metting.name,
+                    description: metting.description,
+                    bgColor: "rgb(16, 204, 82)",
+                    textColor: "#fff",
+                    icon: <FaMeetup />
+                }
+
+                list.push(item);
+            }
+        }
+
+        return list.sort((a, b) => new Date(a.dateDb).getTime() - new Date(b.dateDb).getTime());;
+    }
 
     useEffect(() => {
         // Add class after component mounts
@@ -18,43 +87,20 @@ const ProjectTimeline = ({ data }:{data: JSONObject}) => {
                 document.querySelector('.vertical-timeline')!.classList.remove('vertical-timeline--animate');
     }, []);
 
+    const timelineList = convertData();
+
     return (
         <VerticalTimeline>
-            {data.milestones && data.milestones.map((milestone: JSONObject, index: number) => (
+            {timelineList.map((item: JSONObject, index: number) => (
                 <VerticalTimelineElement
-                    key={milestone._id}
-                    date={new Date(milestone.dueDate).toLocaleDateString()}
-                    icon={<FaClipboardList />}
-                    iconStyle={{ background: 'rgb(33, 150, 243)', color: '#fff' }}
+                    key={item._id}
+                    date={item.date}
+                    icon={item.icon}
+                    iconStyle={{ background: item.bgColor, color: item.textColor }}
                 >
-                    <h3 className="vertical-timeline-element-title">{milestone.name}</h3>
-                    <p>{milestone.description}</p>
-                    <p>Status: {milestone.status}</p>
-                </VerticalTimelineElement>
-            ))}
-
-            {data.tasks && data.tasks.map((task: JSONObject, index: number) => (
-                <VerticalTimelineElement
-                    key={task._id}
-                    date={`${new Date(task.startDate).toLocaleDateString()} - ${new Date(task.endDate).toLocaleDateString()}`}
-                    icon={<FaTasks />}
-                    iconStyle={{ background: 'rgb(233, 30, 99)', color: '#fff' }}
-                >
-                    <h3 className="vertical-timeline-element-title">{task.name}</h3>
-                    <p>{task.description}</p>
-                    <p>Status: {task.status}</p>
-                </VerticalTimelineElement>
-            ))}
-
-            {data.mettings && data.mettings.map((meeting: JSONObject, index: number) => (
-                <VerticalTimelineElement
-                    key={meeting._id}
-                    date={new Date(meeting.date).toLocaleDateString()}
-                    icon={<FaCalendarCheck />}
-                    iconStyle={{ background: 'rgb(16, 204, 82)', color: '#fff' }}
-                >
-                    <h3 className="vertical-timeline-element-title">{meeting.name}</h3>
-                    <p>{meeting.description}</p>
+                    <h3 className="vertical-timeline-element-title font-bold line-space">{item.name}</h3>
+                    <div className="text-sm">{item.description}</div>
+                    {item.status && <div className="text-sm mt-2 space-x-2"><span className="font-semibold">Status:</span> <span className="p-1 rounded-md" style={{backgroundColor: Utils.getStatusColor(item.status)}}>{Utils.getStatusName(item.status)}</span></div>}
                 </VerticalTimelineElement>
             ))}
         </VerticalTimeline>

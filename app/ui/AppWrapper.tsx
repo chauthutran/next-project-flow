@@ -11,6 +11,7 @@ import { GiThreeLeaves } from "react-icons/gi";
 import ProjectDetailsPage from "./project/ProjectDetailsPage";
 import * as AppStore from "@/lib/appStore";
 import { RiBubbleChartFill } from "react-icons/ri";
+import LoginPage from "./auth/LoginPage";
 
 
 export default function AppWrapper() {
@@ -19,7 +20,7 @@ export default function AppWrapper() {
 	const { user } = useAuth();
 
 	return (
-		<main className={`flex-1 overflow-auto bg-opacity-20 bg-royal-blue`}>
+		<main className={`flex-1 overflow-auto ${user!==null && "bg-opacity-20 bg-royal-blue"}`}>
 			<div className="absolute flex items-end justify-start w-full bottom-14 z-0" >
 				<GiThreeLeaves className="text-pale-blue size-96" />
 			</div>
@@ -30,7 +31,7 @@ export default function AppWrapper() {
 			</div>
 
 			<div className="relative">
-				{mainPage === Constant.PAGE_LOGIN && <LoginForm />}
+				{mainPage === Constant.PAGE_LOGIN && <LoginPage />}
 				{mainPage === Constant.PAGE_USER_REGISTRATION && <RegisterForm />}
 				{mainPage === Constant.PAGE_DASHBOARD && <Dashboard />}
 				{mainPage === Constant.PAGE_PROJECT_DETAILS && <ProjectDetailsPage project={AppStore.getProject()!} />}

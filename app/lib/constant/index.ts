@@ -1,1 +1,2 @@
-export * from "./constantPageNames";
+export * from "./pageNameList";
+export * from "./status";
