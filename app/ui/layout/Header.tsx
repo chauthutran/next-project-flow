@@ -38,9 +38,7 @@ export default function Header() {
 				<div className={`uppercase cursor-pointer ${mainPage === Constant.PAGE_DASHBOARD && "border-b-2 border-light-sky-blue pr-5"}`} onClick={() => showDashboard()}>Dashboard</div>
 				{mainPage === Constant.PAGE_PROJECT_DETAILS && <>
 					<IoMdArrowDropright />
-					<div className="flex space-x-1 uppercase">
-					<div className="cursor-pointer">{AppStore.getProject() !== null && AppStore.getProject()!.name}</div>
-				</div>
+					<div className="uppercase cursor-pointer border-b-2 border-light-sky-blue pr-5">{AppStore.getProject() !== null && AppStore.getProject()!.name}</div>
 				</>}
 			</div>}
 
