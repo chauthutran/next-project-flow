@@ -1,7 +1,7 @@
 "use client"
 
 import { useMainUi } from "@/contexts/MainUiContext";
-import * as Constant from '@/lib/constants';
+import * as Constant from '@/lib/constant';
 import { useAuth } from "@/contexts/AuthContext";
 import { FcTimeline } from "react-icons/fc";
 import { CiWavePulse1 } from "react-icons/ci";

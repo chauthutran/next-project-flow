@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { IoSearch } from "react-icons/io5";
 import * as dbService from "@/lib/dbService";
 import { JSONObject } from "@/lib/definations";
-import * as Constant from "@/lib/constants";
+import * as Constant from "@/lib/constant";
 import { useMainUi } from "@/contexts/MainUiContext";
 import * as AppStore from "@/lib/appStore";
 

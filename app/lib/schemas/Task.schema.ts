@@ -14,7 +14,7 @@ const TaskSchema = new Schema(
 		description: { type: String, required: true },
 		startDate: { type: Date, required: true },
 		endDate: { type: Date, required: true },
-        status: { type: Date, required: true }, // e.g., not_started, in_progress, completed
+        status: { type: String, required: true }, // e.g., not_started, in_progress, completed
         assignedTo: [ {
             type: mongoose.Schema.Types.ObjectId,
             required: true,

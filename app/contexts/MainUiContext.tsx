@@ -1,7 +1,7 @@
 "use client";
 
 import React, { createContext, useContext, useState, ReactNode } from 'react';
-import * as Contanst from "@/lib/constants";
+import * as Contanst from "@/lib/constant";
 
 interface MainUiContextProps {
 	mainPage: string;

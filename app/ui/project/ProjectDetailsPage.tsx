@@ -10,7 +10,8 @@ export default function ProjectDetailsPage({project}: {project: JSONObject}) {
 
     const [details, setDetails] = useState<JSONObject[]>([]);
     const [errMessage, setErrMessage] = useState("");
-console.log('fasd');
+
+    
     const fetchProjects = async () => {
         const response: JSONObject = await dbService.fetchProjectById(project._id);
         if( response.status != "success" ) {
@@ -26,7 +27,7 @@ console.log('fasd');
     }, []);
 
     return (
-        <div className="container mx-auto relative">
+        <div className="">
             <ProjectTimeline data={details} />
         </div>
     )
