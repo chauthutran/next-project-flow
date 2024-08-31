@@ -27,7 +27,7 @@ export default function ProjectDetailsPage({project}: {project: JSONObject}) {
     }, []);
 
     return (
-        <div className="">
+        <div className="m-2">
             <ProjectTimeline data={details} />
         </div>
     )
