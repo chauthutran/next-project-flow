@@ -38,17 +38,17 @@ export default function LoginPage() {
             </div>
 
             <div className="flex-grow">
-                <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-x-4 gap-y-4 my-5 mx-10 h-full">
-                    <div className="bg-gold p-3 rounded-t-xl bg-opacity-60 flex flex-col items-center justify-center font-bold">
-                        <div><FaTimeline className="size-32 text-slate-700" /></div>
+                <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-x-4 gap-y-4 my-5 mx-5 h-full">
+                    <div className="bg-royal-blue bg-opacity-30 p-3 rounded-t-xl flex flex-col items-center justify-center font-bold">
+                        <div><FaTimeline className="size-32 text-red-500" /></div>
                         <div>Visualize project timelines</div>
                     </div>
-                    <div className="bg-gold p-3 rounded-t-xl bg-opacity-60 flex flex-col items-center justify-center font-bold">
-                        <div><LuMilestone className="size-32 text-slate-700" /></div>
+                    <div className="bg-royal-blue bg-opacity-30 p-3 rounded-t-xl flex flex-col items-center justify-center font-bold">
+                        <div><LuMilestone className="size-32 text-blue-500" /></div>
                         <div>Track milestones</div>
                     </div>
-                    <div className="bg-gold p-3 rounded-t-xl bg-opacity-60 flex flex-col items-center justify-center font-bold">
-                        <div><FaTasks className="size-32 text-slate-700" /></div>
+                    <div className="bg-royal-blue p-3 rounded-t-xl bg-opacity-30 flex flex-col items-center justify-center font-bold">
+                        <div><FaTasks className="size-32 text-green-500" /></div>
                         <div>Manage tasks efficiently</div>
                     </div>
                 </div>
