@@ -12,6 +12,13 @@ import { FaUser } from "react-icons/fa6";
 import { FaUserCircle } from "react-icons/fa";
 import * as AppStore from "@/lib/appStore";
 import { IoMdArrowDropright } from "react-icons/io";
+import { FaArrowsSpin } from "react-icons/fa6";
+import { MdDoubleArrow } from "react-icons/md";
+import { ImPlus } from "react-icons/im";
+import { FaMeetup } from "react-icons/fa";
+import { LuMilestone } from "react-icons/lu";
+import { FaTasks } from 'react-icons/fa';
+
 
 
 export default function Header() {
@@ -35,10 +42,19 @@ export default function Header() {
 	return (
 		<header className={`flex flex-row items-center space-x-8 text-sm bg-white z-10 ${user !== null ? "px-6 py-2" : "px-6 pt-10 pb-3 pr-4"}`}>
 			{user !== null && <div className={`flex-1 flex space-x-3 items-center my-3`} >
-				<div className={`uppercase cursor-pointer ${mainPage === Constant.PAGE_DASHBOARD && "border-b-2 border-light-sky-blue pr-5"}`} onClick={() => showDashboard()}>Dashboard</div>
+				<div className={`uppercase pr-3 cursor-pointer border-b-2 border-white hover:border-light-sky-blue $
+				
+				{mainPage === Constant.PAGE_DASHBOARD && "border-b-2 border-light-sky-blue"}`} onClick={() => showDashboard()}>Dashboard</div>
+
 				{mainPage === Constant.PAGE_PROJECT_DETAILS && <>
-					<IoMdArrowDropright />
-					<div className="uppercase cursor-pointer border-b-2 border-light-sky-blue pr-5">{AppStore.getProject() !== null && AppStore.getProject()!.name}</div>
+					{/* <IoMdArrowDropright /> */}
+					<div className="uppercase pl-5 font-semibold border-l-2 border-slate-200">{AppStore.getProject() !== null && AppStore.getProject()!.name}</div>
+					<MdDoubleArrow />
+					<div className="uppercase cursor-pointer pr-5 border-b-2 border-white hover:border-light-sky-blue ">Timeline</div>
+					<div className="uppercase cursor-pointer pr-5 border-b-2 border-white hover:border-light-sky-blue flex flex-row space-x-1 items-center"><ImPlus className="size-2"/><div>Task</div></div>
+					<div className="uppercase cursor-pointer pr-5 border-b-2 border-white hover:border-light-sky-blue flex flex-row space-x-2 items-center"><ImPlus className="size-2"/><div>Meeting</div></div>
+					<div className="uppercase cursor-pointer pr-5 border-b-2 border-white hover:border-light-sky-blue flex flex-row space-x-2 items-center"><ImPlus className="size-2"/> <div>Millestone</div></div>
+
 				</>}
 			</div>}
 

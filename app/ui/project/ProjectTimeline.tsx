@@ -3,11 +3,11 @@
 import React, { useEffect } from 'react';
 import { VerticalTimeline, VerticalTimelineElement } from 'react-vertical-timeline-component';
 import 'react-vertical-timeline-component/style.min.css';
-import { FaTasks, FaCalendarCheck, FaClipboardList } from 'react-icons/fa';
 import { JSONObject } from '@/lib/definations';
 import * as Utils from "@/lib/utils";
 import { FaMeetup } from "react-icons/fa";
 import { LuMilestone } from "react-icons/lu";
+import { FaTasks } from 'react-icons/fa';
 
 
 const ProjectTimeline = ({ data }:{data: JSONObject}) => {
@@ -93,17 +93,16 @@ const ProjectTimeline = ({ data }:{data: JSONObject}) => {
         <VerticalTimeline className=''>
             {timelineList.map((item: JSONObject, index: number) => (
                 <VerticalTimelineElement
-                contentStyle={{ border: '2px solid #bfdbfe', backgroundColor: "#eff6ff", color: '#fff', boxShadow: "0 3px 0 #fff" }}
-                contentArrowStyle={{ borderRight: '7px solid  #bfdbfe' }}
-
+                    contentStyle={{ border: '2px solid #bfdbfe', backgroundColor: "#eff6ff", color: '#fff', boxShadow: "0 3px 0 #fff" }}
+                    contentArrowStyle={{ borderRight: '7px solid  #bfdbfe' }}
                     key={item._id}
                     date={item.date}
                     icon={item.icon}
                     iconStyle={{ background: item.bgColor, color: item.textColor }}
                 >
-                    <h3 className="vertical-timeline-element-title font-bold line-space text-black flex flex-row">
+                    <h3 className="vertical-timeline-element-title line-space text-black flex flex-row">
                         {item.status && <span className="px-2 py-1 rounded-md mr-4" style={{backgroundColor: Utils.getStatusColor(item.status)}}>{Utils.getStatusName(item.status)}</span>}
-                        {item.name}
+                        <span className="font-bold">{item.name}</span>
                     </h3>
                     <div className="text-sm mt-3 text-black">{item.description}</div>
                 </VerticalTimelineElement>

@@ -5,6 +5,9 @@ import { useEffect, useState } from "react";
 import * as dbService from "@/lib/dbService";
 import ProjectTimeline from "./ProjectTimeline";
 import { FaCalendarAlt, FaClipboardCheck, FaClock, FaFlag, FaPlus, FaUsers } from "react-icons/fa";
+import { FaMeetup } from "react-icons/fa";
+import { LuMilestone } from "react-icons/lu";
+import { FaTasks } from 'react-icons/fa';
 
 
 export default function ProjectDetailsPage({ project }: { project: JSONObject }) {
@@ -28,35 +31,36 @@ export default function ProjectDetailsPage({ project }: { project: JSONObject })
     }, []);
 
     return (
-        <div className="p-5 flex">
+        <div className="p-5 flex ">
             <div className="w-1/4 bg-white shadow-lg rounded-lg p-5">
                 <div className="text-2xl font-bold mb-5">
                     {project.name}
                 </div>
 
-                <nav className="space-y-4">                    <a href="#" className="block text-gray-500 hover:text-blue-700">
+                <nav className="space-y-4">
+                    <a href="#" className="block text-gray-500 hover:text-blue-700">
                         <span className="flex items-center">
                             <FaClock className="mr-2" /> Timeline View
                         </span>
                     </a>
-                    <a href="#" className="block font-semibold hover:text-blue-700">
+                    <a href="#" className="block text-blue-500 font-semibold hover:text-blue-700">
                         <span className="flex items-center">
                             <FaCalendarAlt className="mr-2" /> Calendar View
                         </span>
                     </a>
                     <a href="#" className="block text-gray-500 hover:text-blue-700">
                         <span className="flex items-center">
-                            <FaPlus className="mr-2" /> Add New Task
+                            <FaTasks className="mr-2" /> Add New Task
                         </span>
                     </a>
                     <a href="#" className="block text-gray-500 hover:text-blue-700">
                         <span className="flex items-center">
-                            <FaUsers className="mr-2" /> Meeting Schedule
+                            <FaMeetup className="mr-2" /> Meeting Schedule
                         </span>
                     </a>
                     <a href="#" className="block text-gray-500 hover:text-blue-700">
                         <span className="flex items-center">
-                            <FaFlag className="mr-2" /> Milestones
+                            <LuMilestone className="mr-2" /> Milestones
                         </span>
                     </a>
                     <a href="#" className="block text-gray-500 hover:text-blue-700">
