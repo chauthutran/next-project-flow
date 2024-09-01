@@ -8,22 +8,6 @@ import * as Constant from '@/lib/constant';
 import * as Utils from "@/lib/utils";
 import { useMainUi } from "@/contexts/MainUiContext";
 import { useAuth } from "@/contexts/AuthContext";
-import { FaReact } from 'react-icons/fa'; // Example with Font Awesome React icon
-import { FcTimeline } from "react-icons/fc";
-import { RiBubbleChartFill } from "react-icons/ri";
-import { GiThreeLeaves } from "react-icons/gi";
-import { TbChartGridDotsFilled } from "react-icons/tb";
-import { LiaChartLineSolid } from "react-icons/lia";
-import { SiSoundcharts } from "react-icons/si";
-import { LiaChartBar } from "react-icons/lia";
-import { AiFillCloud } from "react-icons/ai";
-import { AiOutlineBarcode } from "react-icons/ai";
-import { AiFillBug } from "react-icons/ai";
-import { AiFillOpenAI } from "react-icons/ai";
-import { FaChartSimple } from "react-icons/fa6";
-import { IoStatsChartSharp } from "react-icons/io5";
-import { CiWavePulse1 } from "react-icons/ci";
-import { FaTimeline } from "react-icons/fa6";
 
 
 

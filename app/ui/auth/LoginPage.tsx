@@ -3,17 +3,18 @@ import LoginForm from "./LoginForm";
 import { FaTimeline } from "react-icons/fa6";
 import { LuMilestone } from "react-icons/lu";
 import { FaTasks } from "react-icons/fa";
+import { FaDotCircle } from "react-icons/fa";
 
 
 export default function LoginPage() {
 
     return (
-        <div className="flex flex-col min-h-screen">
-            <div className="justify-center bg-royal-blue  bg-opacity-40">
+        <div className="flex flex-col">
+            <div className="justify-center bg-royal-blue bg-opacity-40">
                 <div className="relative w- h-full py-10">
 
-                    <div className="ml-4 grid grid-cols-3 h-fit">
-                        <div className="relative flex flex-col space-y-1 col-span-2 ">
+                    <div className="grid grid-cols-1 h-fit lg:grid-cols-3 md:grid-cols-3 ">
+                        <div className="flex flex-col space-y-1 col-span-1 lg:col-span-2 md:col-span-2">
                             <div className="flex flex-row space-y-8">
                                 <div>
                                     <div className="text-4xl font-bold text-blue-navy mb-2">Project</div>
@@ -26,8 +27,10 @@ export default function LoginPage() {
                             </div>
                         </div>
 
-                        <div className="bg-white w-full z-10 rounded-l-lg">
-                            <LoginForm />
+                        <div className={`bg-white w-full z-10 rounded-tl-full rounded-bl-full flex items-center justify-center sm:mt-3`}>
+                            <div className={`w-full flex items-center justify-center pl-10 pt-5`}>
+                                <LoginForm />
+                            </div>
                         </div>
                     </div>
 
