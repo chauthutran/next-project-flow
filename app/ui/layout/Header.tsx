@@ -37,26 +37,29 @@ export default function Header() {
 	const showDashboard = () => {
 		AppStore.setProject(null);
 		setMainPage(Constant.PAGE_DASHBOARD)
-	}
+	}          
 
 	return (
-		<header className={`flex flex-row items-center space-x-8 text-sm bg-white z-10 ${user !== null ? "px-6 py-2" : "px-6 pt-10 pb-3 pr-4"}`}>
-			{user !== null && <div className={`flex-1 flex space-x-3 items-center my-3`} >
-				<div className={`uppercase pr-3 cursor-pointer border-b-2 border-white hover:border-light-sky-blue $
-				
-				{mainPage === Constant.PAGE_DASHBOARD && "border-b-2 border-light-sky-blue"}`} onClick={() => showDashboard()}>Dashboard</div>
+		<header className={`flex flex-row items-center space-x-8 text-sm bg-white z-10 ${user !== null ? "px-6 py-2 border-b-2 border-slate-300 p-3" : "px-6 pt-10 pb-3 pr-4"}`}>
 
-				{mainPage === Constant.PAGE_PROJECT_DETAILS && <>
-					{/* <IoMdArrowDropright /> */}
-					<div className="uppercase pl-5 font-semibold border-l-2 border-slate-200">{AppStore.getProject() !== null && AppStore.getProject()!.name}</div>
-					<MdDoubleArrow />
-					<div className="uppercase cursor-pointer pr-5 border-b-2 border-white hover:border-light-sky-blue ">Timeline</div>
-					<div className="uppercase cursor-pointer pr-5 border-b-2 border-white hover:border-light-sky-blue flex flex-row space-x-1 items-center"><ImPlus className="size-2"/><div>Task</div></div>
-					<div className="uppercase cursor-pointer pr-5 border-b-2 border-white hover:border-light-sky-blue flex flex-row space-x-2 items-center"><ImPlus className="size-2"/><div>Meeting</div></div>
-					<div className="uppercase cursor-pointer pr-5 border-b-2 border-white hover:border-light-sky-blue flex flex-row space-x-2 items-center"><ImPlus className="size-2"/> <div>Millestone</div></div>
-
-				</>}
+			{user !== null && <div className={`flex-1 flex space-y-1 items-start mb-3 mt-2 flex-col`}  >
+				{/* Welcome, {user!.email.split("@")[0]} */}
+                <div className="text-2xl transition-transform">Welcome, {user!.email.split("@")[0]}</div>
+                <div className="text-md italic">Here is your agendar for today</div>
 			</div>}
+
+			{mainPage === Constant.PAGE_PROJECT_DETAILS && <>
+				<div className={`uppercase pr-3 cursor-pointer border-b-2 border-white hover:border-light-sky-blue {mainPage === Constant.PAGE_DASHBOARD && "border-b-2 border-light-sky-blue"}`} onClick={() => showDashboard()}>Dashboard</div>
+			
+				<div className="uppercase pl-5 font-semibold border-l-2 border-slate-200">{AppStore.getProject() !== null && AppStore.getProject()!.name}</div>
+				<MdDoubleArrow />
+
+				<div className="uppercase cursor-pointer pr-5 border-b-2 border-white hover:border-light-sky-blue ">Timeline</div>
+				<div className="uppercase cursor-pointer pr-5 border-b-2 border-white hover:border-light-sky-blue flex flex-row space-x-1 items-center"><ImPlus className="size-2"/><div>Task</div></div>
+				<div className="uppercase cursor-pointer pr-5 border-b-2 border-white hover:border-light-sky-blue flex flex-row space-x-2 items-center"><ImPlus className="size-2"/><div>Meeting</div></div>
+				<div className="uppercase cursor-pointer pr-5 border-b-2 border-white hover:border-light-sky-blue flex flex-row space-x-2 items-center"><ImPlus className="size-2"/> <div>Millestone</div></div>
+
+			</>}
 
 			{mainPage === Constant.PAGE_LOGIN && <div className="ml-auto items-center justify-center flex flex-row space-x-1 uppercase">
 				<LuGanttChart className="text-torch-red"/>

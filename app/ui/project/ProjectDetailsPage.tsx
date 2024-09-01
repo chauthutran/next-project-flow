@@ -31,52 +31,8 @@ export default function ProjectDetailsPage({ project }: { project: JSONObject })
     }, []);
 
     return (
-        <div className="p-5 flex ">
-            <div className="w-1/4 bg-white shadow-lg rounded-lg p-5">
-                <div className="text-2xl font-bold mb-5">
-                    {project.name}
-                </div>
-
-                <nav className="space-y-4">
-                    <a href="#" className="block text-gray-500 hover:text-blue-700">
-                        <span className="flex items-center">
-                            <FaClock className="mr-2" /> Timeline View
-                        </span>
-                    </a>
-                    <a href="#" className="block text-blue-500 font-semibold hover:text-blue-700">
-                        <span className="flex items-center">
-                            <FaCalendarAlt className="mr-2" /> Calendar View
-                        </span>
-                    </a>
-                    <a href="#" className="block text-gray-500 hover:text-blue-700">
-                        <span className="flex items-center">
-                            <FaTasks className="mr-2" /> Add New Task
-                        </span>
-                    </a>
-                    <a href="#" className="block text-gray-500 hover:text-blue-700">
-                        <span className="flex items-center">
-                            <FaMeetup className="mr-2" /> Meeting Schedule
-                        </span>
-                    </a>
-                    <a href="#" className="block text-gray-500 hover:text-blue-700">
-                        <span className="flex items-center">
-                            <LuMilestone className="mr-2" /> Milestones
-                        </span>
-                    </a>
-                    <a href="#" className="block text-gray-500 hover:text-blue-700">
-                        <span className="flex items-center">
-                            <FaClipboardCheck className="mr-2" /> This Week Plans
-                        </span>
-                    </a>
-                </nav>
-            </div>
-
-            <div className="w-3/4 bg-white  p-5 ml-5 rounded-lg shadow-lg">
-                <div id="content-area">
-                    <ProjectTimeline data={details} />
-                </div>
-            </div>
-
+        <div className="p-5 flex bg-white">
+            <ProjectTimeline data={details} />
         </div>
     )
 }
