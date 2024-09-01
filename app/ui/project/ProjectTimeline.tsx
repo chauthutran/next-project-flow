@@ -98,9 +98,11 @@ const ProjectTimeline = ({ data }:{data: JSONObject}) => {
                     icon={item.icon}
                     iconStyle={{ background: item.bgColor, color: item.textColor }}
                 >
-                    <h3 className="vertical-timeline-element-title font-bold line-space">{item.name}</h3>
-                    <div className="text-sm">{item.description}</div>
-                    {item.status && <div className="text-sm mt-2 space-x-2"><span className="font-semibold">Status:</span> <span className="p-1 rounded-md" style={{backgroundColor: Utils.getStatusColor(item.status)}}>{Utils.getStatusName(item.status)}</span></div>}
+                    <h3 className="vertical-timeline-element-title font-bold line-space">
+                        {item.status && <span className="px-2 py-1 rounded-md mr-4" style={{backgroundColor: Utils.getStatusColor(item.status)}}>{Utils.getStatusName(item.status)}</span>}
+                        {item.name}
+                    </h3>
+                    <div className="text-sm mt-3">{item.description}</div>
                 </VerticalTimelineElement>
             ))}
         </VerticalTimeline>
