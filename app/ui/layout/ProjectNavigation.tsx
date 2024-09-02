@@ -12,7 +12,7 @@ export default function ProjectNavigation() {
 console.log(subPage);
     return (
         <>
-            <div className="uppercase whitespace-nowrap border-b-2 border-b-white hover:border-b-light-sky-blue animate-shake" onClick={() => setSubPage(null)}>
+            <div className="uppercase whitespace-nowrap animate-shake" >
                 {AppStore.getProject() !== null && AppStore.getProject()!.name}
             </div>
             

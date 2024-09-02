@@ -28,12 +28,12 @@ body {
 
 
 /* Change the color of the vertical timeline line */
-/* .vertical-timeline::before {
+.vertical-timeline::before {
   background-color: #0053af  !important; 
 } 
 .vertical-timeline-element-date {
   color: #475569 ;
-} */
+}
 
 .text-shadow {
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);

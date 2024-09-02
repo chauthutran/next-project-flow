@@ -17,9 +17,9 @@ export default function TaskForm({ projectId, onSuccessSubmit }: { projectId: st
         endDate: '',
         status: 'not_started',
         assignedTo: [],
+        createdBy: user!._id
     });
 
-    console.log(formData);
     const handleChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement> | React.ChangeEvent<HTMLSelectElement>) => {
         const { name, value } = e.target;
         setFormData({
@@ -36,117 +36,151 @@ export default function TaskForm({ projectId, onSuccessSubmit }: { projectId: st
         });
     };
 
-    const handleSubmit = async(e: React.MouseEvent<HTMLInputElement>) => {
+    const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
-       
-        const response: JSONObject = addTask(formData);
-        if( response.status !== "success" ) {
+
+        const response: JSONObject = await addTask(formData);
+        console.log(response);
+        if (response.status !== "success") {
             alert(response.message);
         }
         else {
             alert("Add task successfully !");
         }
     };
-    
+
     return (
-        <form className="max-w-lg mx-auto bg-white p-6 rounded-lg shadow-md">
-            <h2 className="text-2xl font-semibold mb-6">Create New Task</h2>
+        <div className="bg-white p-6 w-full">
+            <h2 className="text-2xl font-semibold mb-6 flex justify-center">Create New Task</h2>
 
-            {/* Task Name */}
-            <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700">Task Name</label>
-                <input
-                    type="text"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                    required
-                />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {/* Task Name */}
+                <div>
+                    <label className="mb-2 text-sm font-medium">Task Name</label>
+                    <input
+                        type="text"
+                        name="name"
+                        value={formData.name}
+                        onChange={handleChange}
+                        className="peer block w-full rounded-md border border-gray-200 p-2 text-sm outline-2 placeholder:text-gray-500"
+                        required
+                    />
+                </div>
+
+                {/* Description */}
+                <div>
+                    <label className="mb-2 text-sm font-medium">Description</label>
+                    <textarea
+                        name="description"
+                        value={formData.description}
+                        onChange={handleChange}
+                        className="peer block w-full rounded-md border border-gray-200 p-2 text-sm outline-2 placeholder:text-gray-500 h-9"
+                        required
+                    />
+                </div>
+
+                {/* Start Date */}
+                <div>
+                    <label className="mb-2 text-sm font-medium">Start Date</label>
+                    <input
+                        type="date"
+                        name="startDate"
+                        value={formData.startDate}
+                        onChange={handleChange}
+                        className="peer block w-full rounded-md border border-gray-200 p-2 text-sm outline-2 placeholder:text-gray-500"
+                        required
+                    />
+                </div>
+
+                {/* End Date */}
+                <div>
+                    <label className="mb-2 text-sm font-medium">End Date</label>
+                    <input
+                        type="date"
+                        name="endDate"
+                        value={formData.endDate}
+                        onChange={handleChange}
+                        className="peer block w-full rounded-md border border-gray-200 p-2 text-sm outline-2 placeholder:text-gray-500"
+                        required
+                    />
+                </div>
+
+                {/* Status */}
+                <div>
+                    <label className="text-sm font-medium text-gray-700">Status</label>
+                    <div className="flex flex-col space-y-2 mt-2">
+                        <label className="inline-flex items-center text-xs font-medium">
+                            <input
+                                type="radio"
+                                name="status"
+                                value={Constant.TASK_STATUS_NOT_STARTED}
+                                checked={formData.status === Constant.TASK_STATUS_NOT_STARTED}
+                                onChange={handleChange}
+                                className="form-radio h-4 w-4 text-blue-600 border-gray-300 focus:ring-blue-500"
+                                required
+                            />
+                            <span className="ml-2">Not Started</span>
+                        </label>
+
+                        <label className="inline-flex items-center text-xs font-medium">
+                            <input
+                                type="radio"
+                                name="status"
+                                value={Constant.TASK_STATUS_IN_PROGRESS}
+                                checked={formData.status === Constant.TASK_STATUS_IN_PROGRESS}
+                                onChange={handleChange}
+                                className="form-radio h-4 w-4 text-blue-600 border-gray-300 focus:ring-blue-500"
+                                required
+                            />
+                            <span className="ml-2">In Progress</span>
+                        </label>
+
+                        <label className="inline-flex items-center text-xs font-medium">
+                            <input
+                                type="radio"
+                                name="status"
+                                value={Constant.TASK_STATUS_COMPLETED}
+                                checked={formData.status === Constant.TASK_STATUS_COMPLETED}
+                                onChange={handleChange}
+                                className="form-radio h-4 w-4 text-blue-600 border-gray-300 focus:ring-blue-500"
+                                required
+                            />
+                            <span className="ml-2">Completed</span>
+                        </label>
+                    </div>
+                </div>
+
+                {/* Assigned To */}
+                <div>
+                    <label className="text-sm font-medium text-gray-700">Assign to Users</label>
+                    <select
+                        multiple
+                        name="assignedTo"
+                        value={formData.assignedTo}
+                        onChange={handleUserSelection}
+                        className="peer block w-full rounded-md border border-gray-200 p-2 text-sm outline-2 placeholder:text-gray-500"
+                        required
+                    >
+                        {user!.teamMembers.map((member: JSONObject) => (
+                            <option key={member._id} value={member._id}>
+                                {member.email}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+
             </div>
 
-            {/* Description */}
-            <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700">Description</label>
-                <textarea
-                    name="description"
-                    value={formData.description}
-                    onChange={handleChange}
-                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                    rows={4}
-                    required
-                />
-            </div>
 
-            {/* Start Date */}
-            <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700">Start Date</label>
-                <input
-                    type="date"
-                    name="startDate"
-                    value={formData.startDate}
-                    onChange={handleChange}
-                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                    required
-                />
-            </div>
-
-            {/* End Date */}
-            <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700">End Date</label>
-                <input
-                    type="date"
-                    name="endDate"
-                    value={formData.endDate}
-                    onChange={handleChange}
-                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                    required
-                />
-            </div>
-
-            {/* Status */}
-            <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700">Status</label>
-                <select
-                    name="status"
-                    value={formData.status}
-                    onChange={handleChange}
-                    className="mt-1 block w-full px-3 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                    required
-                >
-                    <option value={Constant.TASK_STATUS_NOT_STARTED}>Not Started</option>
-                    <option value={Constant.TASK_STATUS_IN_PROGRESS}>In Progress</option>
-                    <option value={Constant.TASK_STATUS_COMPLETED}>Completed</option>
-                </select>
-            </div>
-
-            {/* Assigned To */}
-            <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700">Assign to Users</label>
-                <select
-                    multiple
-                    name="assignedTo"
-                    value={formData.assignedTo}
-                    onChange={handleUserSelection}
-                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                    required
-                >
-                    {user!.teamMembers.map((member: JSONObject) => (
-                        <option key={member._id} value={member._id}>
-                            {member.email}
-                        </option>
-                    ))}
-                </select>
-            </div>
-
-            <div className="mt-6">
+            <div className="mt-3">
                 <button
-                    type="submit"
-                    className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                    className="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                    onClick={(e: React.MouseEvent<HTMLButtonElement>) => handleSubmit(e)}
                 >
                     Create Task
                 </button>
             </div>
-        </form>
+        </div>
+
     );
 }

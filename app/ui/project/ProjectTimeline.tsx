@@ -96,8 +96,8 @@ const ProjectTimeline = ({ data }:{data: JSONObject}) => {
             <VerticalTimeline className=''>
                 {timelineList.map((item: JSONObject, index: number) => (
                     <VerticalTimelineElement
-                        // contentStyle={{ border: '2px solid #bfdbfe', backgroundColor: "#eff6ff", color: '#fff', boxShadow: "0 3px 0 #fff" }}
-                        // contentArrowStyle={{ borderRight: '7px solid  #bfdbfe' }}
+                        contentStyle={{ border: '2px solid #bfdbfe', backgroundColor: "#bfdbfe  ", color: '#fff', boxShadow: "0 3px 0 #fff" }}
+                        contentArrowStyle={{ borderRight: '7px solid  #bfdbfe' }}
                         key={item._id}
                         date={item.date}
                         icon={item.icon}

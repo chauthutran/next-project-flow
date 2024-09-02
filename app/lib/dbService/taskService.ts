@@ -39,9 +39,9 @@ export async function addTask( payload: JSONObject ): Promise<JSONObject> {
             assignedTo: payload.assignedTo.map((id: string) => new mongoose.Types.ObjectId(id)),
             createdBy: new mongoose.Types.ObjectId(payload.createdBy),
         });
-
+		
         // Save the task to the database
-        const newTask = await task.save();
+        const newTask = await Task.create(task);
 
 		return { status: "success", data: Utils.cloneJSONObject(newTask) };
 	} catch (error: any) {

@@ -54,7 +54,7 @@ export default function Header() {
 					  onClick={() => showDashboard()
 					  }><MdDashboard className="size-8"/></div>
 			
-				<div className="flex space-x-4 items-center ">
+				<div className="flex space-x-4 items-center text-lg">
 					  <ProjectNavigation />
 				</div>
 			</>}

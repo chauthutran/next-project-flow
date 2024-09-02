@@ -10,9 +10,9 @@ export default function LoginPage() {
     return (
         <div className="flex flex-col">
             <div className="justify-center bg-royal-blue bg-opacity-40">
-                <div className="relative w- h-full py-10">
+                <div className="relative h-full py-10">
 
-                    <div className="grid grid-cols-1 h-fit  sm:grid-cols-3 ml-7">
+                    <div className="grid grid-cols-1 h-fit sm:grid-cols-3 ml-7">
                         <div className="flex flex-col space-y-1 col-span-1 sm:col-span-2">
                             <div className="flex flex-row space-y-8">
                                 <div>
