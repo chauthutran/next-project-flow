@@ -6,8 +6,8 @@ import 'react-vertical-timeline-component/style.min.css';
 import { JSONObject } from '@/lib/definations';
 import * as Utils from "@/lib/utils";
 import { FaMeetup } from "react-icons/fa";
-import { LuMilestone } from "react-icons/lu";
 import { FaTasks } from 'react-icons/fa';
+import { TbTargetArrow } from "react-icons/tb";
 
 
 const ProjectTimeline = ({ data }:{data: JSONObject}) => {
@@ -30,7 +30,7 @@ const ProjectTimeline = ({ data }:{data: JSONObject}) => {
                     status: milestone.status,
                     bgColor: "rgb(233, 30, 99)",
                     textColor: "#fff",
-                    icon: <LuMilestone />
+                    icon: <TbTargetArrow />
                 }
 
                 list.push(item);

@@ -1,8 +1,8 @@
 import { RiBubbleChartFill } from "react-icons/ri";
 import LoginForm from "./LoginForm";
 import { FaTimeline } from "react-icons/fa6";
-import { LuMilestone } from "react-icons/lu";
 import { FaTasks } from "react-icons/fa";
+import { TbTargetArrow } from "react-icons/tb";
 
 
 export default function LoginPage() {
@@ -42,11 +42,11 @@ export default function LoginPage() {
             <div className="flex-grow">
                 <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-x-4 gap-y-4 my-5 mx-3 h-full">
                     <div className="bg-royal-blue bg-opacity-20 p-3 rounded-t-xl flex flex-col items-center justify-center font-bold">
-                        <div><FaTimeline className="size-32 text-red-500" /></div>
+                        <div><FaTimeline className="size-32 text-blue-500" /></div>
                         <div>Visualize project timelines</div>
                     </div>
                     <div className="bg-royal-blue bg-opacity-20 p-3 rounded-t-xl flex flex-col items-center justify-center font-bold">
-                        <div><LuMilestone className="size-32 text-blue-500" /></div>
+                        <div className="text-[90px]">🎯</div>
                         <div>Track milestones</div>
                     </div>
                     <div className="bg-royal-blue p-3 rounded-t-xl bg-opacity-20 flex flex-col items-center justify-center font-bold">

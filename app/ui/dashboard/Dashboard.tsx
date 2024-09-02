@@ -2,12 +2,14 @@
 
 import { useAuth } from "@/contexts/AuthContext";
 import { useEffect, useState } from "react";
-import { IoSearch } from "react-icons/io5";
 import * as dbService from "@/lib/dbService";
 import { JSONObject } from "@/lib/definations";
 import * as Constant from "@/lib/constant";
 import { useMainUi } from "@/contexts/MainUiContext";
 import * as AppStore from "@/lib/appStore";
+import { Calendar } from "nextjs-jc-component-libs/dist/components";
+import { EventType } from "nextjs-jc-component-libs/dist/libs/definations";
+import * as Utils from "@/lib/utils";
 
 
 export default function Dashboard() {
@@ -15,7 +17,7 @@ export default function Dashboard() {
     const { setMainPage } = useMainUi();
 
     const { user } = useAuth();
-    const [projects, setProjects] = useState<JSONObject[]>([]);
+    const [details, setDetails] = useState<JSONObject>({});
     const [errMessage, setErrMessage] = useState("");
 
     const fetchProjects = async () => {
@@ -24,7 +26,16 @@ export default function Dashboard() {
             setErrMessage( response.message );
         }
         else {
-            setProjects( response.data );
+
+            const projects = response.data;
+
+            const projectIds = projects.map((item: JSONObject) => item._id);
+
+            const taskResponse = await dbService.fetchTasksByProjectIdList(projectIds);
+            const meetingResponse = await dbService.fetchMeetingsByProjectIdList(projectIds);
+            const milestoneResponse = await dbService.fetchMilestonesByProjectIdList(projectIds);
+
+            setDetails({ projects, tasks: taskResponse.data, meetings: meetingResponse.data, milestones: milestoneResponse.data });
         }
     }
 
@@ -32,47 +43,107 @@ export default function Dashboard() {
         fetchProjects();
     }, []);
 
+    const getCalendarEvents = (): EventType[] => {
+        let events: EventType[] = [];
+
+        let tasks = details.tasks && details.tasks.map((item: JSONObject) => {
+            return {
+                title: item.name,
+                start: Utils.convertDateStrToObj(item.startDate),
+                end: Utils.convertDateStrToObj(item.endDate),
+                color: Utils.getTaskColor()
+            } as EventType
+        });
+        if(!tasks) tasks = [];
+        
+        let milestones = details.milestones && details.milestones.map((item: JSONObject) => {
+            return {
+                title: item.name,
+                start: Utils.convertDateStrToObj(item.dueDate),
+                end: Utils.convertDateStrToObj(item.dueDate),
+                color: Utils.getMilestoneColor()
+            } as EventType
+        });
+        if(!milestones) milestones = [];
+
+        
+        let meetings = details.meetings && details.meetings.map((item: JSONObject) => {
+            return {
+                title: item.name,
+                start: Utils.convertDateStrToObj(item.date),
+                end: Utils.convertDateStrToObj(item.date),
+                color: Utils.getMeetingColor()
+            } as EventType
+        });
+        if(!meetings) meetings = [];
+
+        return events.concat(tasks, milestones, meetings);
+    }
+
     const showProjectDetails = (project: JSONObject) => {
         AppStore.setProject(project);
         setMainPage(Constant.PAGE_PROJECT_DETAILS);
     }
 
+    const getTodayEvents = () => {
+        const events = getCalendarEvents();
+        const today = new Date();
+        const todayEvents: EventType[] = events.filter((event: EventType) => event.start.getTime() <= today.getTime() && today.getTime() <= event.end.getTime() );
+
+        return todayEvents;
+    }
+
+    // // Event after today in the current week
+    // const getCurrentWeekEvents = () => {
+    //     const events = getCalendarEvents();
+
+    //     const {startDate, endDate} = Utils.getCurrentWeekDates();
+    //     const today = new Date();
+
+    //     const weekEvents: EventType[] = events.filter((event: EventType) => event.start.getTime() <= today.getTime() && today.getTime() <= event.end.getTime() );
+
+    //     return weekEvents;
+    // }
+
     if( errMessage !== "" ) return (<div className="p-3">{errMessage}</div>);
 
-    
-    return (
-        <div className="flex-1 relative px-6 my-8 grid grid-cols-5 gap-y-5 gap-x-5 z-10">
-            <div className="col-span-2">
-                <div className="text-2xl font-bold transition-transform" style={{letterSpacing: "3px"}}>Welcome, {user!.email.split("@")[0]}</div>
-                <div className="text-md">Here is your agendar for today</div>
-            </div>
-            <div className="col-span-3 items-center justify-center">
-                    <div className="relative">
-                        <input
-                            className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500 "
-                            id="searchProject"
-                            type="text"
-                            name="searchProject"
-                            // value={email}
-                            placeholder="Search"
-                            required
-                            // onChange={(e) => { setEmail(e.target.value) }}
-                        />
-                        <IoSearch className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900"></IoSearch>
-                    </div>
-            </div>
+    const todayEvents = getTodayEvents();
 
-            <div className="col-span-2 bg-white rounded-lg p-3 space-y-4">
-                <div className="font-bold">Projects</div>
-                <div>
-                    {projects.map((project: JSONObject, idx: number)=> (
-                        <div key={`project-${project._id}`} className="cursor-pointer font-medium" onClick={() => showProjectDetails(project)}>{project.name}</div>
-                    ))}
+    return (
+        <div className="px-6 my-8 grid grid-cols-1 gap-y-5 gap-x-5 z-10 lg:grid-cols-2 md:grid-cols-2">
+            
+            <div className="space-y-4">
+                <div className="bg-white rounded-lg p-3 space-y-4">
+                    <div className="font-bold">Projects</div>
+                    <div>
+                        {details.projects && details.projects.map((project: JSONObject, idx: number)=> (
+                            <div key={`project-${project._id}`} className="cursor-pointer hover:text-blue-500" onClick={() => showProjectDetails(project)}>{project.name}</div>
+                        ))}
+                    </div>
+                </div>
+
+                <div className="bg-white rounded-lg p-3 min-w-96 min-h-[520px]">
+                    {/* <Calendar events={[]} onClick={({date: Date, events: EventType[]})=> {}} /> */}
+                    <Calendar events={getCalendarEvents()} onClick={(data: JSONObject)=> { }} />
                 </div>
             </div>
 
-            <div className="col-span-3 items-center justify-center bg-white rounded-lg p-3 space-y-4">
-                <div className="font-bold">Today Tasks</div>
+            <div className="space-y-4">
+                <div className="row-span-2 items-center justify-center bg-white rounded-lg p-3 space-y-4">
+                    <div className="font-bold">Today Tasks</div>
+                    {todayEvents === undefined && todayEvents === null ? <div>[No task]</div> :
+                        todayEvents.map((event: EventType, idx: number) => (
+                            <div key={`today_event_${idx}`} style={{color: event.color}}>{Utils.formatDateTimeObj(event.start)} - {event.title}</div>
+                        ))}
+                </div>
+
+                <div className="row-span-2 items-center justify-center bg-white rounded-lg p-3 space-y-4">
+                    <div className="font-bold">This Week Tasks</div>
+                    {todayEvents === undefined && todayEvents === null ? <div>[No task]</div> :
+                        todayEvents.map((event: EventType, idx: number) => (
+                            <div key={`today_event_${idx}`} style={{color: event.color}}>{Utils.formatDateTimeObj(event.start)} - {event.title}</div>
+                        ))}
+                </div>
             </div>
         </div>
     )

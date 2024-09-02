@@ -12,3 +12,15 @@ STATUS_COLORS[Constant.TASK_STATUS_COMPLETED] =  "#2E7D32";
 export const getStatusColor = ( status: string ) => {
     return STATUS_COLORS[status];
 }
+
+export const getTaskColor = (): string => {
+    return "#2196f3";
+}
+
+export const getMeetingColor = (): string => {
+    return "#10cc52";
+}
+
+export const getMilestoneColor = (): string => {
+    return "#e91e63";
+}

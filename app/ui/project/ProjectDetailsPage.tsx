@@ -4,14 +4,13 @@ import { JSONObject } from "@/lib/definations";
 import { useEffect, useState } from "react";
 import * as dbService from "@/lib/dbService";
 import ProjectTimeline from "./ProjectTimeline";
-import { FaCalendarAlt, FaClipboardCheck, FaClock, FaFlag, FaPlus, FaUsers } from "react-icons/fa";
-import { FaMeetup } from "react-icons/fa";
-import { LuMilestone } from "react-icons/lu";
-import { FaTasks } from 'react-icons/fa';
+import * as Constant from "@/lib/constant";
+import { useMainUi } from "@/contexts/MainUiContext";
 
 
 export default function ProjectDetailsPage({ project }: { project: JSONObject }) {
 
+    const { subPage } = useMainUi();
     const [details, setDetails] = useState<JSONObject[]>([]);
     const [errMessage, setErrMessage] = useState("");
 
@@ -31,8 +30,11 @@ export default function ProjectDetailsPage({ project }: { project: JSONObject })
     }, []);
 
     return (
-        <div className="p-5 flex bg-white">
-            <ProjectTimeline data={details} />
+
+        <div className="min-h-screen bg-gray-100">
+            {subPage !== "" && <>
+                {subPage === Constant.SUB_PAGE_TIMELINE && <ProjectTimeline data={details} />}
+            </>}
         </div>
     )
 }
