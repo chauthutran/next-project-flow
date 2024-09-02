@@ -16,7 +16,7 @@ import MilestoneForm from "./MilestoneForm";
 export default function ProjectDetailsPage({ project }: { project: JSONObject }) {
 
     const { subPage,setSubPage } = useMainUi();
-    const [details, setDetails] = useState<JSONObject[]>([]);
+    const [details, setDetails] = useState<JSONObject>({});
     const [errMessage, setErrMessage] = useState("");
 
     useEffect(() => {
@@ -37,13 +37,18 @@ export default function ProjectDetailsPage({ project }: { project: JSONObject })
         fetchProjects();
     }, []);
 
+    const onAddTaskSuccess = (newTask: JSONObject) => {
+        if( details.tasks == undefined ) details.tasks = [];
+        details.tasks.push( newTask );
+    }
+
     const projectId = AppStore.getProject()!._id;
 
     return (
-        <div className="relative h-full py-6 px-5 bg-gray-100">
+        <div className="relative h-full py-6 px-5 bg-white">
             {subPage === Constant.SUB_PAGE_TIMELINE && <ProjectTimeline data={details} />}
             {subPage === Constant.SUB_PAGE_CALENDAR && <ProjectCalendar />} 
-            {subPage === Constant.SUB_PAGE_NEW_TASK && <TaskForm projectId={projectId} onSuccessSubmit={() => {} } />}
+            {subPage === Constant.SUB_PAGE_NEW_TASK && <TaskForm projectId={projectId} onSuccess={(newTask: JSONObject) => onAddTaskSuccess(newTask) } />}
             {subPage === Constant.SUB_PAGE_NEW_MEETING && <MeetingForm projectId={projectId} />}
             {subPage === Constant.SUB_PAGE_NEW_MILESTONE && <MilestoneForm projectId={projectId} />}
         </div>

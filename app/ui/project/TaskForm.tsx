@@ -5,7 +5,7 @@ import * as Constant from "@/lib/constant";
 import { addTask } from "@/lib/dbService";
 
 
-export default function TaskForm({ projectId, onSuccessSubmit }: { projectId: string, onSuccessSubmit: () => void }) {
+export default function TaskForm({ projectId, onSuccess }: { projectId: string, onSuccess: (newTask: JSONObject) => void }) {
 
     const { user } = useAuth();
 
@@ -45,70 +45,72 @@ export default function TaskForm({ projectId, onSuccessSubmit }: { projectId: st
             alert(response.message);
         }
         else {
+            // Need to update the project details data
             alert("Add task successfully !");
+            onSuccess(response.data);
         }
     };
 
     return (
-        <div className="bg-white p-6 w-full">
-            <h2 className="text-2xl font-semibold mb-6 flex justify-center">Create New Task</h2>
+        <div className="bg-white w-full">
+            <h2 className="text-2xl font-semibold mb-6 flex justify-center border-b-2 border-light-sky-blue pb-2 w-fit pr-5">Create New Task</h2>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 border bg-gray-100 p-4 rounded">
                 {/* Task Name */}
                 <div>
-                    <label className="mb-2 text-sm font-medium">Task Name</label>
+                    <label className="mb-2 text-sm font-medium mt-2">Task Name</label>
                     <input
                         type="text"
                         name="name"
                         value={formData.name}
                         onChange={handleChange}
-                        className="peer block w-full rounded-md border border-gray-200 p-2 text-sm outline-2 placeholder:text-gray-500"
+                        className="peer block w-full rounded-md border border-gray-300 p-2 text-sm outline-2 placeholder:text-gray-500"
                         required
                     />
                 </div>
 
                 {/* Description */}
                 <div>
-                    <label className="mb-2 text-sm font-medium">Description</label>
+                    <label className="mb-2 text-sm font-medium mt-2">Description</label>
                     <textarea
                         name="description"
                         value={formData.description}
                         onChange={handleChange}
-                        className="peer block w-full rounded-md border border-gray-200 p-2 text-sm outline-2 placeholder:text-gray-500 h-9"
+                        className="peer block w-full rounded-md border border-gray-300 p-2 text-sm outline-2 placeholder:text-gray-500 h-9"
                         required
                     />
                 </div>
 
                 {/* Start Date */}
                 <div>
-                    <label className="mb-2 text-sm font-medium">Start Date</label>
+                    <label className="mb-2 text-sm font-medium mt-2">Start Date</label>
                     <input
                         type="date"
                         name="startDate"
                         value={formData.startDate}
                         onChange={handleChange}
-                        className="peer block w-full rounded-md border border-gray-200 p-2 text-sm outline-2 placeholder:text-gray-500"
+                        className="peer block w-full rounded-md border border-gray-300 p-2 text-sm outline-2 placeholder:text-gray-500"
                         required
                     />
                 </div>
 
                 {/* End Date */}
                 <div>
-                    <label className="mb-2 text-sm font-medium">End Date</label>
+                    <label className="mb-2 text-sm font-medium mt-2">End Date</label>
                     <input
                         type="date"
                         name="endDate"
                         value={formData.endDate}
                         onChange={handleChange}
-                        className="peer block w-full rounded-md border border-gray-200 p-2 text-sm outline-2 placeholder:text-gray-500"
+                        className="peer block w-full rounded-md border border-gray-300 p-2 text-sm outline-2 placeholder:text-gray-500"
                         required
                     />
                 </div>
 
                 {/* Status */}
                 <div>
-                    <label className="text-sm font-medium text-gray-700">Status</label>
-                    <div className="flex flex-col space-y-2 mt-2">
+                    <label className="text-sm font-medium text-gray-700 mb-2">Status</label>
+                    <div className="grid grid-cols-1 space-y-2 rounded-md border border-gray-300 p-2 bg-white">
                         <label className="inline-flex items-center text-xs font-medium">
                             <input
                                 type="radio"
@@ -158,7 +160,7 @@ export default function TaskForm({ projectId, onSuccessSubmit }: { projectId: st
                         name="assignedTo"
                         value={formData.assignedTo}
                         onChange={handleUserSelection}
-                        className="peer block w-full rounded-md border border-gray-200 p-2 text-sm outline-2 placeholder:text-gray-500"
+                          className="peer block w-full rounded-md border border-gray-300 p-2 text-sm outline-2 placeholder:text-gray-500"
                         required
                     >
                         {user!.teamMembers.map((member: JSONObject) => (

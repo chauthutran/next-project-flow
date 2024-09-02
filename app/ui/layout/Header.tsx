@@ -42,7 +42,7 @@ export default function Header() {
 	}          
 
 	return (
-		<header className={`flex bg-white px-4 py-3 items-center text-sm z-10`}>
+		<header className={`flex bg-white px-4 py-3 items-center text-sm z-10 ${user !== null && "border-b border-gray-400"}`}>
 			{user !== null && mainPage !== Constant.PAGE_PROJECT_DETAILS && <div className={`ml-5 flex-1 flex items-start`}  >
                 <div className="text-2xl transition-transform">Welcome, {user!.email.split("@")[0]}</div>
                 {/* <div className="text-md italic">Here is your agendar for today</div> */}
