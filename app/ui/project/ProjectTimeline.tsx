@@ -90,24 +90,28 @@ const ProjectTimeline = ({ data }:{data: JSONObject}) => {
     const timelineList = convertData();
 
     return (
-        <VerticalTimeline className=''>
-            {timelineList.map((item: JSONObject, index: number) => (
-                <VerticalTimelineElement
-                    contentStyle={{ border: '2px solid #bfdbfe', backgroundColor: "#eff6ff", color: '#fff', boxShadow: "0 3px 0 #fff" }}
-                    contentArrowStyle={{ borderRight: '7px solid  #bfdbfe' }}
-                    key={item._id}
-                    date={item.date}
-                    icon={item.icon}
-                    iconStyle={{ background: item.bgColor, color: item.textColor }}
-                >
-                    <h3 className="vertical-timeline-element-title line-space text-black flex flex-row">
-                        {item.status && <span className="px-2 py-1 rounded-md mr-4" style={{backgroundColor: Utils.getStatusColor(item.status)}}>{Utils.getStatusName(item.status)}</span>}
-                        <span className="font-bold">{item.name}</span>
-                    </h3>
-                    <div className="text-sm mt-3 text-black">{item.description}</div>
-                </VerticalTimelineElement>
-            ))}
-        </VerticalTimeline>
+        <>
+            
+            <h2 className="text-3xl mt-3 mb-8 text-blue-navy">Project Timeline</h2>
+            <VerticalTimeline className=''>
+                {timelineList.map((item: JSONObject, index: number) => (
+                    <VerticalTimelineElement
+                        // contentStyle={{ border: '2px solid #bfdbfe', backgroundColor: "#eff6ff", color: '#fff', boxShadow: "0 3px 0 #fff" }}
+                        // contentArrowStyle={{ borderRight: '7px solid  #bfdbfe' }}
+                        key={item._id}
+                        date={item.date}
+                        icon={item.icon}
+                        iconStyle={{ background: item.bgColor, color: item.textColor }}
+                    >
+                        <h3 className="vertical-timeline-element-title line-space text-black flex flex-row">
+                            {item.status && <span className="px-2 py-1 rounded-md mr-4" style={{backgroundColor: Utils.getStatusColor(item.status)}}>{Utils.getStatusName(item.status)}</span>}
+                            <span className="font-bold">{item.name}</span>
+                        </h3>
+                        <div className="text-sm mt-3 text-black">{item.description}</div>
+                    </VerticalTimelineElement>
+                ))}
+            </VerticalTimeline>
+        </>
     );
 };
 

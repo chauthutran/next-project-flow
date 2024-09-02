@@ -7,7 +7,11 @@ const UserSchema = new Schema(
 	{
 		email: { type: String, required: true, unique: true },
 		password: { type: String, required: true },
-		role: { type: String, required: true }  // e.g., project_manager, team_member, viewer
+		role: { type: String, required: true }, // e.g., project_manager, team_member, viewer
+		teamMembers: [{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User'
+        }]
 	},
 	{
 		timestamps: true,

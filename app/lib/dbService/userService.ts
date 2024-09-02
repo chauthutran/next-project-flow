@@ -5,6 +5,7 @@ import connectToDatabase from "./db";
 import User from "../schemas/User.schema";
 import * as Encrypt from "./encryptPassword";
 import * as Utils from "@/lib/utils";
+import mongoose from "mongoose";
 
 
 export async function login({email, password}: JSONObject): Promise<JSONObject> {
@@ -28,6 +29,11 @@ export async function login({email, password}: JSONObject): Promise<JSONObject> 
 			return ({status: "fail", message: "Username/Password is wrong"});
 		}
 		
+
+		const teamMemberIdObjs = matchedUser.teamMembers.map((id: string) => new mongoose.Types.ObjectId(id));
+		const teamMembers = await User.find({ _id: { $in: teamMemberIdObjs } });
+		matchedUser.teamMembers = teamMembers;
+
 		// Utils.cloneJSONObject(matchedUser) ==> need to do it so that I can avoid the issue "Warning: Only plain objects can be passed to Client Components from Server Components" 
 		return ({status: "success", data: Utils.cloneJSONObject( matchedUser )});
 	} catch (error: any) {
@@ -59,3 +65,26 @@ export async function register(userData: JSONObject): Promise<JSONObject> {
         // }
 	}
 }
+
+
+// export async function linkTeamMembers() {
+//     try {
+//         await connectToDatabase();
+
+//         // Find all users with the "team_member" role
+//         const teamMembers = await User.find({ role: 'team_member' });
+
+//         // Iterate over each team member and link them to other team members
+//         for (let user of teamMembers) {
+//             user.teamMembers = teamMembers
+//                 .filter(member => member._id.toString() !== user._id.toString()) // Exclude the user from their own teamMembers array
+//                 .map(member => member._id); // Map to ObjectId
+
+//             await user.save();
+//         }
+
+//         console.log('Team members linked successfully.');
+//     } catch (error) {
+//         console.error('Error linking team members:', error);
+//     } 
+// }

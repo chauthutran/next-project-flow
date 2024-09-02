@@ -22,3 +22,29 @@ export async function fetchTasksByProjectIdList(
 		return { status: "error", message: error.message };
 	}
 }
+
+
+export async function addTask( payload: JSONObject ): Promise<JSONObject> {
+	try {
+		await connectToDatabase();
+
+		// Create a new task instance
+        const task = new Task({
+            projectId: new mongoose.Types.ObjectId(payload.projectId),
+            name: payload.name,
+            description: payload.description,
+            startDate: new Date(payload.startDate),
+            endDate: new Date(payload.endDate),
+            status: payload.status,
+            assignedTo: payload.assignedTo.map((id: string) => new mongoose.Types.ObjectId(id)),
+            createdBy: new mongoose.Types.ObjectId(payload.createdBy),
+        });
+
+        // Save the task to the database
+        const newTask = await task.save();
+
+		return { status: "success", data: Utils.cloneJSONObject(newTask) };
+	} catch (error: any) {
+		return { status: "error", message: error.message };
+	}
+}
