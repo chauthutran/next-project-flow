@@ -38,7 +38,8 @@ export default function Header() {
 
 	const showDashboard = () => {
 		AppStore.setProject(null);
-		setMainPage(Constant.PAGE_DASHBOARD)
+		setMainPage(Constant.PAGE_DASHBOARD);
+		setSubPage(null);
 	}          
 
 	return (

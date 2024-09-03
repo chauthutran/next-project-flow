@@ -111,7 +111,7 @@ export default function TaskForm({ projectId, onSuccess }: { projectId: string, 
                 <div>
                     <label className="text-sm font-medium text-gray-700 mb-2">Status</label>
                     <div className="grid grid-cols-1 space-y-2 rounded-md border border-gray-300 p-2 bg-white">
-                        <label className="inline-flex items-center text-xs font-medium">
+                        <label className="inline-flex items-center text-xs font-medium my-1 mx-1">
                             <input
                                 type="radio"
                                 name="status"
@@ -124,7 +124,7 @@ export default function TaskForm({ projectId, onSuccess }: { projectId: string, 
                             <span className="ml-2">Not Started</span>
                         </label>
 
-                        <label className="inline-flex items-center text-xs font-medium">
+                        <label className="inline-flex items-center text-xs font-medium my-1 mx-1">
                             <input
                                 type="radio"
                                 name="status"
@@ -137,7 +137,7 @@ export default function TaskForm({ projectId, onSuccess }: { projectId: string, 
                             <span className="ml-2">In Progress</span>
                         </label>
 
-                        <label className="inline-flex items-center text-xs font-medium">
+                        <label className="inline-flex items-center text-xs font-medium my-1 mx-1">
                             <input
                                 type="radio"
                                 name="status"

@@ -39,3 +39,17 @@ export const getCurrentWeekDates = (): { startDate: Date, endDate: Date } => {
 
     return { startDate, endDate };
 }
+
+export const getDaysBetweenDates = (startDate: Date, endDate: Date) => {
+    // Convert both dates to milliseconds
+    const start = new Date(startDate).getTime();
+    const end = new Date(endDate).getTime();
+
+    // Calculate the difference in milliseconds
+    const difference = end - start;
+
+    // Convert milliseconds to days
+    const days = difference / (1000 * 60 * 60 * 24);
+
+    return Math.floor(days);
+}

@@ -21,7 +21,7 @@ const ProgressBar: React.FC<ProgressBarProps> = ({ name, percentage }) => {
 				></div>
 			</div>
 			<p className={`text-sm mt-2 ${textColor}`}>
-				{percentage.toFixed(2)}% of the budget used
+				{percentage.toFixed(2)}%
 			</p>
 		</div>
 
@@ -29,20 +29,22 @@ const ProgressBar: React.FC<ProgressBarProps> = ({ name, percentage }) => {
 	);
 };
 
+export default ProgressBar;
 
-export default function BudgetVsActualProcessBar({ data }: { data: JSONObject }) {
 
-	const reportData = data.data;
+// export default function ProgressBar({ data }: { data: JSONObject }) {
+
+// 	const reportData = data.data;
 	
-	const calculatePercentage = (actual: number, budget: number): number => {
-		return (actual / budget) * 100;
-	};
+// 	const calculatePercentage = (actual: number, budget: number): number => {
+// 		return (actual / budget) * 100;
+// 	};
 
-	return (
-		<div className="mb-10">
-			{reportData !== undefined && reportData.map((item: JSONObject) => (
-				<ProgressBar key={item._id.categoryName} percentage={calculatePercentage(item.expenseAmount, item.budgetAmount)} name={item._id.categoryName} />
-			))}
-		</div>
-	);
-}
+// 	return (
+// 		<div className="mb-10">
+// 			{reportData !== undefined && reportData.map((item: JSONObject) => (
+// 				<ProgressBar key={item._id.categoryName} percentage={calculatePercentage(item.expenseAmount, item.budgetAmount)} name={item._id.categoryName} />
+// 			))}
+// 		</div>
+// 	);
+// }
