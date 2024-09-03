@@ -60,3 +60,26 @@ export const findAndReplaceItemFromList = function( list: JSONObject[], searchVa
 	}
 
 }
+
+
+export const removeFromArray = function( list: JSONObject[], value: string, propertyName: string )
+{
+	let index: any;
+
+	for( let i = 0; i < list.length; i++ )
+	{
+		var item = list[i];
+		if ( item[ propertyName ] == value ) 
+		{
+			index = i;
+			break;
+		}
+	}
+
+	if ( index != undefined ) 
+	{
+		list.splice( index, 1 );
+	}
+
+	return list;
+};

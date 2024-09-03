@@ -2,13 +2,14 @@ import { JSONObject } from "@/lib/definations";
 import * as Utils from "@/lib/utils";
 import * as Constant from "@/lib/constant";
 import ProgressBar from "@/ui/basics/ProgressBar";
-import { FaEdit } from "react-icons/fa";
+import { FaEdit, FaTrash } from "react-icons/fa";
 import Modal from "@/ui/basics/Modal";
 import { IoIosCloseCircle } from "react-icons/io";
 import TaskForm from "./TaskForm";
 import { useEffect, useState } from "react";
 import * as AppStore from "@/lib/appStore";
 import { useProject } from "@/contexts/ProjectContext";
+import { IoTrash } from "react-icons/io5";
 
 
 export default function TaskList({projectId, data}: {projectId: string, data: JSONObject[]}) {
@@ -60,6 +61,11 @@ export default function TaskList({projectId, data}: {projectId: string, data: JS
                     return ( <div key={`task_${task._id}`} className="border border-gray-300 p-3">
                         <div className="flex flex-row space-x-2">
                             <FaEdit className="size-5 text-blue-600 hover:text-sky-blue cursor-pointer" onClick={() => showUpdateTaskForm(task)}/>
+                                 {/* Remove Icon */}
+                            <IoTrash
+                                className="size-5 text-red-600 hover:text-red-800 cursor-pointer" 
+                                onClick={() => {}} 
+                            />
                             <div>{Utils.formatDateTimeObj(task.startDate)}</div>
                             <div>-</div>
                             <div>{Utils.formatDateTimeObj(task.endDate)}</div>

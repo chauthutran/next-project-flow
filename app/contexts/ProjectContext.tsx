@@ -10,6 +10,7 @@ import * as Constant from "@/lib/constant";
 interface ProjectContextProps {
 	projectDetails: JSONObject | null;
 	saveTask: (task: JSONObject) => Promise<void>;
+	removeTask: (id: string) => Promise<void>;
 	error: string | null;
 	processStatus: string;
 }
@@ -17,6 +18,7 @@ interface ProjectContextProps {
 const ProjectContext = createContext<ProjectContextProps>({
 	projectDetails: null,
 	saveTask: async() => { },
+	removeTask: async() => { },
 	error: null,
 	processStatus: ""
 });
@@ -85,6 +87,25 @@ export const ProjectProvider = ({ projectId, children }: { projectId: string, ch
         }
 	}
 
+	const removeTask = async(id: string) => {
+		setProcessStatus(Constant.TASK_SAVE_REQUEST);
+		setError(null);
+
+		let response: JSONObject = await dbService.removeTask(id);
+        if (response.status !== "success") {
+            setError(response.message);
+			setProcessStatus(Constant.TASK_SAVE_FAILURE);
+        }
+        else {
+            // Need to update the new task of project details data
+			const temp = Utils.cloneJSONObject(projectDetails!);
+			Utils.removeFromArray( temp.tasks!, id, "_id");
+			
+			setProjectDetails(temp);
+			setProcessStatus(Constant.TASK_SAVE_SUCCESS);
+        }
+	}
+
 	const convertTaskDatesToUTC = (task: JSONObject) => {
 		let newTask = Utils.cloneJSONObject(task);
         newTask.startDate = Utils.convertToUTCDateObj(newTask.startDate);
@@ -94,7 +115,7 @@ export const ProjectProvider = ({ projectId, children }: { projectId: string, ch
 	}
 
 	return (
-		<ProjectContext.Provider value={{ projectDetails, processStatus, error, saveTask }}>
+		<ProjectContext.Provider value={{ projectDetails, processStatus, error, saveTask, removeTask }}>
 			{children}
 		</ProjectContext.Provider>
 	);
