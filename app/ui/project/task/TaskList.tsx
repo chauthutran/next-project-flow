@@ -31,6 +31,8 @@ export default function TaskList({data}: {data: JSONObject[]}) {
                 const progressBarData = getProgressData(task);
                 
                 return ( <div key={`task_${task._id}`}>
+                    <div>Start date: <span className="font-semibold">{Utils.formatDateTimeObj(task.startDate)}</span></div>
+                    <div>End date: <span className="font-semibold">{Utils.formatDateTimeObj(task.endDate)}</span></div>
                     <ProgressBar name={progressBarData.name} percentage={progressBarData.percent} />
                 </div> )
             })}

@@ -52,10 +52,9 @@ export default function TaskForm({ projectId, onSuccess }: { projectId: string, 
     };
 
     return (
-        <div className="bg-white w-full">
-            <h2 className="text-2xl font-semibold mb-6 flex justify-center border-b-2 border-light-sky-blue pb-2 w-fit pr-5">Create New Task</h2>
+        <div className="w-full">
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 border bg-gray-100 p-4 rounded">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {/* Task Name */}
                 <div>
                     <label className="mb-2 text-sm font-medium mt-2">Task Name</label>
