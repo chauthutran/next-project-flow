@@ -1,27 +1,48 @@
 import { useAuth } from "@/contexts/AuthContext";
 import { JSONObject } from "@/lib/definations";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import * as Constant from "@/lib/constant";
-import { addTask } from "@/lib/dbService";
+import * as Utils from "@/lib/utils";
+import { useProject } from "@/contexts/ProjectContext";
+import { FaSpinner } from "react-icons/fa";
 
 
-export default function TaskForm({ projectId, onSuccess }: { projectId: string, onSuccess: (newTask: JSONObject) => void }) {
+export default function TaskForm({ projectId, data = null }: {projectId: string, data?: JSONObject | null}) {
 
     const { user } = useAuth();
+    const { projectDetails, saveTask, error, processStatus } = useProject();
 
-    const [formData, setFormData] = useState<JSONObject>({
-        projectId: projectId,
-        name: '',
-        description: '',
-        startDate: '',
-        endDate: '',
-        status: 'not_started',
-        assignedTo: [],
-        createdBy: user!._id
-    });
+    const getInitData = (): JSONObject => {
+        if( data === null ) {
+            return {
+                projectId: projectId,
+                name: '',
+                description: '',
+                startDate: '',
+                endDate: '',
+                status: 'not_started',
+                assignedTo: [],
+                createdBy: user!._id
+            } as JSONObject
+        }
+        else {
+            let temp = Utils.cloneJSONObject(data);
+            temp.startDate = Utils.convertToLocalDateStrForDateInputField(temp.startDate);
+            temp.endDate = Utils.convertToLocalDateStrForDateInputField(temp.endDate);
 
+            return temp;
+        }
+    }
+    
+    const [formData, setFormData] = useState<JSONObject>(getInitData());
+
+    useEffect(() => {
+        // alert()
+    },[projectDetails])
+    
     const handleChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement> | React.ChangeEvent<HTMLSelectElement>) => {
         const { name, value } = e.target;
+
         setFormData({
             ...formData,
             [name]: value,
@@ -36,19 +57,9 @@ export default function TaskForm({ projectId, onSuccess }: { projectId: string, 
         });
     };
 
-    const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
-
-        const response: JSONObject = await addTask(formData);
-        console.log(response);
-        if (response.status !== "success") {
-            alert(response.message);
-        }
-        else {
-            // Need to update the project details data
-            alert("Add task successfully !");
-            onSuccess(response.data);
-        }
+        saveTask(formData);
     };
 
     return (
@@ -84,7 +95,7 @@ export default function TaskForm({ projectId, onSuccess }: { projectId: string, 
                 <div>
                     <label className="mb-2 text-sm font-medium mt-2">Start Date</label>
                     <input
-                        type="date"
+                        type="datetime-local"
                         name="startDate"
                         value={formData.startDate}
                         onChange={handleChange}
@@ -97,7 +108,7 @@ export default function TaskForm({ projectId, onSuccess }: { projectId: string, 
                 <div>
                     <label className="mb-2 text-sm font-medium mt-2">End Date</label>
                     <input
-                        type="date"
+                        type="datetime-local"
                         name="endDate"
                         value={formData.endDate}
                         onChange={handleChange}
@@ -172,14 +183,16 @@ export default function TaskForm({ projectId, onSuccess }: { projectId: string, 
 
             </div>
 
-
             <div className="mt-3">
                 <button
                     className="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                     onClick={(e: React.MouseEvent<HTMLButtonElement>) => handleSubmit(e)}
                 >
-                    Create Task
+                    {data === null ? "Create Task" : "Update Task"}
+                    {processStatus === Constant.TASK_SAVE_REQUEST && <FaSpinner className="ml-auto h-5" size={20} />}
                 </button>
+
+                {processStatus === Constant.TASK_SAVE_FAILURE && <span className="text-red-500">{error}</span>}
             </div>
         </div>
 

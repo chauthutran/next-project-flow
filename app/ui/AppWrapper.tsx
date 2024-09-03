@@ -12,6 +12,7 @@ import ProjectDetailsPage from "./project/ProjectDetailsPage";
 import * as AppStore from "@/lib/appStore";
 import { RiBubbleChartFill } from "react-icons/ri";
 import LoginPage from "./auth/LoginPage";
+import { ProjectProvider } from "@/contexts/ProjectContext";
 
 
 export default function AppWrapper() {
@@ -35,7 +36,10 @@ export default function AppWrapper() {
 					{mainPage === Constant.PAGE_LOGIN && <LoginPage />}
 					{mainPage === Constant.PAGE_USER_REGISTRATION && <RegisterForm />}
 					{mainPage === Constant.PAGE_DASHBOARD && <Dashboard />}
-					{mainPage === Constant.PAGE_PROJECT_DETAILS && <ProjectDetailsPage project={AppStore.getProject()!} />}
+					{mainPage === Constant.PAGE_PROJECT_DETAILS && 
+						<ProjectProvider projectId={AppStore.getProject()!._id}>
+							<ProjectDetailsPage project={AppStore.getProject()!} />
+						</ProjectProvider>}
 				</div>
 			</div>
 		</main>

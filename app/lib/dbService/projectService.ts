@@ -28,9 +28,32 @@ export async function fetchProjectById(projectId: string): Promise<JSONObject> {
     const projectIdObj = new mongoose.Types.ObjectId(projectId);
 
     await connectToDatabase();
-    const mettings = await Metting.find({ projectId: projectIdObj });
-    const milestones = await Milestone.find({ projectId: projectIdObj });
-    const tasks = await Task.find({ projectId: projectIdObj });
+    let mettings = await Metting.find({ projectId: projectIdObj });
+    let milestones = await Milestone.find({ projectId: projectIdObj });
+    let tasks = await Task.find({ projectId: projectIdObj });
+
+    // // Convert dates with UTC to Local date
+    // mettings = mettings.map((metting: JSONObject, idx: number) => {
+		// 	let _temp = Utils.cloneJSONObject(metting);
+		// 	_temp.date = Utils.convertToLocalDateObj(_temp.date);
+
+    //   return _temp;
+		// });
+
+    // milestones = milestones.map((milestone: JSONObject, idx: number) => {
+		// 	let _temp = Utils.cloneJSONObject(milestone);
+		// 	_temp.dueDate = Utils.convertToLocalDateObj(_temp.dueDate);
+
+    //   return _temp;
+		// });
+
+    // tasks = tasks.map((task: JSONObject, idx: number) => {
+		// 	let _temp = Utils.cloneJSONObject(task); 
+		// 	_temp.startDate = Utils.convertToLocalDateObj(_temp.startDate);
+		// 	_temp.endDate = Utils.convertToLocalDateObj(_temp.endDate);
+
+    //   return _temp;
+		// });
 
     return ({ status: "success", data: Utils.cloneJSONObject({ mettings, milestones, tasks }) });
   } catch (error: any) {

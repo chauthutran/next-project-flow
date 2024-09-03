@@ -33,23 +33,20 @@ console.log(subPage);
             <div 
                 className={`cursor-pointer pr-5 border-b-2 hover:border-light-sky-blue flex flex-row space-x-1 items-center ${subPage === Constant.SUB_PAGE_NEW_TASK ? "border-light-sky-blue" : "border-white"}`} 
                 onClick={() => setSubPage(Constant.SUB_PAGE_NEW_TASK)}>
-                    <ImPlus className="size-2" />
-                    <div> Task</div>
+                    Tasks
             </div>
 
             <div 
                 className={`cursor-pointer pr-5 border-b-2 hover:border-light-sky-blue flex flex-row space-x-2 items-center ${subPage === Constant.SUB_PAGE_NEW_MEETING ? "border-light-sky-blue" : "border-white"}`} 
                 onClick={() => setSubPage(Constant.SUB_PAGE_NEW_MEETING)}>
-                    <ImPlus className="size-2" />
-                    <div>Meeting</div>
-                </div>
+                   Meetings
+            </div>
 
             <div 
                 className={`cursor-pointer pr-5 border-b-2 hover:border-light-sky-blue flex flex-row space-x-2 items-center ${subPage === Constant.SUB_PAGE_NEW_MILESTONE ? "border-light-sky-blue" : "border-white"}`} 
                 onClick={() => setSubPage(Constant.SUB_PAGE_NEW_MILESTONE)}>
-                    <ImPlus className="size-2" /> 
-                    <div>Millestone</div>
-                </div>
+                    Millestones
+            </div>
         </>
     )
 }

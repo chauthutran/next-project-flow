@@ -2,9 +2,30 @@ import { JSONObject } from "@/lib/definations";
 import * as Utils from "@/lib/utils";
 import * as Constant from "@/lib/constant";
 import ProgressBar from "@/ui/basics/ProgressBar";
+import { FaEdit } from "react-icons/fa";
+import Modal from "@/ui/basics/Modal";
+import { IoIosCloseCircle } from "react-icons/io";
+import TaskForm from "./TaskForm";
+import { useEffect, useState } from "react";
+import * as AppStore from "@/lib/appStore";
+import { useProject } from "@/contexts/ProjectContext";
 
 
-export default function TaskList({data}: {data: JSONObject[]}) {
+export default function TaskList({projectId, data}: {projectId: string, data: JSONObject[]}) {
+
+    const [showTaskForm, setShowTaskForm] = useState(false);
+
+    const { projectDetails, processStatus } = useProject();
+
+    useEffect(() => {
+
+    }, [data]);
+
+    useEffect(() => {
+        if( processStatus === Constant.TASK_SAVE_SUCCESS ) {
+            setShowTaskForm(false);
+        }
+    }, [projectDetails, processStatus]);
 
     const getProgressData = (task: JSONObject): JSONObject => {
         let result: JSONObject = { name: `${task.name} is ${Utils.getStatusName(task.status)}`, percent: 0 };
@@ -23,19 +44,46 @@ export default function TaskList({data}: {data: JSONObject[]}) {
         }
 
         return result;
+    } 
+
+    const showUpdateTaskForm = (task: JSONObject) => {
+        AppStore.setTask( task );
+        setShowTaskForm( true );
     }
 
     return (
         <>
-            {data.map((task:JSONObject, idx: number) => {
-                const progressBarData = getProgressData(task);
-                
-                return ( <div key={`task_${task._id}`}>
-                    <div>Start date: <span className="font-semibold">{Utils.formatDateTimeObj(task.startDate)}</span></div>
-                    <div>End date: <span className="font-semibold">{Utils.formatDateTimeObj(task.endDate)}</span></div>
-                    <ProgressBar name={progressBarData.name} percentage={progressBarData.percent} />
-                </div> )
-            })}
+            <div className="grid grid-cols-1 gap-3">
+                {data.map((task:JSONObject, idx: number) => {
+                    const progressBarData = getProgressData(task);
+                    
+                    return ( <div key={`task_${task._id}`} className="border border-gray-300 p-3">
+                        <div className="flex flex-row space-x-2">
+                            <FaEdit className="size-5 text-blue-600 hover:text-sky-blue cursor-pointer" onClick={() => showUpdateTaskForm(task)}/>
+                            <div>{Utils.formatDateTimeObj(task.startDate)}</div>
+                            <div>-</div>
+                            <div>{Utils.formatDateTimeObj(task.endDate)}</div>
+                        </div>
+                        <ProgressBar name={progressBarData.name} percentage={progressBarData.percent} />
+                    </div> )
+                })}
+            </div>
+
+            
+            {showTaskForm && <Modal>
+                <div className="bg-white rounded-lg">
+                    <h2 className="py-3 px-5 text-xl flex bg-blue-navy text-white rounded-t-lg items-center justify-between">
+                        <div>Edit Task</div>
+                        <div className="flex cursor-pointer" onClick={() => setShowTaskForm(false)}>
+                            <IoIosCloseCircle className="size-6" />
+                        </div>
+                    </h2>
+
+                    <div className="p-5 rounded-md bg-gray-100">
+                        <TaskForm projectId={projectId} data={AppStore.getTask()} />
+                    </div>
+                </div>
+            </Modal>}
         </>
     )
 }

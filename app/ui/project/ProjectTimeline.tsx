@@ -11,8 +11,6 @@ import { TbTargetArrow } from "react-icons/tb";
 
 
 const ProjectTimeline = ({ data }:{data: JSONObject}) => {
-    
-    console.log(data);
 
     const convertData = (): JSONObject[] => {
         let list: JSONObject[] = [];
@@ -23,7 +21,7 @@ const ProjectTimeline = ({ data }:{data: JSONObject}) => {
                 const milestone = data.milestones[i];
                 const item = { 
                     _id: milestone._id,
-                    date: Utils.formatDateTime(milestone.dueDate),
+                    date: Utils.formatDateTimeObj(milestone.dueDate),
                     dateDb: milestone.dueDate,
                     name: milestone.name,
                     description: milestone.description,
@@ -43,7 +41,7 @@ const ProjectTimeline = ({ data }:{data: JSONObject}) => {
                 const task = data.tasks[i];
                 const item = { 
                     _id: task._id,
-                    date: `${Utils.formatDateTime(task.startDate)} - ${Utils.formatDateTime(task.endDate)}`,
+                    date: `${Utils.formatDateTimeObj(task.startDate)} - ${Utils.formatDateTimeObj(task.endDate)}`,
                     dateDb: task.startDate,
                     name: task.name,
                     description: task.description,
@@ -61,7 +59,7 @@ const ProjectTimeline = ({ data }:{data: JSONObject}) => {
         if( data.mettings !== undefined) {
             for( var i=0; i<data.mettings.length; i++ ) {
                 const metting = data.mettings[i];
-                const date: any = Utils.formatDateTime(metting.date);
+                const date: any = Utils.formatDateTimeObj(metting.date);
                 const item = { 
                     _id: metting._id,
                     date: date,

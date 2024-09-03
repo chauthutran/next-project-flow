@@ -9,7 +9,7 @@ import { IoClose } from "react-icons/io5";
 import { IoIosCloseCircle } from "react-icons/io";
 
 
-export default function TaskPage({projectId, data, onSuccess}: {projectId: string, data: JSONObject, onSuccess: (newTask: JSONObject) => void }) {
+export default function TaskPage({projectId, data}: {projectId: string, data: JSONObject}) {
 
     const taskList = (data.tasks !== undefined ) ? data.tasks : [];
     
@@ -22,19 +22,19 @@ export default function TaskPage({projectId, data, onSuccess}: {projectId: strin
                 <div className="flex flex-1 items-end justify-end cursor-pointer hover:text-royal-blue text-blue-navy" onClick={() => setShowTaskForm(true)}><IoIosAddCircle className="size-10" /></div>
             </h2>
 
-            <TaskList data={taskList} />
+            <TaskList projectId={projectId} data={taskList} />
 
             {showTaskForm && <Modal>
                 <div className="bg-white rounded-lg">
-                    <h2 className="p-5 text-2xl flex bg-light-sky-blue rounded-t-lg items-center justify-between">
+                    <h2 className="py-3 px-5 text-xl flex bg-blue-navy text-white rounded-t-lg items-center justify-between">
                         <div>Create New Task</div>
                         <div className="flex cursor-pointer" onClick={() => setShowTaskForm(false)}>
-                            <IoIosCloseCircle />
+                            <IoIosCloseCircle className="size-6" />
                         </div>
                     </h2>
 
-                        <div className="p-5 rounded-md bg-pale-blue">
-                            <TaskForm projectId={projectId} onSuccess={(newTask: JSONObject) => onSuccess(newTask) } />
+                        <div className="p-5 rounded-md bg-gray-100">
+                            <TaskForm projectId={projectId} />
                         </div>
                     </div>
             </Modal>}
