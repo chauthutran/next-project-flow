@@ -19,7 +19,7 @@ export default function TaskPage({projectId, data}: {projectId: string, data: JS
         <div className="bg-white w-full">
             <h2 className="text-2xl font-semibold mb-6 flex space-x-3">
                 <div className="border-b-2 border-light-sky-blue pb-2 w-fit pr-5">Task List</div>
-                <div className="flex flex-1 items-end justify-end cursor-pointer hover:text-royal-blue text-blue-navy" onClick={() => setShowTaskForm(true)}><IoIosAddCircle className="size-10" /></div>
+                <div className="flex flex-1 items-end justify-end cursor-pointer hover:text-blue-500 text-royal-blue" onClick={() => setShowTaskForm(true)}><IoIosAddCircle className="size-10" /></div>
             </h2>
 
             <TaskList projectId={projectId} data={taskList} />

@@ -16,7 +16,7 @@ export default function TaskList({projectId, data}: {projectId: string, data: JS
 
     const [showTaskForm, setShowTaskForm] = useState(false);
 
-    const { projectDetails, processStatus } = useProject();
+    const { projectDetails, processStatus, removeTask } = useProject();
 
     useEffect(() => {
 
@@ -52,6 +52,13 @@ export default function TaskList({projectId, data}: {projectId: string, data: JS
         setShowTaskForm( true );
     }
 
+    const deleteTask = (task: JSONObject) => {
+        const ok = confirm(`Are you sure you want to delete the task '${task.name}'?`);
+        if( ok ) {
+            removeTask(task._id);
+        }
+    }
+
     return (
         <>
             <div className="grid grid-cols-1 gap-3">
@@ -64,7 +71,7 @@ export default function TaskList({projectId, data}: {projectId: string, data: JS
                                  {/* Remove Icon */}
                             <IoTrash
                                 className="size-5 text-red-600 hover:text-red-800 cursor-pointer" 
-                                onClick={() => {}} 
+                                onClick={() => deleteTask(task)} 
                             />
                             <div>{Utils.formatDateTimeObj(task.startDate)}</div>
                             <div>-</div>
