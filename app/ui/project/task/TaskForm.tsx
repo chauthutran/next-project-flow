@@ -59,6 +59,7 @@ export default function TaskForm({ projectId, data = null }: {projectId: string,
 
     const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
+        console.log("Task Formdata: ", formData);
         saveTask(formData);
     };
 

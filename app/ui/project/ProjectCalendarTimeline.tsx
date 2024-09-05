@@ -53,10 +53,10 @@ export default function ProjectCalendarTimeline({ project, data }: { project: JS
             }
         }
 
-        // mettings
-        if( data.mettings !== undefined) {
-            for( var i=0; i<data.mettings.length; i++ ) {
-                const metting = data.mettings[i];
+        // meetings
+        if( data.meetings !== undefined) {
+            for( var i=0; i<data.meetings.length; i++ ) {
+                const metting = data.meetings[i];
                 const date: any = Utils.formatDateTimeObj(metting.date);
                 const item = { 
                     _id: metting._id,

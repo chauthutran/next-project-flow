@@ -86,7 +86,7 @@ export default function MilestoneList({projectId, data}: {projectId: string, dat
 
             
             {showMilestoneForm && <Modal>
-                <div className="bg-white rounded-lg">
+                <div className="bg-white rounded-lg w-3/4">
                     <h2 className="py-3 px-5 text-xl flex bg-blue-navy text-white rounded-t-lg items-center justify-between">
                         <div>Edit Milestone</div>
                         <div className="flex cursor-pointer" onClick={() => setShowMilestoneForm(false)}>

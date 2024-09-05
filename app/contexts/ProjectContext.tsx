@@ -119,10 +119,10 @@ export const ProjectProvider = ({ projectId, children }: { projectId: string, ch
 		setProcessStatus(Constant.TASK_SAVE_REQUEST);
 		setError(null);
 		
-		let newMetting = Utils.cloneJSONObject(meeting.date);
-		newMetting.startDate = Utils.convertToUTCDateObj(newMetting.startDate);
+		let newMeeting = Utils.cloneJSONObject(meeting);
+		newMeeting.date = Utils.convertToUTCDateObj(newMeeting.date);
 
-		let response: JSONObject = await dbService.saveMetting(newMetting);
+		let response: JSONObject = await dbService.saveMetting(newMeeting);
         if (response.status !== "success") {
             setError(response.message);
 			setProcessStatus(Constant.TASK_SAVE_FAILURE);
@@ -130,7 +130,7 @@ export const ProjectProvider = ({ projectId, children }: { projectId: string, ch
         else {
             // Need to update the new meeting of project details data
 			const temp = Utils.cloneJSONObject(projectDetails!);
-			if( temp.mettings == undefined ) temp.meetings = [];
+			if( temp.meetings == undefined ) temp.meetings = [];
 
 			const savedMeeting = response.data;
 			var found = Utils.findItemFromList(temp.meetings, savedMeeting._id, "_id");
@@ -170,10 +170,10 @@ export const ProjectProvider = ({ projectId, children }: { projectId: string, ch
 		setProcessStatus(Constant.TASK_SAVE_REQUEST);
 		setError(null);
 		
-		let newMetting = Utils.cloneJSONObject(milestone.date);
-		newMetting.startDate = Utils.convertToUTCDateObj(newMetting.startDate);
+		let newMilestone = Utils.cloneJSONObject(milestone);
+		newMilestone.dueDate = Utils.convertToUTCDateObj(newMilestone.dueDate);
 
-		let response: JSONObject = await dbService.saveMetting(newMetting);
+		let response: JSONObject = await dbService.saveMilestone(newMilestone);
         if (response.status !== "success") {
             setError(response.message);
 			setProcessStatus(Constant.TASK_SAVE_FAILURE);
@@ -181,7 +181,7 @@ export const ProjectProvider = ({ projectId, children }: { projectId: string, ch
         else {
             // Need to update the new milestone of project details data
 			const temp = Utils.cloneJSONObject(projectDetails!);
-			if( temp.mettings == undefined ) temp.milestones = [];
+			if( temp.milestones == undefined ) temp.milestones = [];
 
 			const savedMilestone = response.data;
 			var found = Utils.findItemFromList(temp.milestones, savedMilestone._id, "_id");
@@ -201,7 +201,7 @@ export const ProjectProvider = ({ projectId, children }: { projectId: string, ch
 		setProcessStatus(Constant.TASK_SAVE_REQUEST);
 		setError(null);
 
-		let response: JSONObject = await dbService.removeMetting(id);
+		let response: JSONObject = await dbService.removeMilestone(id);
         if (response.status !== "success") {
             setError(response.message);
 			setProcessStatus(Constant.TASK_SAVE_FAILURE);
@@ -215,7 +215,6 @@ export const ProjectProvider = ({ projectId, children }: { projectId: string, ch
 			setProcessStatus(Constant.TASK_SAVE_SUCCESS);
         }
 	}
-
 
 	const convertTaskDatesToUTC = (task: JSONObject) => {
 		let newTask = Utils.cloneJSONObject(task);

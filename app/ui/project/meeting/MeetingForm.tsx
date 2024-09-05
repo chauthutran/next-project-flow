@@ -57,6 +57,7 @@ export default function MeetingForm({ projectId, data = null }: {projectId: stri
 
     const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
+        console.log("Meeting formData: ", formData);
         saveMeeting(formData);
     };
 
@@ -77,6 +78,19 @@ export default function MeetingForm({ projectId, data = null }: {projectId: stri
                     />
                 </div>
 
+                {/* Date */}
+                <div>
+                    <label className="mb-2 text-sm font-medium mt-2">Date</label>
+                    <input
+                        type="datetime-local"
+                        name="date"
+                        value={formData.date}
+                        onChange={handleChange}
+                        className="peer block w-full rounded-md border border-gray-300 p-2 text-sm outline-2 placeholder:text-gray-500"
+                        required
+                    />
+                </div>
+
                 {/* Description */}
                 <div>
                     <label className="mb-2 text-sm font-medium mt-2">Description</label>
@@ -84,80 +98,9 @@ export default function MeetingForm({ projectId, data = null }: {projectId: stri
                         name="description"
                         value={formData.description}
                         onChange={handleChange}
-                        className="peer block w-full rounded-md border border-gray-300 p-2 text-sm outline-2 placeholder:text-gray-500 h-9"
+                        className="peer block w-full rounded-md border border-gray-300 p-2 text-sm outline-2 placeholder:text-gray-500 h-[90px]"
                         required
                     />
-                </div>
-
-                {/* Start Date */}
-                <div>
-                    <label className="mb-2 text-sm font-medium mt-2">Start Date</label>
-                    <input
-                        type="datetime-local"
-                        name="startDate"
-                        value={formData.startDate}
-                        onChange={handleChange}
-                        className="peer block w-full rounded-md border border-gray-300 p-2 text-sm outline-2 placeholder:text-gray-500"
-                        required
-                    />
-                </div>
-
-                {/* End Date */}
-                <div>
-                    <label className="mb-2 text-sm font-medium mt-2">End Date</label>
-                    <input
-                        type="datetime-local"
-                        name="endDate"
-                        value={formData.endDate}
-                        onChange={handleChange}
-                        className="peer block w-full rounded-md border border-gray-300 p-2 text-sm outline-2 placeholder:text-gray-500"
-                        required
-                    />
-                </div>
-
-                {/* Status */}
-                <div>
-                    <label className="text-sm font-medium text-gray-700 mb-2">Status</label>
-                    <div className="grid grid-cols-1 space-y-2 rounded-md border border-gray-300 p-2 bg-white">
-                        <label className="inline-flex items-center text-xs font-medium my-1 mx-1">
-                            <input
-                                type="radio"
-                                name="status"
-                                value={Constant.TASK_STATUS_NOT_STARTED}
-                                checked={formData.status === Constant.TASK_STATUS_NOT_STARTED}
-                                onChange={handleChange}
-                                className="form-radio h-4 w-4 text-blue-600 border-gray-300 focus:ring-blue-500"
-                                required
-                            />
-                            <span className="ml-2">Not Started</span>
-                        </label>
-
-                        <label className="inline-flex items-center text-xs font-medium my-1 mx-1">
-                            <input
-                                type="radio"
-                                name="status"
-                                value={Constant.TASK_STATUS_IN_PROGRESS}
-                                checked={formData.status === Constant.TASK_STATUS_IN_PROGRESS}
-                                onChange={handleChange}
-                                className="form-radio h-4 w-4 text-blue-600 border-gray-300 focus:ring-blue-500"
-                                required
-                            />
-                            <span className="ml-2">In Progress</span>
-                        </label>
-
-                        <label className="inline-flex items-center text-xs font-medium my-1 mx-1">
-                            <input
-                                type="radio"
-                                name="status"
-                                value={Constant.TASK_STATUS_COMPLETED}
-                                checked={formData.status === Constant.TASK_STATUS_COMPLETED}
-                                onChange={handleChange}
-                                className="form-radio h-4 w-4 text-blue-600 border-gray-300 focus:ring-blue-500"
-                                required
-                            />
-                            <span className="ml-2">Completed</span>
-                        </label>
-                    </div>
                 </div>
 
                 {/* Assigned To */}

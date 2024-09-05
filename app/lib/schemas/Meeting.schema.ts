@@ -19,7 +19,7 @@ const MettingSchema = new Schema(
             required: true,
             ref: 'User',
         }],
-        meetingNotes: { type: Date, required: false },
+        meetingNotes: { type: String, required: false },
         assignedTo: [{
             type: mongoose.Schema.Types.ObjectId,
             required: true,

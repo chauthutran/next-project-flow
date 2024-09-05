@@ -25,7 +25,7 @@ export default function TaskPage({projectId, data}: {projectId: string, data: JS
             <TaskList projectId={projectId} data={taskList} />
 
             {showTaskForm && <Modal>
-                <div className="bg-white rounded-lg">
+                <div className="bg-white rounded-lg w-3/4">
                     <h2 className="py-3 px-5 text-xl flex bg-blue-navy text-white rounded-t-lg items-center justify-between">
                         <div>Create New Task</div>
                         <div className="flex cursor-pointer" onClick={() => setShowTaskForm(false)}>
