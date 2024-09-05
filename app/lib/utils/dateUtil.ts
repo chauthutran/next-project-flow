@@ -14,6 +14,14 @@ export const convertDateStrToObj = ( dateStr: string) : Date => {
     const year = parseInt(dateStr.substring(0, 4), 10);
     const month = parseInt(dateStr.substring(5,7), 10) - 1;
     const day = parseInt(dateStr.substring(8,10), 10);
+
+    if(dateStr.length >= 19) { // Include the time
+        const hours = parseInt(dateStr.substring(11,13));
+        const minutes = parseInt(dateStr.substring(14,16));
+        const seconds = parseInt(dateStr.substring(17,19));
+
+        return new Date( year, month, day, hours, minutes, seconds );
+    }
     
     return new Date( year, month, day );
 }

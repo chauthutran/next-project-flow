@@ -59,10 +59,12 @@ export default function TaskList({projectId, data}: {projectId: string, data: JS
         }
     }
 
+    const sortedData = (data.length == 0 ) ? [] : data.sort((a, b) => Utils.convertDateStrToObj(a.startDate).getTime() - Utils.convertDateStrToObj(b.startDate).getTime());
+
     return (
         <>
             <div className="grid grid-cols-1 gap-3">
-                {data.map((task:JSONObject, idx: number) => {
+                {sortedData.map((task:JSONObject, idx: number) => {
                     const progressBarData = getProgressData(task);
                     
                     return ( <div key={`task_${task._id}`} className="border border-gray-300 p-3">
@@ -73,9 +75,9 @@ export default function TaskList({projectId, data}: {projectId: string, data: JS
                                 className="size-5 text-red-600 hover:text-red-800 cursor-pointer" 
                                 onClick={() => deleteTask(task)} 
                             />
-                            <div>{Utils.formatDateTimeObj(task.startDate)}</div>
+                            <div>{Utils.formatDateTime(task.startDate)}</div>
                             <div>-</div>
-                            <div>{Utils.formatDateTimeObj(task.endDate)}</div>
+                            <div>{Utils.formatDateTime(task.endDate)}</div>
                         </div>
                         <ProgressBar name={progressBarData.name} percentage={progressBarData.percent} />
                     </div> )

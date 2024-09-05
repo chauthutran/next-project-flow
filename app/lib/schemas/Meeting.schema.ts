@@ -20,6 +20,11 @@ const MettingSchema = new Schema(
             ref: 'User',
         }],
         meetingNotes: { type: Date, required: false },
+        assignedTo: [{
+            type: mongoose.Schema.Types.ObjectId,
+            required: true,
+            ref: 'User',
+        }],
         createdBy:  {
             type: mongoose.Schema.Types.ObjectId,
             required: true,

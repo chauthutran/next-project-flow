@@ -11,6 +11,10 @@ interface ProjectContextProps {
 	projectDetails: JSONObject | null;
 	saveTask: (task: JSONObject) => Promise<void>;
 	removeTask: (id: string) => Promise<void>;
+	saveMeeting: (meeting: JSONObject) => Promise<void>;
+	removeMeeting: (id: string) => Promise<void>;
+	saveMilestone: (milestone: JSONObject) => Promise<void>;
+	removeMilestone: (id: string) => Promise<void>;
 	error: string | null;
 	processStatus: string;
 }
@@ -19,6 +23,10 @@ const ProjectContext = createContext<ProjectContextProps>({
 	projectDetails: null,
 	saveTask: async() => { },
 	removeTask: async() => { },
+	saveMeeting: async() => { },
+	removeMeeting: async() => { },
+	saveMilestone: async() => { },
+	removeMilestone: async() => { },
 	error: null,
 	processStatus: ""
 });
@@ -106,6 +114,109 @@ export const ProjectProvider = ({ projectId, children }: { projectId: string, ch
         }
 	}
 
+	
+	const saveMeeting = async(meeting: JSONObject) => {
+		setProcessStatus(Constant.TASK_SAVE_REQUEST);
+		setError(null);
+		
+		let newMetting = Utils.cloneJSONObject(meeting.date);
+		newMetting.startDate = Utils.convertToUTCDateObj(newMetting.startDate);
+
+		let response: JSONObject = await dbService.saveMetting(newMetting);
+        if (response.status !== "success") {
+            setError(response.message);
+			setProcessStatus(Constant.TASK_SAVE_FAILURE);
+        }
+        else {
+            // Need to update the new meeting of project details data
+			const temp = Utils.cloneJSONObject(projectDetails!);
+			if( temp.mettings == undefined ) temp.meetings = [];
+
+			const savedMeeting = response.data;
+			var found = Utils.findItemFromList(temp.meetings, savedMeeting._id, "_id");
+			if( found ) {
+				Utils.findAndReplaceItemFromList(temp.meetings, savedMeeting._id, "_id", savedMeeting);
+			}
+			else {
+				temp.meetings.push( savedMeeting );
+			}
+			
+			setProjectDetails(temp);
+			setProcessStatus(Constant.TASK_SAVE_SUCCESS);
+        }
+	}
+
+	const removeMeeting = async(id: string) => {
+		setProcessStatus(Constant.TASK_SAVE_REQUEST);
+		setError(null);
+
+		let response: JSONObject = await dbService.removeMetting(id);
+        if (response.status !== "success") {
+            setError(response.message);
+			setProcessStatus(Constant.TASK_SAVE_FAILURE);
+        }
+        else {
+            // Need to update the new meeting of project details data
+			const temp = Utils.cloneJSONObject(projectDetails!);
+			Utils.removeFromArray( temp.meetings!, id, "_id");
+			
+			setProjectDetails(temp);
+			setProcessStatus(Constant.TASK_SAVE_SUCCESS);
+        }
+	}
+
+	
+	const saveMilestone = async(milestone: JSONObject) => {
+		setProcessStatus(Constant.TASK_SAVE_REQUEST);
+		setError(null);
+		
+		let newMetting = Utils.cloneJSONObject(milestone.date);
+		newMetting.startDate = Utils.convertToUTCDateObj(newMetting.startDate);
+
+		let response: JSONObject = await dbService.saveMetting(newMetting);
+        if (response.status !== "success") {
+            setError(response.message);
+			setProcessStatus(Constant.TASK_SAVE_FAILURE);
+        }
+        else {
+            // Need to update the new milestone of project details data
+			const temp = Utils.cloneJSONObject(projectDetails!);
+			if( temp.mettings == undefined ) temp.milestones = [];
+
+			const savedMilestone = response.data;
+			var found = Utils.findItemFromList(temp.milestones, savedMilestone._id, "_id");
+			if( found ) {
+				Utils.findAndReplaceItemFromList(temp.milestones, savedMilestone._id, "_id", savedMilestone);
+			}
+			else {
+				temp.milestones.push( savedMilestone );
+			}
+			
+			setProjectDetails(temp);
+			setProcessStatus(Constant.TASK_SAVE_SUCCESS);
+        }
+	}
+
+	const removeMilestone = async(id: string) => {
+		setProcessStatus(Constant.TASK_SAVE_REQUEST);
+		setError(null);
+
+		let response: JSONObject = await dbService.removeMetting(id);
+        if (response.status !== "success") {
+            setError(response.message);
+			setProcessStatus(Constant.TASK_SAVE_FAILURE);
+        }
+        else {
+            // Need to update the new milestone of project details data
+			const temp = Utils.cloneJSONObject(projectDetails!);
+			Utils.removeFromArray( temp.milestones!, id, "_id");
+			
+			setProjectDetails(temp);
+			setProcessStatus(Constant.TASK_SAVE_SUCCESS);
+        }
+	}
+
+
 	const convertTaskDatesToUTC = (task: JSONObject) => {
 		let newTask = Utils.cloneJSONObject(task);
         newTask.startDate = Utils.convertToUTCDateObj(newTask.startDate);
@@ -115,7 +226,7 @@ export const ProjectProvider = ({ projectId, children }: { projectId: string, ch
 	}
 
 	return (
-		<ProjectContext.Provider value={{ projectDetails, processStatus, error, saveTask, removeTask }}>
+		<ProjectContext.Provider value={{ projectDetails, processStatus, error, saveTask, removeTask, saveMeeting, removeMeeting, saveMilestone, removeMilestone }}>
 			{children}
 		</ProjectContext.Provider>
 	);
