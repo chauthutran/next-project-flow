@@ -72,7 +72,7 @@ export default function Header() {
 				<RiBarChartHorizontalLine className="text-torch-red" />
 			</div>}
 
-			{user !== null && <div className="m-auto items-center justify-center flex flex-row space-x-1">
+			{user !== null && <div className="m-auto items-center justify-end flex flex-1 flex-row space-x-1">
 				<FaUserCircle className=" size-8 text-blue-navy" onClick={() => handleLogout()}/>
 			</div>}
 		</header>
