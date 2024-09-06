@@ -28,7 +28,7 @@ export default function AppWrapper() {
 			</div>
 
 
-			<div className="absolute flex items-end justify-end w-full">
+			<div className="absolute flex items-end justify-end w-[calc(100%-20px)]">
 				<RiBubbleChartFill className="text-sky-blue size-32 opacity-15" />
 			</div>
 
