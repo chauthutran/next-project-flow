@@ -14,13 +14,14 @@ export const getStatusColor = ( status: string ) => {
 }
 
 export const getTaskColor = (): string => {
-    return "#2196f3";
+    return "#80B3FF";
 }
 
 export const getMeetingColor = (): string => {
-    return "#10cc52";
+    return "#c3f0ca";
 }
 
 export const getMilestoneColor = (): string => {
-    return "#e91e63";
+    // return "#e91e63";
+    return "#ff8ba7";
 }

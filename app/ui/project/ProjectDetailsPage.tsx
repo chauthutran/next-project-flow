@@ -28,7 +28,7 @@ export default function ProjectDetailsPage({ project }: { project: JSONObject })
     const projectId = AppStore.getProject()!._id;
 
     if( projectDetails === null ) return (<div>Loading ...</div>);
-console.log("==== projectDetails: ", projectDetails);
+
     return (
         <div className="relative h-full py-6 px-5 bg-white">
             {subPage === Constant.SUB_PAGE_TIMELINE && <ProjectTimeline data={projectDetails} />}
