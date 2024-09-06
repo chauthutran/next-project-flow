@@ -23,7 +23,7 @@ export default function MeetingList({projectId, data}: {projectId: string, data:
     }, [data]);
 
     useEffect(() => {
-        if( processStatus === Constant.TASK_SAVE_SUCCESS ) {
+        if( processStatus === Constant.SAVE_DATA_SUCCESS ) {
             setShowMeetingForm(false);
         }
     }, [projectDetails, processStatus]);
@@ -39,7 +39,7 @@ export default function MeetingList({projectId, data}: {projectId: string, data:
             removeMeeting(meeting._id);
         }
     }
-console.log(data);
+    
     const sortedData = (data.length == 0 ) ? [] : data.sort((a, b) => Utils.convertDateStrToObj(a.date).getTime() - Utils.convertDateStrToObj(b.date).getTime());
 
     return (
@@ -54,7 +54,7 @@ console.log(data);
                         {meeting.meetingNotes && <div>{meeting.meetingNotes}</div>}
                     </div>
 
-                    <div className="flex space-x-3">
+                    <div className="flex space-x-3 flex-1 justify-end">
                         <FaEdit className="size-5 text-blue-600 hover:text-sky-blue cursor-pointer" onClick={() => showUpdateMeetingForm(meeting)}/>
                             {/* Remove Icon */}
                         <IoTrash

@@ -190,10 +190,10 @@ export default function TaskForm({ projectId, data = null }: {projectId: string,
                     onClick={(e: React.MouseEvent<HTMLButtonElement>) => handleSubmit(e)}
                 >
                     {data === null ? "Create Task" : "Update Task"}
-                    {processStatus === Constant.TASK_SAVE_REQUEST && <FaSpinner className="ml-auto h-5" size={20} />}
+                    {processStatus === Constant.SAVE_DATA_REQUEST && <FaSpinner className="ml-auto h-5" size={20} />}
                 </button>
 
-                {processStatus === Constant.TASK_SAVE_FAILURE && <span className="text-red-500">{error}</span>}
+                {processStatus === Constant.SAVE_DATA_FAILURE && <span className="text-red-500">{error}</span>}
             </div>
         </div>
 

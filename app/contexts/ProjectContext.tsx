@@ -47,17 +47,17 @@ export const ProjectProvider = ({ projectId, children }: { projectId: string, ch
 
 	
 	const fetchProgramDetails = async (programId: string) => {
-		setProcessStatus(Constant.TASK_FETCH_REQUEST);
+		setProcessStatus(Constant.FETCH_DATA_REQUEST);
 		setError(null);
 
 		const response: JSONObject = await dbService.fetchProjectById(programId);
         if (response.status != "success") {
             setError(response.message);
-			setProcessStatus(Constant.TASK_FETCH_FAILURE);
+			setProcessStatus(Constant.FETCH_DATA_FAILURE);
         }
         else {
             setProjectDetails(response.data);
-			setProcessStatus(Constant.TASK_FETCH_SUCCESS);
+			setProcessStatus(Constant.FETCH_DATA_SUCCESS);
         }
 	};
 
@@ -66,7 +66,7 @@ export const ProjectProvider = ({ projectId, children }: { projectId: string, ch
     }, []);
 
 	const saveTask = async(task: JSONObject) => {
-		setProcessStatus(Constant.TASK_SAVE_REQUEST);
+		setProcessStatus(Constant.SAVE_DATA_REQUEST);
 		setError(null);
 		
 		let newTask = convertTaskDatesToUTC(task);
@@ -74,7 +74,7 @@ export const ProjectProvider = ({ projectId, children }: { projectId: string, ch
 		let response: JSONObject = await dbService.saveTask(newTask);
         if (response.status !== "success") {
             setError(response.message);
-			setProcessStatus(Constant.TASK_SAVE_FAILURE);
+			setProcessStatus(Constant.SAVE_DATA_FAILURE);
         }
         else {
             // Need to update the new task of project details data
@@ -91,18 +91,18 @@ export const ProjectProvider = ({ projectId, children }: { projectId: string, ch
 			}
 			
 			setProjectDetails(temp);
-			setProcessStatus(Constant.TASK_SAVE_SUCCESS);
+			setProcessStatus(Constant.SAVE_DATA_SUCCESS);
         }
 	}
 
 	const removeTask = async(id: string) => {
-		setProcessStatus(Constant.TASK_SAVE_REQUEST);
+		setProcessStatus(Constant.SAVE_DATA_REQUEST);
 		setError(null);
 
 		let response: JSONObject = await dbService.removeTask(id);
         if (response.status !== "success") {
             setError(response.message);
-			setProcessStatus(Constant.TASK_SAVE_FAILURE);
+			setProcessStatus(Constant.SAVE_DATA_FAILURE);
         }
         else {
             // Need to update the new task of project details data
@@ -110,13 +110,13 @@ export const ProjectProvider = ({ projectId, children }: { projectId: string, ch
 			Utils.removeFromArray( temp.tasks!, id, "_id");
 			
 			setProjectDetails(temp);
-			setProcessStatus(Constant.TASK_SAVE_SUCCESS);
+			setProcessStatus(Constant.SAVE_DATA_SUCCESS);
         }
 	}
 
 	
 	const saveMeeting = async(meeting: JSONObject) => {
-		setProcessStatus(Constant.TASK_SAVE_REQUEST);
+		setProcessStatus(Constant.SAVE_DATA_REQUEST);
 		setError(null);
 		
 		let newMeeting = Utils.cloneJSONObject(meeting);
@@ -125,7 +125,7 @@ export const ProjectProvider = ({ projectId, children }: { projectId: string, ch
 		let response: JSONObject = await dbService.saveMetting(newMeeting);
         if (response.status !== "success") {
             setError(response.message);
-			setProcessStatus(Constant.TASK_SAVE_FAILURE);
+			setProcessStatus(Constant.SAVE_DATA_FAILURE);
         }
         else {
             // Need to update the new meeting of project details data
@@ -142,18 +142,18 @@ export const ProjectProvider = ({ projectId, children }: { projectId: string, ch
 			}
 			
 			setProjectDetails(temp);
-			setProcessStatus(Constant.TASK_SAVE_SUCCESS);
+			setProcessStatus(Constant.SAVE_DATA_SUCCESS);
         }
 	}
 
 	const removeMeeting = async(id: string) => {
-		setProcessStatus(Constant.TASK_SAVE_REQUEST);
+		setProcessStatus(Constant.SAVE_DATA_REQUEST);
 		setError(null);
 
 		let response: JSONObject = await dbService.removeMetting(id);
         if (response.status !== "success") {
             setError(response.message);
-			setProcessStatus(Constant.TASK_SAVE_FAILURE);
+			setProcessStatus(Constant.SAVE_DATA_FAILURE);
         }
         else {
             // Need to update the new meeting of project details data
@@ -161,13 +161,13 @@ export const ProjectProvider = ({ projectId, children }: { projectId: string, ch
 			Utils.removeFromArray( temp.meetings!, id, "_id");
 			
 			setProjectDetails(temp);
-			setProcessStatus(Constant.TASK_SAVE_SUCCESS);
+			setProcessStatus(Constant.SAVE_DATA_SUCCESS);
         }
 	}
 
 	
 	const saveMilestone = async(milestone: JSONObject) => {
-		setProcessStatus(Constant.TASK_SAVE_REQUEST);
+		setProcessStatus(Constant.SAVE_DATA_REQUEST);
 		setError(null);
 		
 		let newMilestone = Utils.cloneJSONObject(milestone);
@@ -176,7 +176,7 @@ export const ProjectProvider = ({ projectId, children }: { projectId: string, ch
 		let response: JSONObject = await dbService.saveMilestone(newMilestone);
         if (response.status !== "success") {
             setError(response.message);
-			setProcessStatus(Constant.TASK_SAVE_FAILURE);
+			setProcessStatus(Constant.SAVE_DATA_FAILURE);
         }
         else {
             // Need to update the new milestone of project details data
@@ -193,18 +193,18 @@ export const ProjectProvider = ({ projectId, children }: { projectId: string, ch
 			}
 			
 			setProjectDetails(temp);
-			setProcessStatus(Constant.TASK_SAVE_SUCCESS);
+			setProcessStatus(Constant.SAVE_DATA_SUCCESS);
         }
 	}
 
 	const removeMilestone = async(id: string) => {
-		setProcessStatus(Constant.TASK_SAVE_REQUEST);
+		setProcessStatus(Constant.SAVE_DATA_REQUEST);
 		setError(null);
 
 		let response: JSONObject = await dbService.removeMilestone(id);
         if (response.status !== "success") {
             setError(response.message);
-			setProcessStatus(Constant.TASK_SAVE_FAILURE);
+			setProcessStatus(Constant.SAVE_DATA_FAILURE);
         }
         else {
             // Need to update the new milestone of project details data
@@ -212,7 +212,7 @@ export const ProjectProvider = ({ projectId, children }: { projectId: string, ch
 			Utils.removeFromArray( temp.milestones!, id, "_id");
 			
 			setProjectDetails(temp);
-			setProcessStatus(Constant.TASK_SAVE_SUCCESS);
+			setProcessStatus(Constant.SAVE_DATA_SUCCESS);
         }
 	}
 

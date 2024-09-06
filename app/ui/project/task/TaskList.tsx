@@ -23,7 +23,7 @@ export default function TaskList({projectId, data}: {projectId: string, data: JS
     }, [data]);
 
     useEffect(() => {
-        if( processStatus === Constant.TASK_SAVE_SUCCESS ) {
+        if( processStatus === Constant.SAVE_DATA_SUCCESS ) {
             setShowTaskForm(false);
         }
     }, [projectDetails, processStatus]);

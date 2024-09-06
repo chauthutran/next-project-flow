@@ -19,7 +19,7 @@ export default function MilestoneForm({ projectId, data = null }: {projectId: st
                 name: '',
                 description: '',
                 dueDate: '',
-                status: 'not_started',
+                status: 'pending',
                 assignedTo: [],
                 createdBy: user!._id
             } as JSONObject
@@ -77,40 +77,27 @@ export default function MilestoneForm({ projectId, data = null }: {projectId: st
                     />
                 </div>
 
-                {/* Description */}
+                {/* Due Date */}
                 <div>
+                    <label className="mb-2 text-sm font-medium mt-2">Due Date</label>
+                    <input
+                        type="datetime-local"
+                        name="dueDate"
+                        value={formData.dueDate}
+                        onChange={handleChange}
+                        className="peer block w-full rounded-md border border-gray-300 p-2 text-sm outline-2 placeholder:text-gray-500"
+                        required
+                    />
+                </div>
+
+                {/* Description */}
+                <div className="md:col-span-2">
                     <label className="mb-2 text-sm font-medium mt-2">Description</label>
                     <textarea
                         name="description"
                         value={formData.description}
                         onChange={handleChange}
-                        className="peer block w-full rounded-md border border-gray-300 p-2 text-sm outline-2 placeholder:text-gray-500 h-9"
-                        required
-                    />
-                </div>
-
-                {/* Start Date */}
-                <div>
-                    <label className="mb-2 text-sm font-medium mt-2">Start Date</label>
-                    <input
-                        type="datetime-local"
-                        name="startDate"
-                        value={formData.startDate}
-                        onChange={handleChange}
-                        className="peer block w-full rounded-md border border-gray-300 p-2 text-sm outline-2 placeholder:text-gray-500"
-                        required
-                    />
-                </div>
-
-                {/* End Date */}
-                <div>
-                    <label className="mb-2 text-sm font-medium mt-2">End Date</label>
-                    <input
-                        type="datetime-local"
-                        name="endDate"
-                        value={formData.endDate}
-                        onChange={handleChange}
-                        className="peer block w-full rounded-md border border-gray-300 p-2 text-sm outline-2 placeholder:text-gray-500"
+                        className="peer block w-full rounded-md border border-gray-300 p-2 text-sm outline-2 placeholder:text-gray-500 h-20"
                         required
                     />
                 </div>
@@ -123,39 +110,39 @@ export default function MilestoneForm({ projectId, data = null }: {projectId: st
                             <input
                                 type="radio"
                                 name="status"
-                                value={Constant.TASK_STATUS_NOT_STARTED}
-                                checked={formData.status === Constant.TASK_STATUS_NOT_STARTED}
+                                value={Constant.MILESTONE_STATUS_PENDING}
+                                checked={formData.status === Constant.MILESTONE_STATUS_PENDING}
                                 onChange={handleChange}
                                 className="form-radio h-4 w-4 text-blue-600 border-gray-300 focus:ring-blue-500"
                                 required
                             />
-                            <span className="ml-2">Not Started</span>
+                            <span className="ml-2">Pending</span>
                         </label>
 
                         <label className="inline-flex items-center text-xs font-medium my-1 mx-1">
                             <input
                                 type="radio"
                                 name="status"
-                                value={Constant.TASK_STATUS_IN_PROGRESS}
-                                checked={formData.status === Constant.TASK_STATUS_IN_PROGRESS}
+                                value={Constant.MILESTONE_STATUS_ACHIEVED}
+                                checked={formData.status === Constant.MILESTONE_STATUS_ACHIEVED}
                                 onChange={handleChange}
                                 className="form-radio h-4 w-4 text-blue-600 border-gray-300 focus:ring-blue-500"
                                 required
                             />
-                            <span className="ml-2">In Progress</span>
+                            <span className="ml-2">Achieved</span>
                         </label>
 
                         <label className="inline-flex items-center text-xs font-medium my-1 mx-1">
                             <input
                                 type="radio"
                                 name="status"
-                                value={Constant.TASK_STATUS_COMPLETED}
-                                checked={formData.status === Constant.TASK_STATUS_COMPLETED}
+                                value={Constant.MILESTONE_STATUS_DELAY}
+                                checked={formData.status === Constant.MILESTONE_STATUS_DELAY}
                                 onChange={handleChange}
                                 className="form-radio h-4 w-4 text-blue-600 border-gray-300 focus:ring-blue-500"
                                 required
                             />
-                            <span className="ml-2">Completed</span>
+                            <span className="ml-2">Delay</span>
                         </label>
                     </div>
                 </div>
@@ -187,10 +174,10 @@ export default function MilestoneForm({ projectId, data = null }: {projectId: st
                     onClick={(e: React.MouseEvent<HTMLButtonElement>) => handleSubmit(e)}
                 >
                     {data === null ? "Create Milestone" : "Update Milestone"}
-                    {processStatus === Constant.TASK_SAVE_REQUEST && <FaSpinner className="ml-auto h-5" size={20} />}
+                    {processStatus === Constant.SAVE_DATA_REQUEST && <FaSpinner className="ml-auto h-5" size={20} />}
                 </button>
 
-                {processStatus === Constant.TASK_SAVE_FAILURE && <span className="text-red-500">{error}</span>}
+                {processStatus === Constant.SAVE_DATA_FAILURE && <span className="text-red-500">{error}</span>}
             </div>
         </div>
 

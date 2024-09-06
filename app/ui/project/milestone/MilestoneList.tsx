@@ -23,29 +23,10 @@ export default function MilestoneList({projectId, data}: {projectId: string, dat
     }, [data]);
 
     useEffect(() => {
-        if( processStatus === Constant.TASK_SAVE_SUCCESS ) {
+        if( processStatus === Constant.SAVE_DATA_SUCCESS ) {
             setShowMilestoneForm(false);
         }
     }, [projectDetails, processStatus]);
-
-    const getProgressData = (milestone: JSONObject): JSONObject => {
-        let result: JSONObject = { name: `${milestone.name} is ${Utils.getStatusName(milestone.status)}`, percent: 0 };
-
-
-        if( milestone.status === Constant.TASK_STATUS_COMPLETED ) {
-            result.percent = 100;
-        }
-        else if( milestone.status === Constant.TASK_STATUS_IN_PROGRESS ) {
-
-            const milestoneDays = Utils.getDaysBetweenDates( milestone.startDate, milestone.endDate ); 
-            const realDays = Utils.getDaysBetweenDates( new Date(), milestone.endDate ); 
-
-            result.percent = ( ( milestoneDays - realDays ) / milestoneDays ) * 100;
-            result.name = ( realDays < 0 ) ? `${milestone.name} is overdue` : `${milestone.name} has ${realDays} day(s) left`;
-        }
-
-        return result;
-    } 
 
     const showUpdateMilestoneForm = (milestone: JSONObject) => {
         AppStore.setMilestone( milestone );
@@ -59,30 +40,35 @@ export default function MilestoneList({projectId, data}: {projectId: string, dat
         }
     }
 
-    const sortedData = (data.length == 0 ) ? [] : data.sort((a, b) => Utils.convertDateStrToObj(a.startDate).getTime() - Utils.convertDateStrToObj(b.startDate).getTime());
-
+    const sortedData = (data.length == 0 ) ? [] : data.sort((a, b) => Utils.convertDateStrToObj(a.dueDate).getTime() - Utils.convertDateStrToObj(b.dueDate).getTime());
+    
     return (
         <>
-            <div className="grid grid-cols-1 gap-3">
-                {sortedData.map((milestone:JSONObject, idx: number) => {
-                    const progressBarData = getProgressData(milestone);
+            {sortedData.map((milestone:JSONObject, idx: number) => ( 
+                <div key={`meeting_${milestone._id}`} className="grid grid-cols-8 open:justify-center items-center border-b mb-5 pb-1 border-gray-300">
+                     <div className="px-2 py-1 rounded-md mr-4 whitespace-nowrap items-center flex" style={{backgroundColor: Utils.getStatusColor(milestone.status)}}>{Utils.getStatusName(milestone.status)}</div>
+
+                    <div className="col-span-2">
                     
-                    return ( <div key={`milestone_${milestone._id}`} className="border border-gray-300 p-3">
-                        <div className="flex flex-row space-x-2">
-                            <FaEdit className="size-5 text-blue-600 hover:text-sky-blue cursor-pointer" onClick={() => showUpdateMilestoneForm(milestone)}/>
-                                 {/* Remove Icon */}
-                            <IoTrash
-                                className="size-5 text-red-600 hover:text-red-800 cursor-pointer" 
-                                onClick={() => deleteMilestone(milestone)} 
-                            />
-                            <div>{Utils.formatDateTime(milestone.startDate)}</div>
-                            <div>-</div>
-                            <div>{Utils.formatDateTime(milestone.endDate)}</div>
-                        </div>
-                        <ProgressBar name={progressBarData.name} percentage={progressBarData.percent} />
-                    </div> )
-                })}
-            </div>
+
+                        <div>{Utils.formatDateTime(milestone.dueDate)}</div>
+                    </div>
+                    
+                    <div className="col-span-4">
+                        <div className="font-semibold">{milestone.name}</div>
+                        <div>{milestone.description}</div>
+                    </div>
+
+                    <div className="flex space-x-3 flex-1 justify-end">
+                        <FaEdit className="size-5 text-blue-600 hover:text-sky-blue cursor-pointer" onClick={() => showUpdateMilestoneForm(milestone)}/>
+                            {/* Remove Icon */}
+                        <IoTrash
+                            className="size-5 text-red-600 hover:text-red-800 cursor-pointer" 
+                            onClick={() => deleteMilestone(milestone)} 
+                        />
+                    </div>
+                </div> 
+            ))}
 
             
             {showMilestoneForm && <Modal>
