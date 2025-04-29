@@ -16,11 +16,6 @@
     "jsx": "preserve",
     "incremental": true,
     "strictNullChecks": true,
-    "typeRoots": [
-      "./types",
-      "./node_modules/@types",
-      "app/libs"
-    ],
     "plugins": [
       {
         "name": "next"
