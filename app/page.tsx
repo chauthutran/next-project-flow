@@ -1,12 +1,12 @@
 "use client";
 
-import { MainUiProvider } from "./contexts/MainUiContext";
-import { AuthProvider } from "./contexts/AuthContext";
-import Header from "./ui/layout/Header";
-import AppWrapper from "./ui/AppWrapper";
-import Footer from "./ui/layout/Footer";
+import { MainUiProvider } from "./context/MainUiContext";
+import { AuthProvider } from "./context/AuthContext";
+import Header from "./components/Header";
+import AppWrapper from "./features/AppWrapper";
+import Footer from "./components/Footer";
 
-export default function Home() {
+export default function App() {
 	return (
 		<MainUiProvider>
 		 	 <AuthProvider>
