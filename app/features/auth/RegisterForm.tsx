@@ -7,13 +7,13 @@ import { FaSpinner } from 'react-icons/fa';
 import { IoKeyOutline } from "react-icons/io5";
 import * as Constant from '@/lib/constant';
 import { useMainUi } from "@/context/MainUiContext";
-import { useAuth } from "@/context/AuthContext";
 import { GiThreeLeaves } from 'react-icons/gi';
+import useAuth from '@/hooks/useAuth';
 
 export default function RegisterForm() {
 
 	const { setMainPage } = useMainUi();
-	const { loading, error, user, register} = useAuth();
+	const { loading, error, user, register } = useAuth();
 
 	const [email, setEmail] = useState("");
 

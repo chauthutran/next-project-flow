@@ -1,5 +1,5 @@
 import { JSONObject } from "@/lib/definations";
-import TaskForm from "./TaskForm";
+import TaskForm from "./form/TaskForm";
 import TaskList from "./TaskList";
 import { useState } from "react";
 import { GrFormAdd } from "react-icons/gr";

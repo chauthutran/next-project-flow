@@ -8,18 +8,18 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        "royal-blue": "#0053af",
-        "sky-blue": "#0fa0d5",
-        "light-sky-blue": "#9ad7ea ",
-        "pale-blue": "#daf1f7",
-        "bright-blue": "#3db2de",
-        "powder-blue": "#bed3ec ",
-        "very-light-blue": "#dceaf4",
-        "sunray": "#ebbe79",
-        "torch-red": "#fc3441",
-        "blue-navy": "#1d3a82",
-        "gold": "#FFD700",
-        "sea-green": "#00A36C"
+        // "royal-blue": "#0053af",
+        // "sky-blue": "#0fa0d5",
+        // "light-sky-blue": "#9ad7ea ",
+        // "pale-blue": "#daf1f7",
+        // "bright-blue": "#3db2de",
+        // "powder-blue": "#bed3ec ",
+        // "very-light-blue": "#dceaf4",
+        // "sunray": "#ebbe79",
+        // "torch-red": "#fc3441",
+        // "blue-navy": "#1d3a82",
+        // "gold": "#FFD700",
+        // "sea-green": "#00A36C"
       },
       rotate: {
         '-15': '-5deg',

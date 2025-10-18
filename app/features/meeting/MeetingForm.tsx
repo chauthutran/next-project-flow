@@ -1,10 +1,10 @@
-import { useAuth } from "@/context/AuthContext";
 import { JSONObject } from "@/lib/definations";
 import { useEffect, useState } from "react";
 import * as Constant from "@/lib/constant";
 import * as Utils from "@/lib/utils";
 import { useProject } from "@/context/ProjectContext";
 import { FaSpinner } from "react-icons/fa";
+import useAuth from "@/hooks/useAuth";
 
 
 export default function MeetingForm({ projectId, data = null }: {projectId: string, data?: JSONObject | null}) {
@@ -114,9 +114,9 @@ export default function MeetingForm({ projectId, data = null }: {projectId: stri
                           className="peer block w-full rounded-md border border-gray-300 p-2 text-sm outline-2 placeholder:text-gray-500"
                         required
                     >
-                        {user!.teamMembers.map((member: JSONObject) => (
-                            <option key={member._id} value={member._id}>
-                                {member.email}
+                        {user!.teamMembers.map((member: string) => (
+                            <option key={member} value={member}>
+                                {member}
                             </option>
                         ))}
                     </select>

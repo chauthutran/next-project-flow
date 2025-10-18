@@ -1,71 +1,57 @@
-'use server';
+import { JSONObject } from '../lib/definations';
+import connectToDatabase from '../lib/dbService/db';
+import * as Encrypt from '../lib/dbService/encryptPassword';
+import User from '@/models/User';
+import { setAuthCookie } from '@/lib/utils/authUtils';
+import { ValidationError } from 'yup';
+import { NotFoundError } from './errors';
+import { handleError } from './errorUtils';
 
-import { JSONObject } from "../lib/definations";
-import connectToDatabase from "../lib/dbService/db";
-import User from "../lib/schemas/User.schema";
-import * as Encrypt from "../lib/dbService/encryptPassword";
-import * as Utils from "@/lib/utils";
-import mongoose from "mongoose";
+export async function login({ email, password }: JSONObject) {
+    if (!email || !password) {
+        throw new ValidationError('Email/password is missing');
+    }
 
+    try {
+        await connectToDatabase();
+        const user = await User.findOne({ email });
+        if (!user) {
+            throw new NotFoundError('Invalid email or password');
+        }
 
-export async function login({email, password}: JSONObject): Promise<JSONObject> {
+        // Compare password securely
+        const isMatch = await Encrypt.comparePassword(password, user.password);
+        if (!isMatch) {
+            throw new NotFoundError('Invalid email or password');
+        }
 
-	try {
-		await connectToDatabase();
-		const searchResult = await User.find({ email });
+        // Generate token on login
+        await setAuthCookie({
+            id: user._id!.toString(),
+            email: user.email,
+            role: user.role
+        });
 
-		// Find the users with the password if there is password in parametters
-		let matchedUser: JSONObject | null = null;
-		for (let i = 0; i < searchResult.length; i++) {
-			const user = searchResult[i];
-			const matched = await Encrypt.comparePassword(password!, user.password);
-			if (matched) {
-				matchedUser = user;
-				break;
-			}
-		}
-
-		if ( matchedUser === null ) {
-			return ({status: "fail", message: "Username/Password is wrong"});
-		}
-		
-
-		const teamMemberIdObjs = matchedUser.teamMembers.map((id: string) => new mongoose.Types.ObjectId(id));
-		const teamMembers = await User.find({ _id: { $in: teamMemberIdObjs } });
-		matchedUser.teamMembers = teamMembers;
-
-		// Utils.cloneJSONObject(matchedUser) ==> need to do it so that I can avoid the issue "Warning: Only plain objects can be passed to Client Components from Server Components" 
-		return ({status: "success", data: Utils.cloneJSONObject( matchedUser )});
-	} catch (error: any) {
-		return ({status: "error", message: error.message});
-	}
+        // user.toJSON() ==> need to do it so that I can avoid the issue "Warning: Only plain objects can be passed to Client Components from Server Components"
+        return user.toJSON();
+    } catch (error: any) {
+        handleError(error);
+    }
 }
 
-export async function register(userData: JSONObject): Promise<JSONObject> {
-	
-	try {
-		await connectToDatabase();
+export async function register(userData: JSONObject) {
+    try {
+        await connectToDatabase();
 
-		const password = userData.password;
-		userData.password = await Encrypt.hashPassword(password);
+        const password = userData.password;
+        userData.password = await Encrypt.hashPassword(password);
 
-		const newUser = await User.create(userData);
-		return ({status: "succcess", data: Utils.cloneJSONObject(newUser)});
-
-	} catch (error: any) {
-		return ({status: "error", message: error.message});
-		// if (error instanceof mongoose.Error.ValidationError) {
-        //     return({status: "error",error: 'Validation Error:' + error.message});
-        // } else if (error instanceof mongoose.Error.CastError) {
-        //     return({error: 'Cast Error:' + error.message});
-        // } else if (error.code === 11000) {  // Duplicate key error code
-        //     return({error: 'Duplicate Key Error:' + error.message});
-        // } else {
-        //     return({error: 'UnknownError:' + error.message});
-        // }
-	}
+        const newUser = await User.create(userData);
+        return newUser.toJSON();
+    } catch (error: any) {
+        handleError(error);
+    }
 }
-
 
 // export async function linkTeamMembers() {
 //     try {
@@ -86,5 +72,5 @@ export async function register(userData: JSONObject): Promise<JSONObject> {
 //         console.log('Team members linked successfully.');
 //     } catch (error) {
 //         console.error('Error linking team members:', error);
-//     } 
+//     }
 // }

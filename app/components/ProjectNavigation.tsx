@@ -1,5 +1,5 @@
 
-import { useMainUi } from "@/context/MainUiContext";
+// import { useMainUi } from "@/context/MainUiContext";
 import * as AppStore from "@/lib/appStore";
 import { MdDoubleArrow } from "react-icons/md";
 import * as Constant from '@/lib/constant';
@@ -11,7 +11,7 @@ import { useState } from "react";
 
 export default function ProjectNavigation() {
 
-    const { subPage, setSubPage } = useMainUi();
+    // const { subPage, setSubPage } = useMainUi();
     const [showMenus, setShowMenus] = useState(false);
 
     const renderDetailsOptions = () => {
@@ -19,32 +19,39 @@ export default function ProjectNavigation() {
             <>
 
                 <div
-                    className={`cursor-pointer pr-5 border-b-2 hover:border-light-sky-blue ${subPage === Constant.SUB_PAGE_TIMELINE ? "border-light-sky-blue" : "border-white"}`}
-                    onClick={() => setSubPage(Constant.SUB_PAGE_TIMELINE)}>
+                    // className={`cursor-pointer pr-5 border-b-2 hover:border-light-sky-blue 
+                    //     ${subPage === Constant.SUB_PAGE_TIMELINE ? "border-light-sky-blue" : "border-white"}`}
+                    // onClick={() => setSubPage(Constant.SUB_PAGE_TIMELINE)}
+                    >
                     Timeline
                 </div>
 
                 <div
-                    className={`cursor-pointer pr-5 border-b-2 hover:border-light-sky-blue ${subPage === Constant.SUB_PAGE_CALENDAR ? "border-light-sky-blue" : "border-white"}`}
-                    onClick={() => setSubPage(Constant.SUB_PAGE_CALENDAR)}>
+                    // className={`cursor-pointer pr-5 border-b-2 hover:border-light-sky-blue 
+                    //       ${subPage === Constant.SUB_PAGE_CALENDAR ? "border-light-sky-blue" : "border-white"}`}
+                    // onClick={() => setSubPage(Constant.SUB_PAGE_CALENDAR)}
+                    >
                     Calendar
                 </div>
 
                 <div
-                    className={`cursor-pointer pr-5 border-b-2 hover:border-light-sky-blue flex flex-row space-x-1 items-center ${subPage === Constant.SUB_PAGE_NEW_TASK ? "border-light-sky-blue" : "border-white"}`}
-                    onClick={() => setSubPage(Constant.SUB_PAGE_NEW_TASK)}>
+                    // className={`cursor-pointer pr-5 border-b-2 hover:border-light-sky-blue flex flex-row space-x-1 items-center ${subPage === Constant.SUB_PAGE_NEW_TASK ? "border-light-sky-blue" : "border-white"}`}
+                    // onClick={() => setSubPage(Constant.SUB_PAGE_NEW_TASK)}
+                    >
                     Tasks
                 </div>
 
                 <div
-                    className={`cursor-pointer pr-5 border-b-2 hover:border-light-sky-blue flex flex-row space-x-2 items-center ${subPage === Constant.SUB_PAGE_NEW_MEETING ? "border-light-sky-blue" : "border-white"}`}
-                    onClick={() => setSubPage(Constant.SUB_PAGE_NEW_MEETING)}>
+                    // className={`cursor-pointer pr-5 border-b-2 hover:border-light-sky-blue flex flex-row space-x-2 items-center ${subPage === Constant.SUB_PAGE_NEW_MEETING ? "border-light-sky-blue" : "border-white"}`}
+                    // onClick={() => setSubPage(Constant.SUB_PAGE_NEW_MEETING)}
+                    >
                     Meetings
                 </div>
 
                 <div
-                    className={`cursor-pointer pr-5 border-b-2 hover:border-light-sky-blue flex flex-row space-x-2 items-center ${subPage === Constant.SUB_PAGE_NEW_MILESTONE ? "border-light-sky-blue" : "border-white"}`}
-                    onClick={() => setSubPage(Constant.SUB_PAGE_NEW_MILESTONE)}>
+                    // className={`cursor-pointer pr-5 border-b-2 hover:border-light-sky-blue flex flex-row space-x-2 items-center ${subPage === Constant.SUB_PAGE_NEW_MILESTONE ? "border-light-sky-blue" : "border-white"}`}
+                    // onClick={() => setSubPage(Constant.SUB_PAGE_NEW_MILESTONE)}
+                    >
                     Millestones
                 </div>
             </>

@@ -3,50 +3,181 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+    --foreground-rgb: 0, 0, 0;
+    --background-start-rgb: 214, 219, 220;
+    --background-end-rgb: 255, 255, 255;
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+    :root {
+        --foreground-rgb: 255, 255, 255;
+        --background-start-rgb: 0, 0, 0;
+        --background-end-rgb: 0, 0, 0;
+    }
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
+    color: rgb(var(--foreground-rgb));
 }
 
 @layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+    .text-balance {
+        text-wrap: balance;
+    }
 }
-
 
 /* Change the color of the vertical timeline line */
 .vertical-timeline::before {
-  background-color: #0053af  !important; 
-} 
+    background-color: #0053af !important;
+}
 .vertical-timeline-element-date {
-  color: #475569 ;
+    color: #475569;
 }
 
 .text-shadow {
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .animate-shake {
-  animation: shake 0.5s ease-in-out;
+    animation: shake 0.5s ease-in-out;
 }
 
 @keyframes shake {
-  0% { transform: translateX(0); }
-  25% { transform: translateX(-5px); }
-  50% { transform: translateX(5px); }
-  75% { transform: translateX(-5px); }
-  100% { transform: translateX(0); }
+    0% {
+        transform: translateX(0);
+    }
+    25% {
+        transform: translateX(-5px);
+    }
+    50% {
+        transform: translateX(5px);
+    }
+    75% {
+        transform: translateX(-5px);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+
+button:disabled,
+input:disabled {
+    background-color: silver;
+}
+
+button:disabled:hover,
+input:disabled:hover {
+    background-color: silver;
+}
+
+.theme-light {
+    /* Background & Text */
+    --bg: #f7f9fc; /* very light, soft gray-blue */
+    --text: #1e293b; /* dark slate, easy on the eyes */
+
+    /* Gradient for hero/login sections */
+    --gradient-from: #3b82f6; /* bright blue */
+    --gradient-via: #60a5fa; /* sky blue */
+    --gradient-to: #93c5fd; /* soft pastel blue */
+    --gradient-text: #ffffff;
+
+    /* Primary color - headers, buttons */
+    --primary: #3b82f6; /* bright blue */
+    --primary-hover: #2563eb;
+    --primary-hover-light: rgba(37, 99, 235, 0.2);
+    --primary-active: #1e40af;
+    --primary-border: #60a5fa;
+    --primary-text: ##ffffff;
+    --primary-subtext: #060707;
+
+    /* Secondary color - links, secondary buttons */
+    --secondary: #10b981; /* teal green for contrast */
+    --secondary-hover: #059669;
+    --secondary-active: #047857;
+    --secondary-border: #34d399;
+    --secondary-text: #ffffff;
+    --secondary-subtext: #d1fae5;
+
+    /* Accent - highlights, notifications */
+    --accent: #fbbf24; /* golden yellow */
+    --accent-hover: #f59e0b;
+    --accent-active: #d97706;
+
+    /* Cards & borders */
+    --card: #ffffff; /* clean white cards */
+    --card-text: #000000;
+    --border: #e5e7eb; /* light neutral borders */
+    --muted: #6b7280; /* secondary text, placeholders */
+
+    /* Status */
+    /* Status */
+    --success: #10b981;
+    --success-light: rgba(16, 185, 129, 0.2); /* 20% opacity */
+    --error: #ef4444;
+    --error-light: rgba(239, 68, 68, 0.2); /* 20% opacity */
+    --warning: #f59e0b;
+    --warning-light: rgba(245, 158, 11, 0.2); /* 20% opacity */
+    --info: #3b82f6;
+    --info-light: rgba(59, 130, 246, 0.2); /* 20% opacity */
+
+    /* Inputs */
+    --input-bg: #ffffff; /* White input background */
+    --input-border: #d1d5db; /* Light gray border */
+    --input-focus-border: #3b82f6; /* Bright blue when focused */
+    --input-focus-ring: rgba(59, 130, 246, 0.4); /* Soft blue ring on focus */
+
+    /* Select menu */
+    --select-menu-bg: #ffffff; /* Default menu background */
+    --select-option-hover-bg: #eff6ff; /* Light blue on hover */
+    --select-option-selected-bg: #3b82f6; /* Blue background for selected option */
+    --select-option-text: #111827; /* Dark text for options */
+    --select-option-selected-text: #ffffff; /* White text for selected option */
+
+    /* Multi-value pills */
+    --select-multi-bg: #3b82f6; /* Blue pill background */
+    --select-multi-text: #ffffff; /* White pill text */
+}
+
+.theme-dark {
+    /* Background & Text */
+    --bg: #121212; /* deep dark gray, reduces eye strain */
+    --text: #f1f5f9; /* light gray for readability */
+
+    /* Gradient for hero/login sections */
+    --gradient-from: #4c3575; /* primary purple */
+    --gradient-via: #5a3f8d;
+    --gradient-to: #b07aff;
+    --gradient-text: #ffffff;
+
+    /* Primary color - headers, buttons */
+    --primary: #8b63d2; /* lighter purple for contrast on dark bg */
+    --primary-hover: #a07ee5;
+    --primary-active: #6b3ea8;
+    --primary-border: #9b7bd6;
+    --primary-text: #ffffff;
+    --primary-subtext: #d9c4f5;
+
+    /* Secondary color - info, links, less important buttons */
+    --secondary: #3b82f6; /* same professional blue */
+    --secondary-hover: #2563eb;
+    --secondary-active: #1d4ed8;
+    --secondary-border: #2563eb;
+    --secondary-text: #ffffff;
+    --secondary-subtext: #a5c8ff;
+
+    /* Accent - highlights, status, success */
+    --accent: #22c55e; /* green for success/completed */
+    --accent-hover: #16a34a;
+    --accent-active: #15803d;
+
+    /* Cards & borders */
+    --card: #1e1e2f; /* slightly lighter than background for contrast */
+    --border: #33354a; /* subtle borders for cards and tables */
+    --muted: #94a3b8; /* for secondary text, placeholders */
+
+    /* Status */
+    --success: #22c55e;
+    --error: #ef4444;
+    --warning: #f59e0b;
+    --info: #3b82f6;
 }

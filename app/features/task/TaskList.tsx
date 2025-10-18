@@ -5,7 +5,7 @@ import ProgressBar from "@/components/ProgressBar";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import Modal from "@/components/Modal";
 import { IoIosCloseCircle } from "react-icons/io";
-import TaskForm from "./TaskForm";
+import TaskForm from "./form/TaskForm";
 import { useEffect, useState } from "react";
 import * as AppStore from "@/lib/appStore";
 import { useProject } from "@/context/ProjectContext";

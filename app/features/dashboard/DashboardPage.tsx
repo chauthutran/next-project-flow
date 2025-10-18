@@ -1,11 +1,9 @@
 "use client";
 
-import { useAuth } from "@/context/AuthContext";
 import { useEffect, useState } from "react";
 import * as dbService from "@/lib/dbService";
 import { JSONObject } from "@/lib/definations";
 import * as Constant from "@/lib/constant";
-import { useMainUi } from "@/context/MainUiContext";
 import * as AppStore from "@/lib/appStore";
 import { Calendar } from "nextjs-jc-component-libs/dist/components";
 import { EventType } from "nextjs-jc-component-libs/dist/libs/definations";
@@ -17,11 +15,10 @@ import { MdOutlineViewTimeline } from "react-icons/md";
 import { FcTimeline } from "react-icons/fc";
 import { IoStatsChart } from "react-icons/io5";
 import { LuGanttChart } from "react-icons/lu";
+import useAuth from "@/hooks/useAuth";
 
 
 export default function DashboardPage() {
-
-    const { setMainPage } = useMainUi();
 
     const { user } = useAuth();
     const [details, setDetails] = useState<JSONObject>({});
