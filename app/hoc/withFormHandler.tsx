@@ -6,6 +6,7 @@ import * as yup from 'yup';
 interface WithFormHandlerOptions<T extends FormikValues> {
     initialValues: T;
     validationSchema: yup.ObjectSchema<any>;
+    getLoading?: () => boolean;
     onSubmit: (formValues: T) => Promise<void> | void;
     onCancel?: () => void;
 }
@@ -15,12 +16,13 @@ export default function withFormHandler<T extends FormikValues>(
         formik: ReturnType<typeof useFormHandler<T>>['formik'];
         loading: boolean;
         handleCancel: () => void;
+        getLoading?: () => boolean;
     }>,
     options: WithFormHandlerOptions<T>
 ) {
     return function FormHandlerHOC() {
         const { formik, handleCancel } = useFormHandler<T>(options);
-        const { loading } = useAuth(); // use Redux loading
+        const loading = options.getLoading ? options.getLoading() : false; // dynamic loading
 
         return (
             <FormikProvider value={formik}>

@@ -2,16 +2,16 @@ import {
     createErrorResponse,
     createSuccessResponse
 } from '@/lib/utils/apiResponseUtil';
-import { fetchTasksByProjectId, saveTask } from '@/services/taskService';
+import { deleteMilestonesByProjectId, fetchMilestonesByProjectId, saveMilestone } from '@/services/milestoneService';
 
 export async function GET(
     request: Request,
-    { params }: { params: { project: string } }
+    { params }: { params: { id: string } }
 ) {
     try {
-        const projectId = params.project;
+        const projectId = params.id;
 
-        const response = await fetchTasksByProjectId(projectId);
+        const response = await fetchMilestonesByProjectId(projectId);
 
         return createSuccessResponse(response);
     } catch (error) {
@@ -21,15 +21,33 @@ export async function GET(
 
 export async function POST(
     request: Request,
-    { params }: { params: { project: string } }
+    { params }: { params: { id: string } }
 ) {
     try {
-        const projectId = params.project;
+        const projectId = params.id;
 
         const payload = await request.json();
         payload.projectId = projectId;
 
-        const response = await saveTask(payload);
+        const response = await saveMilestone(payload);
+
+        return createSuccessResponse(response);
+    } catch (error) {
+        return createErrorResponse(error);
+    }
+}
+
+export async function DELETE(
+    request: Request,
+    { params }: { params: { id: string } }
+) {
+    try {
+        const projectId = params.id;
+
+        const payload = await request.json();
+        payload.projectId = projectId;
+
+        const response = await deleteMilestonesByProjectId(projectId);
 
         return createSuccessResponse(response);
     } catch (error) {

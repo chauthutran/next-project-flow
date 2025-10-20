@@ -33,7 +33,7 @@ export async function fetchTasksByProjectId(
     if (!projectId) {
         throw new ValidationError('Project ID is missing.');
     }
-    
+
     try {
         await connectToDatabase();
 
@@ -47,20 +47,18 @@ export async function fetchTasksByProjectId(
     }
 }
 
-export async function getTaskById(
-    id: string
-): Promise<ITask | undefined> {
+export async function getTaskById(id: string): Promise<ITask | undefined> {
     if (!id) {
         throw new ValidationError('ID is missing.');
     }
-    
+
     try {
         await connectToDatabase();
 
         const task = await Task.findById(id).lean<ITask>();
 
-        if( task === null) throw new NotFoundError("Task not found");
-        
+        if (task === null) throw new NotFoundError('Task not found');
+
         return task;
     } catch (error: any) {
         handleError(error);
@@ -82,7 +80,7 @@ export async function saveTask(payload: ITaskDTO): Promise<ITask | undefined> {
             const newTask = await Task.create(task);
             return newTask.toJSON() as ITask;
         }
-		
+
         // Update new
         const updatedTask = await Task.findByIdAndUpdate(task._id, task, {
             new: true,
@@ -111,6 +109,28 @@ export async function deleteTask(id: string): Promise<ITask | undefined> {
         }
 
         return deletedTask;
+    } catch (error: any) {
+        handleError(error);
+    }
+}
+
+export async function deleteTasksByProjectId(
+    projectId: string
+): Promise<ITask[] | undefined> {
+    if (!projectId) throw new ValidationError('Project ID is missing.');
+
+    try {
+        await connectToDatabase();
+
+        const deletedTasks = await Task.deleteMany({ projectId }).lean<
+            ITask[]
+        >();
+
+        if (!deletedTasks) {
+            throw new NotFoundError('Tasks not found');
+        }
+
+        return deletedTasks;
     } catch (error: any) {
         handleError(error);
     }

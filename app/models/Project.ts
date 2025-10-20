@@ -1,16 +1,6 @@
+import { ProjectStatus, STATUS_KEYS } from '@/types/status';
 import mongoose, { Document, Model, Schema, Types } from 'mongoose';
 
-export const STATUSES = [
-    'not_started',
-    'planning',
-    'in_progress',
-    'on_hold',
-    'completed',
-    'cancelled',
-    'delayed'
-] as const;
-
-export type ProjectStatus = typeof STATUSES[number];
 
 export interface IProject extends Document {
     name: string;
@@ -28,7 +18,7 @@ const ProjectSchema = new Schema<IProject>(
         description: { type: String, required: true },
         startDate: { type: Date, required: true },
         endDate: { type: Date, required: true },
-        status: { type: String, enum: STATUSES, required: true },
+        status: { type: String, enum: STATUS_KEYS, required: true },
         managedBy: {
             type: mongoose.Schema.Types.ObjectId,
             required: true,

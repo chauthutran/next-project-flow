@@ -1,5 +1,5 @@
+import { ProjectStatus } from '@/types/status';
 import mongoose, { Model, Schema, Types } from 'mongoose';
-import { ProjectStatus } from './Project';
 
 export interface IMilestone extends Document {
     projectId: Types.ObjectId;

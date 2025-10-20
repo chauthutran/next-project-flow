@@ -1,84 +1,147 @@
 import mongoose from 'mongoose';
 import { JSONObject } from '../lib/definations';
 import connectToDatabase from '../lib/dbService/db';
-import * as Utils from '@/lib/utils';
-import Metting from '@/models/Meeting';
+import Meeting, { IMeeting } from '@/models/Meeting';
+import { NotFoundError, ValidationError } from './errors';
+import { IMeetingDTO } from '@/types/meeting';
+import { handleError } from './errorUtils';
 
 export async function fetchMeetingsByProjectIdList(
     projectIds: string[]
-): Promise<JSONObject> {
+): Promise<IMeeting[] | undefined> {
+    if (!projectIds || projectIds.length === 0)
+        throw new ValidationError('Project IDs are missing.');
+
     try {
         await connectToDatabase();
 
         const projectObjIds = projectIds.map(
             (id) => new mongoose.Types.ObjectId(id)
         );
-        const meetings = await Metting.find({
+        const meetings = await Meeting.find({
             projectId: { $in: projectObjIds }
-        });
+        }).lean<IMeeting[]>();
 
-        return { status: 'success', data: Utils.cloneJSONObject(meetings) };
+        return meetings;
     } catch (error: any) {
-        return { status: 'error', message: error.message };
+        handleError(error);
     }
 }
 
 export async function fetchMeetingsByProjectId(
     projectId: string
-): Promise<JSONObject> {
+): Promise<IMeeting | undefined> {
+    if (!projectId) {
+        throw new ValidationError('Project ID is missing.');
+    }
     try {
         await connectToDatabase();
 
-        const meetings = await Metting.find({
+        const meetings = await Meeting.find({
             projectId: new mongoose.Types.ObjectId(projectId)
-        });
+        }).lean<IMeeting>();
 
-        return { status: 'success', data: Utils.cloneJSONObject(meetings) };
+        return meetings;
     } catch (error: any) {
-        return { status: 'error', message: error.message };
+        handleError(error);
     }
 }
 
-export async function saveMeeting(payload: JSONObject): Promise<JSONObject> {
+export async function getMeetingById(
+    id: string
+): Promise<IMeeting | undefined> {
+    if (!id) {
+        throw new ValidationError('ID is missing.');
+    }
+
     try {
         await connectToDatabase();
 
-        let metting: JSONObject = Utils.cloneJSONObject(payload);
-        metting.projectId = new mongoose.Types.ObjectId(payload.projectId);
-        // metting.assignedTo = payload.assignedTo.map((id: string) => new mongoose.Types.ObjectId(id));
-        metting.createdBy = new mongoose.Types.ObjectId(payload.createdBy);
+        const meeting = await Meeting.findById(id).lean<IMeeting>();
 
-        // Save the metting to the database
-        if (metting._id === undefined) {
+        if (meeting === null) throw new NotFoundError('Meeting not found');
+
+        return meeting;
+    } catch (error: any) {
+        handleError(error);
+    }
+}
+
+export async function saveMeeting(
+    payload: IMeetingDTO
+): Promise<IMeeting | undefined> {
+    try {
+        await connectToDatabase();
+
+        let meeting = {
+            ...payload,
+            projectId: new mongoose.Types.ObjectId(payload.projectId),
+            createdBy: new mongoose.Types.ObjectId(payload.createdBy)
+        };
+
+        // Save the meeting to the database
+        if (meeting._id === undefined) {
             // Add new
-            const newMetting = await Metting.create(metting);
-            return { status: 'success', data: newMetting?.toJSON() };
+            const newMeeting = await Meeting.create(meeting);
+            return newMeeting.toJSON() as IMeeting;
         }
 
         // Update
-        const updatedMetting = await Metting.findByIdAndUpdate(
-            metting._id,
-            metting,
+        const updatedMeeting = await Meeting.findByIdAndUpdate(
+            meeting._id,
+            meeting,
             { new: true, runValidators: true }
         );
-        if (!updatedMetting) {
+
+        if (!updatedMeeting) {
             throw new Error('Task not found');
         }
-        return { status: 'success', data: updatedMetting.toJSON() };
+
+        return updatedMeeting;
     } catch (error: any) {
-        return { status: 'error', message: error.message };
+        handleError(error);
     }
 }
 
-export async function deleteMeeting(id: string): Promise<JSONObject> {
+export async function deleteMeeting(id: string): Promise<IMeeting | undefined> {
+     if (!id) throw new ValidationError('Meeting ID is missing.');
+
+     try {
+        await connectToDatabase();
+
+        // Save the meeting to the database
+        const deletedMeeting = await Meeting.findByIdAndDelete(
+            id
+        ).lean<IMeeting>();
+
+        if (!deletedMeeting) {
+            throw new Error('Meeting not found');
+        }
+        
+        return deletedMeeting;
+    } catch (error: any) {
+        handleError(error);
+    }
+}
+
+export async function deleteMeetingsByProjectId(
+    projectId: string
+): Promise<IMeeting[] | undefined> {
+    if (!projectId) throw new ValidationError('Project ID is missing.');
+
     try {
         await connectToDatabase();
 
-        // Save the metting to the database
-        const newMetting = await Metting.findByIdAndDelete(id);
+        const deletedMeetings = await Meeting.deleteMany({
+            projectId
+        }).lean<IMeeting[]>();
 
-        return { status: 'success' };
+        if (!deletedMeetings) {
+            throw new NotFoundError('Meetings not found');
+        }
+
+        return deletedMeetings;
     } catch (error: any) {
-        return { status: 'error', message: error.message };
+        handleError(error);
     }
 }

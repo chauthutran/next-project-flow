@@ -1,7 +1,4 @@
-import { ProjectStatus } from "@/models/Project";
-import { IMeetingDTO } from "./meeting";
-import { ITaskDTO } from "./task";
-import { IMilestoneDTO } from "./milestone";
+import { ProjectStatus } from "./status";
 
 export interface IProjectDTO {
     _id?: string,
@@ -12,11 +9,4 @@ export interface IProjectDTO {
     status: ProjectStatus,
     managedBy: string;
     teamMembers: string[],
-}
-
-export interface ProjectDetailsDTO {
-    project: IProjectDTO,
-    meetings?: IMeetingDTO[],
-    milestones?: IMilestoneDTO[],
-    tasks?: ITaskDTO[],
 }

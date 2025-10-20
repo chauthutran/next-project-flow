@@ -1,5 +1,5 @@
+import { ProjectStatus } from '@/types/status';
 import mongoose, { Document, Model, Schema, Types } from 'mongoose';
-import { ProjectStatus } from './Project';
 
 export interface ITask extends Document {
     projectId: Types.ObjectId;

@@ -13,28 +13,23 @@ import {
     selectProject as selectProjectAction,
     clearProjects as clearProjectsAction
 } from '@/redux/projects/projectSlide';
+import { useAppSelector } from '@/redux/hook';
 
 export function useProjects() {
     const dispatch = useDispatch<AppDispatch>();
     const { user } = useAuth();
     const userId = useMemo(() => user?._id!, [user?._id]);
-    // const userId = user!._id!;
 
-    const { projects, selectedProject, loading, error } = useSelector(
+    const { projects, selectedProject, status } = useAppSelector(
         (state: RootState) => state.projects
     );
 
     useEffect(() => {
-        if (userId) {
-            dispatch(fetchProjectsByUserId(userId));
-        }
-    }, [dispatch, userId]);
+        if (!userId) return;
+        if (projects) return;
 
-    // useEffect(() => {
-    //     if (user?._id) {
-    //         dispatch(fetchProjectsByUserId(user!._id));
-    //     }
-    // }, [dispatch, user?._id]);
+        dispatch(fetchProjectsByUserId(userId));
+    }, [dispatch, userId, projects]);
 
     const handleAddProject = async (project: IProjectDTO) => {
         return await dispatch(addProject(project));
@@ -55,12 +50,12 @@ export function useProjects() {
     const handleClearProjects = () => {
         dispatch(clearProjectsAction());
     };
+    
 
     return {
         projects,
         selectedProject,
-        loading,
-        error,
+        status,
         selectProject: handleSelectProject,
         clearProjects: handleClearProjects,
         addProject: handleAddProject,

@@ -1,6 +1,6 @@
 import { ITaskDTO } from '@/types/task';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { addTask, fetchTasksByProjectId, updateTask, deleteTask } from './tasksThunk';
+import { addTask, fetchTasksByProjectId, updateTask, deleteTask, deleteTasksByProjectId } from './tasksThunk';
 
 interface TaskState {
     tasks: ITaskDTO[] | null;
@@ -83,7 +83,7 @@ const taskSlice = createSlice({
                 state.loading = true;
                 state.error = action.error.message ?? 'Update task failed';
             })
-            // Delete
+            // Delete task by ID
             .addCase(deleteTask.pending, (state) => {
                 state.loading = true;
                 state.error = null;
@@ -99,6 +99,24 @@ const taskSlice = createSlice({
             .addCase(deleteTask.rejected, (state, action) => {
                 state.loading = true;
                 state.error = action.error.message ?? 'Delete task failed';
+            })
+            // Delete tasks by Project-ID
+            .addCase(deleteTasksByProjectId.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(
+                deleteTasksByProjectId.fulfilled,
+                (state, action: PayloadAction<ITaskDTO[]>) => {
+                    const deletedIds = action.payload.map((item) => item._id);
+                    state.tasks = state.tasks!.filter(
+                        (t) => !deletedIds.includes(t._id)
+                    );
+                }
+            )
+            .addCase(deleteTasksByProjectId.rejected, (state, action) => {
+                state.loading = true;
+                state.error = action.error.message ?? 'Delete tasks failed';
             });
     }
 });

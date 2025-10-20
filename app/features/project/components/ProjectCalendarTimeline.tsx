@@ -1,6 +1,5 @@
 import { JSONObject } from "@/lib/definations";
 import * as Utils from "@/lib/utils";
-import { getTime } from "date-fns";
 
 
 export default function ProjectCalendarTimeline({ project, data }: { project: JSONObject, data: JSONObject }) {
@@ -56,14 +55,14 @@ export default function ProjectCalendarTimeline({ project, data }: { project: JS
         // meetings
         if( data.meetings !== undefined) {
             for( var i=0; i<data.meetings.length; i++ ) {
-                const metting = data.meetings[i];
-                const date: any = Utils.formatDateTimeObj(metting.date);
+                const meeting = data.meetings[i];
+                const date: any = Utils.formatDateTimeObj(meeting.date);
                 const item = { 
-                    _id: metting._id,
-                    startDate: metting.date,
-                    endDate: metting.date,
-                    name: metting.name,
-                    description: metting.description,
+                    _id: meeting._id,
+                    startDate: meeting.date,
+                    endDate: meeting.date,
+                    name: meeting.name,
+                    description: meeting.description,
                     bgColor: "rgb(16, 204, 82)"
                 }
 

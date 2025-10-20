@@ -8,7 +8,7 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
 export default function LoginPage() {
-    const { user, login } = useAuth();
+    const { user, login, loading } = useAuth();
     const router = useRouter();
 
     const LoginFormBasic = withFormHandler<LoginFormValues>(LoginForm, {
@@ -16,10 +16,11 @@ export default function LoginPage() {
             email: 'manager1@example.com',
             password: '1234'
         },
+        getLoading: () => !!loading,
         validationSchema: loginSchema,
         onSubmit: async (values) => {
             await login(values);
-        }
+        },
     });
 
     useEffect(() => {

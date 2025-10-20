@@ -1,4 +1,4 @@
-import { STATUSES } from '@/models/Project';
+import { STATUS_KEYS } from '@/types/status';
 import * as yup from 'yup';
 
 export const taskSchema = yup.object({
@@ -14,7 +14,7 @@ export const taskSchema = yup.object({
         .required('End Date is required'),
     status: yup
         .string()
-        .oneOf(STATUSES, 'Invalid status')
+        .oneOf(STATUS_KEYS, 'Invalid status')
         .required('Status is required'),
     projectId: yup.string().required('Project ID is required'),
     assignedTo: yup

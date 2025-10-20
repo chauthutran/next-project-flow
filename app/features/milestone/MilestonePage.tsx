@@ -1,44 +1,56 @@
-import { JSONObject } from "@/lib/definations";
-import MilestoneForm from "./MilestoneForm";
-import MilestoneList from "./MilestoneList";
-import { useState } from "react";
-import { GrFormAdd } from "react-icons/gr";
-import { IoIosAddCircle } from "react-icons/io";
-import Modal from "@/components/Modal";
-import { IoClose } from "react-icons/io5";
-import { IoIosCloseCircle } from "react-icons/io";
+import MilestoneList from './list/MilestoneList';
+import { useState } from 'react';
+import { IoIosAddCircle } from 'react-icons/io';
+import Modal from '@/components/Modal';
+import { IoIosCloseCircle } from 'react-icons/io';
+import MilestoneFormWrapper from './form/MilestoneFormWrapper';
+import { useMilestones } from '@/hooks/useMilestones';
 
-
-export default function MilestonePage({projectId, data}: {projectId: string, data: JSONObject}) {
-
-    const milestoneList = (data.milestones !== undefined ) ? data.milestones : [];
-    
+export default function MilestonePage({ projectId }: { projectId: string }) {
+    const { milestones, loading } = useMilestones();
     const [showMilestoneForm, setShowMilestoneForm] = useState(false);
 
+    if (loading || !milestones) return <div>Loading milestones... </div>;
+
     return (
-        <div className="bg-white w-full">
-            <h2 className="text-2xl font-semibold mb-6 flex space-x-3">
-                <div className="border-b-2 border-light-sky-blue pb-2 w-fit pr-5">Milestone List</div>
-                <div className="flex flex-1 items-end justify-end cursor-pointer hover:text-blue-500 text-royal-blue" onClick={() => setShowMilestoneForm(true)}><IoIosAddCircle className="size-10" /></div>
-            </h2>
+        <div>
+            <div className="flex items-center justify-between mb-4">
+                <h2 className="text-xl font-semibold text-gray-800">
+                    Milestone List
+                </h2>
+                <button
+                    onClick={() => setShowMilestoneForm(true)}
+                    className="text-blue-600 hover:text-blue-800 flex items-center gap-1"
+                >
+                    <IoIosAddCircle className="size-5" />
+                    New
+                </button>
+            </div>
 
-            <MilestoneList projectId={projectId} data={milestoneList} />
+            <MilestoneList milestones={milestones} />
 
-            {showMilestoneForm && <Modal>
-                <div className="bg-white rounded-lg w-3/4">
-                    <h2 className="py-3 px-5 text-xl flex bg-blue-navy text-white rounded-t-lg items-center justify-between">
-                        <div>Create New Milestone</div>
-                        <div className="flex cursor-pointer" onClick={() => setShowMilestoneForm(false)}>
-                            <IoIosCloseCircle className="size-6" />
-                        </div>
-                    </h2>
+            {showMilestoneForm && (
+                <Modal>
+                    <div className="bg-white rounded-lg w-3/4">
+                        <h2 className="py-3 px-5 text-xl flex bg-blue-navy text-white rounded-t-lg items-center justify-between">
+                            <div>Create New Milestone</div>
+                            <div
+                                className="flex cursor-pointer"
+                                onClick={() => setShowMilestoneForm(false)}
+                            >
+                                <IoIosCloseCircle className="size-6" />
+                            </div>
+                        </h2>
 
                         <div className="p-5 rounded-md bg-gray-100">
-                            <MilestoneForm projectId={projectId} />
+                            <MilestoneFormWrapper
+                                projectId={projectId}
+                                afterSubmit={() => {}}
+                            />
                         </div>
                     </div>
-            </Modal>}
-
+                </Modal>
+            )}
         </div>
-    )
+    );
 }

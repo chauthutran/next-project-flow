@@ -1,4 +1,4 @@
-import { STATUSES } from '@/models/Project';
+import { STATUS_KEYS } from '@/types/status';
 import * as yup from 'yup';
 
 export const milestoneSchema = yup.object({
@@ -11,7 +11,7 @@ export const milestoneSchema = yup.object({
         .required('Date is required'),
     status: yup
             .string()
-            .oneOf(STATUSES, 'Invalid status')
+            .oneOf(STATUS_KEYS, 'Invalid status')
             .required('Status is required'),
     meetingNotes: yup.string().required('Meeting Notes are required'),
     assignedTo: yup

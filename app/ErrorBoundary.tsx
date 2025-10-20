@@ -29,7 +29,7 @@ class ErroBoundary extends Component<Props, State> {
                 return this.props.fallback(this.state.error);
             }
             return (
-                <h2 className="text-[var(--error-text) text-2xl]">
+                <h2 className="text-[var(--error) text-2xl]">
                     ⚠️ Something went wrong.
                 </h2>
             );

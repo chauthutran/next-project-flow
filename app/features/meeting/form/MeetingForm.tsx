@@ -8,12 +8,13 @@ import SimpleFormMultipleSelect from '@/components/form/SimpleFormMultipleSelect
 import AccentButton from '@/components/buttons/AccentButton';
 import PrimaryButton from '@/components/buttons/PrimaryButton';
 import { useRouter } from 'next/navigation';
+import SimpleFormActions from '@/components/form/SimpleFormActions';
 
 interface Props {
-    loading?: boolean;
+    loading: boolean;
 }
 
-export default function MeetingForm({ loading = false }: Props) {
+export default function MeetingForm({ loading }: Props) {
     const { user } = useAuth();
     const navigate = useRouter();
 
@@ -22,6 +23,7 @@ export default function MeetingForm({ loading = false }: Props) {
     return (
         <>
             <SimpleFormTitle title="Meeting Details" />
+
             <SimpleForm aria-label="meeting form">
                 <SimpleFormFieldSet>
                     <SimpleFormInput
@@ -87,8 +89,8 @@ export default function MeetingForm({ loading = false }: Props) {
                         required
                         aria-required="true"
                         helpText="Hold Ctrl/Cmd to select multiple members"
-                    />  
-                    
+                    />
+
                     <SimpleFormInput
                         type="hidden"
                         label=""
@@ -98,19 +100,18 @@ export default function MeetingForm({ loading = false }: Props) {
                     />
                 </SimpleFormFieldSet>
 
-                <div className="flex justify-end gap-3 pt-4 whitespace-nowrap">
+                <SimpleFormActions>
                     <AccentButton
                         type="button"
                         title="Cancel"
                         onClick={() => navigate.push('/pages/projects')}
                     />
-
                     <PrimaryButton
                         type="submit"
-                        title={loading ? 'Saving...' : 'Save Project'}
+                        title={loading ? 'Saving...' : 'Save Milestone'}
                         disabled={loading}
                     />
-                </div>
+                </SimpleFormActions>
             </SimpleForm>
         </>
     );

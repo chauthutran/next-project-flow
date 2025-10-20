@@ -8,7 +8,6 @@ export async function GET(request: NextRequest) {
     try {
         // userInToken contains { id, email, role }
         const userInToken = await authenticateToken(request);
-            console.log("/app/api/auth/me/route.ts", userInToken);
         if(userInToken)
         {
             const user = await User.findById(userInToken.id).lean();

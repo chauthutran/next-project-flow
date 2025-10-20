@@ -3,19 +3,20 @@ import { SimpleForm } from '@/components/form/SimpleForm';
 import SimpleFormFieldSet from '@/components/form/SimpleFormFieldSet';
 import SimpleFormInput from '@/components/form/SimpleFormInput';
 import SimpleFormTextArea from '@/components/form/SimpleFormTextArea';
-import { STATUSES } from '@/models/Project';
 import SimpleFormSingleSelect from '@/components/form/SimpleFormSingleSelect';
 import useAuth from '@/hooks/useAuth';
 import SimpleFormMultipleSelect from '@/components/form/SimpleFormMultipleSelect';
 import SimpleFormTitle from '@/components/form/SimpleFormTitle';
 import AccentButton from '@/components/buttons/AccentButton';
 import { useRouter } from 'next/navigation';
+import { STATUS_KEYS } from '@/types/status';
+import SimpleFormActions from '@/components/form/SimpleFormActions';
 
 interface ProjectFormProps {
-    loading?: boolean;
+    loading: boolean;
 }
 
-export default function ProjectForm({ loading = false }: ProjectFormProps) {
+export default function ProjectForm({ loading }: ProjectFormProps) {
     const { user } = useAuth();
     const navigate = useRouter();
 
@@ -61,7 +62,7 @@ export default function ProjectForm({ loading = false }: ProjectFormProps) {
                     <SimpleFormSingleSelect
                         label="Status"
                         name="status"
-                        options={STATUSES.map((name) => ({
+                        options={STATUS_KEYS.map((name: string) => ({
                             label: name,
                             value: name
                         }))}
@@ -91,19 +92,19 @@ export default function ProjectForm({ loading = false }: ProjectFormProps) {
                         helpText="Hold Ctrl/Cmd to select multiple members"
                     />
 
-                    <div className="flex justify-end gap-3 pt-4 whitespace-nowrap">
+                    <SimpleFormActions>
+                        {' '}
                         <AccentButton
                             type="button"
                             title="Cancel"
-                            onClick={() => navigate.push("/pages/projects")}
+                            onClick={() => navigate.push('/pages/projects')}
                         />
-                        
                         <PrimaryButton
                             type="submit"
                             title={loading ? 'Saving...' : 'Save Project'}
                             disabled={loading}
                         />
-                    </div>
+                    </SimpleFormActions>
                 </SimpleFormFieldSet>
             </SimpleForm>
         </>

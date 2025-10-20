@@ -6,18 +6,29 @@ import {
     fetchProjectsByUserId,
     updateProject
 } from './projectThunk';
+import { ILoadingState } from '@/types/loadingState';
 
 interface ProjectState {
     projects: IProjectDTO[] | null;
-    loading: boolean;
-    error: string | null;
+    status: {
+        fetch: ILoadingState;
+        add: ILoadingState;
+        update: ILoadingState;
+        delete: ILoadingState;
+        deleteAll: ILoadingState;
+    };
     selectedProject: IProjectDTO | null;
 }
 
 const initialState: ProjectState = {
     projects: null,
-    loading: false,
-    error: null,
+    status: {
+        fetch: {},
+        add: {},
+        update: {},
+        delete: {},
+        deleteAll: {}
+    },
     selectedProject: null
 };
 
@@ -31,82 +42,113 @@ const projectSlice = createSlice({
         clearProjects: (state) => {
             state.projects = null;
             state.selectedProject = null;
+        },
+        setProjectFetchStatus: (
+            state,
+            action: PayloadAction<ILoadingState>
+        ) => {
+            state.status.fetch = action.payload;
         }
     },
     extraReducers: (builder) => {
         builder
             // Fetch
             .addCase(fetchProjectsByUserId.pending, (state) => {
-                state.loading = true;
-                state.error = null;
+                state.status.fetch.loading = 'Fetch projects ...';
+                state.status.fetch.success = null;
+                state.status.fetch.error = null;
             })
             .addCase(
                 fetchProjectsByUserId.fulfilled,
                 (state, action: PayloadAction<IProjectDTO[]>) => {
-                    state.loading = false;
+                    state.status.fetch.loading = null;
+                    state.status.fetch.success = 'Fetch project successully!';
                     state.projects = action.payload || [];
                 }
             )
             .addCase(fetchProjectsByUserId.rejected, (state, action) => {
-                state.loading = true;
-                state.error = action.error.message ?? 'Fetch projects failed';
+                state.status.fetch.loading = null;
+                state.status.fetch.error =
+                    action.error.message ?? 'Fetch projects failed';
             })
             // Create
             .addCase(addProject.pending, (state) => {
-                state.loading = true;
-                state.error = null;
+                state.status.add.loading = 'Adding ...';
+                state.status.add.success = null;
+                state.status.add.error = null;
             })
             .addCase(
                 addProject.fulfilled,
                 (state, action: PayloadAction<IProjectDTO>) => {
-                    state.loading = false;
                     state.selectedProject = action.payload;
                     state.projects!.push(action.payload);
+
+                    state.status.add.loading = null;
+                    state.status.add.success = 'Project added successfully!';
                 }
             )
             .addCase(addProject.rejected, (state, action) => {
-                state.loading = true;
-                state.error = action.error.message ?? 'Add projects failed';
+                state.status.add.loading = null;
+                state.status.add.error =
+                    action.error.message ?? 'Add project failed';
             })
             // Update
             .addCase(updateProject.pending, (state) => {
-                state.loading = true;
-                state.error = null;
+                state.status.update.loading = null;
+                state.status.update.error = null;
+                state.status.update.success = null;
             })
             .addCase(
                 updateProject.fulfilled,
                 (state, action: PayloadAction<IProjectDTO>) => {
                     state.selectedProject = action.payload;
-                    
+
                     const index = state.projects!.findIndex(
                         (p) => p._id! === action.payload._id
                     );
                     if (index >= 0) state.projects![index] = action.payload;
+
+                    state.status.update.loading = null;
+                    state.status.update.success =
+                        'Project updated successfully!';
                 }
             )
             .addCase(updateProject.rejected, (state, action) => {
-                state.loading = true;
-                state.error = action.error.message ?? 'Update project failed';
+                state.status.update.loading = null;
+                state.status.update.error =
+                    action.error.message ?? 'Update project failed';
             })
             // Delete
             .addCase(deleteProject.pending, (state) => {
-                state.loading = true;
-                state.error = null;
+                 // Start deleting project
+                state.status.delete.loading = 'Deleting project and data related...';
+                state.status.delete.success = null;
+                state.status.delete.error = null;
             })
             .addCase(
                 deleteProject.fulfilled,
                 (state, action: PayloadAction<IProjectDTO>) => {
+                    // Remove from the list
                     state.projects = state.projects!.filter(
                         (p) => p._id !== action.payload._id
                     );
+
+                    state.status.delete.loading = null;
+                    state.status.delete.success =
+                        'Project deleted successfully!';
                 }
             )
             .addCase(deleteProject.rejected, (state, action) => {
-                state.loading = true;
-                state.error = action.error.message ?? 'Delete project failed';
+                state.status.delete.loading = null;
+                state.status.delete.error =
+                    action.error.message ?? 'Delete project failed';
             });
     }
 });
 
-export const { selectProject, clearProjects } = projectSlice.actions;
+export const {
+    selectProject,
+    clearProjects,
+    setProjectFetchStatus,
+} = projectSlice.actions;
 export default projectSlice.reducer;

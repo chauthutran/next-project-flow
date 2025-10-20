@@ -2,14 +2,14 @@ import {
     createErrorResponse,
     createSuccessResponse
 } from '@/lib/utils/apiResponseUtil';
-import { fetchMeetingsByProjectId, saveMeeting } from '@/services/meetingService';
+import { deleteMeetingsByProjectId, fetchMeetingsByProjectId, saveMeeting } from '@/services/meetingService';
 
 export async function GET(
     request: Request,
-    { params }: { params: { project: string } }
+    { params }: { params: { id: string } }
 ) {
     try {
-        const projectId = params.project;
+        const projectId = params.id;
 
         const response = await fetchMeetingsByProjectId(projectId);
 
@@ -21,10 +21,10 @@ export async function GET(
 
 export async function POST(
     request: Request,
-    { params }: { params: { project: string } }
+    { params }: { params: { id: string } }
 ) {
     try {
-        const projectId = params.project;
+        const projectId = params.id;
 
         const payload = await request.json();
         payload.projectId = projectId;
@@ -36,3 +36,21 @@ export async function POST(
         return createErrorResponse(error);
     }
 }
+export async function DELETE(
+    request: Request,
+    { params }: { params: { id: string } }
+) {
+    try {
+        const projectId = params.id;
+
+        const payload = await request.json();
+        payload.projectId = projectId;
+
+        const response = await deleteMeetingsByProjectId(projectId);
+
+        return createSuccessResponse(response);
+    } catch (error) {
+        return createErrorResponse(error);
+    }
+}
+

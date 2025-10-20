@@ -1,7 +1,5 @@
 import mongoose from 'mongoose';
-import { JSONObject } from '../lib/definations';
 import connectToDatabase from '../lib/dbService/db';
-import * as Utils from '@/lib/utils';
 import Milestone, { IMilestone } from '@/models/Milestone';
 import { NotFoundError, ValidationError } from './errors';
 import { IMilestoneDTO } from '@/types/milestone';
@@ -102,6 +100,28 @@ export async function deleteMilestone(
 
         return deletedMilestone;
     } catch (error: any) {
-         handleError(error);
+        handleError(error);
+    }
+}
+
+export async function deleteMilestonesByProjectId(
+    projectId: string
+): Promise<IMilestone[] | undefined> {
+    if (!projectId) throw new ValidationError('Project ID is missing.');
+
+    try {
+        await connectToDatabase();
+
+        const deletedIMilestones = await Milestone.deleteMany({
+            projectId
+        }).lean<IMilestone[]>();
+
+        if (!deletedIMilestones) {
+            throw new NotFoundError('Milestones not found');
+        }
+
+        return deletedIMilestones;
+    } catch (error: any) {
+        handleError(error);
     }
 }

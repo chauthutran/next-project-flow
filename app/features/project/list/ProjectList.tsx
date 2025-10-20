@@ -1,8 +1,15 @@
 import { IProjectDTO } from '@/types/project';
 import ProjectTableHeader from './ProjectTableHeader';
 import ProjectTableRow from './ProjectTableRow';
+import useConfirmDialog from '@/components/dialog/useConfirmDialog';
 
-export default function ProjectList({ projects }: { projects: IProjectDTO[] }) {
+export default function ProjectList({
+    projects,
+    handleOnDeleteItem
+}: {
+    projects: IProjectDTO[];
+    handleOnDeleteItem: (project: IProjectDTO) => void;
+}) {
     return (
         <div className="overflow-hidden border border-[var(--border)] bg-[var(--card)]">
             <div className="h-[68vh] overflow-y-auto">
@@ -13,6 +20,7 @@ export default function ProjectList({ projects }: { projects: IProjectDTO[] }) {
                             <ProjectTableRow
                                 key={project._id}
                                 project={project}
+                                handleOnDeleteItem={handleOnDeleteItem}
                             />
                         ))}
                     </tbody>

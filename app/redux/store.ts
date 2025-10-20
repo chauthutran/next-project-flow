@@ -1,5 +1,4 @@
 import { configureStore } from '@reduxjs/toolkit';
-// import authReducer from './auth/authSlide';
 import projectReducer from './projects/projectSlide';
 import taskReducer from './tasks/taskSlides';
 import meetingReducer from './meetings/meetingSlides';
@@ -17,7 +16,6 @@ import { listenerMiddleware } from './listenerMiddleware';
 
 export const store = configureStore({
     reducer: {
-        // auth: authReducer,
         projects: projectReducer,
         tasks: taskReducer,
         meetings: meetingReducer,

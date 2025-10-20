@@ -1,23 +1,53 @@
 import { useProjects } from '@/hooks/useProjects';
-import ProjectList from './ProjectList';
-import useAuth from '@/hooks/useAuth';
 import PageTitle from '@/components/PageTitle';
 import { PiFolderLight } from 'react-icons/pi';
 import { useRouter } from 'next/navigation';
 import SecondButton from '@/components/buttons/SecondButton';
+import ProjectList from './list/ProjectList';
+import { deleteProject } from '@/redux/projects/projectThunk';
+import useConfirmDialog from '@/components/dialog/useConfirmDialog';
+import { IProjectDTO } from '@/types/project';
+import { useEffect } from 'react';
+import useNofifier from '@/hooks/useNotifier';
 
 export default function ProjectsPage() {
     const navigate = useRouter();
-    const { projects, loading, error } = useProjects();
+    const { projects, status: projectStatus, selectProject } =
+        useProjects();
+    const { openDialog, ConfirmDialogComponent } = useConfirmDialog({
+        title: 'Warning'
+    });
+    
+    useNofifier(projectStatus.delete);
 
-    if (projects === null || loading)
+    // useEffect(() => {
+    //     if(projectStatus.delete.)
+    //     {
+    //         alert('Project is deleted');
+    //     }
+    // }, [projectStatus.delete]);
+
+    const handleOpenNewForm = () => {
+        selectProject(null);
+        navigate.push('/pages/projects/new');
+    };
+    
+    const handleOnDeleteItem = async (project: IProjectDTO) => {
+        openDialog(
+            () => deleteProject(project._id!),
+            `Are you sure you want to delete "${project.name}"?`
+        );
+    };
+
+    // if (projects === null || loading.fetch)
+    if(projectStatus.fetch.loading)
         return (
             <div className="text-center py-10 text-[var(--muted)]">
                 Loading projects...
             </div>
         );
 
-    if (error)
+    if (projectStatus.fetch.error)
         return (
             <div className="text-center py-10 text-[var(--error)]">
                 Failed to load projects.
@@ -38,21 +68,28 @@ export default function ProjectsPage() {
         );
 
     return (
-        <div className="flex-1 overflow-y-auto bg-[var(--bg)]">
-            <PageTitle
-                title="Project Management"
-                subtitle="Track, organize, and manage your ongoing projects efficiently."
-                icon={<PiFolderLight />}
-                action={
-                    <SecondButton
-                        type="button"
-                        title="+ New Project"
-                        onClick={() => navigate.push('/pages/projects/new')}
-                    />
-                }
-            />
+        <>
+            {ConfirmDialogComponent}
+            
+            <div className="flex-1 overflow-y-auto bg-[var(--bg)]">
+                <PageTitle
+                    title="Project Management"
+                    subtitle="Track, organize, and manage your ongoing projects efficiently."
+                    icon={<PiFolderLight />}
+                    action={
+                        <SecondButton
+                            type="button"
+                            title="+ New Project"
+                            onClick={handleOpenNewForm}
+                        />
+                    }
+                />
 
-            <ProjectList projects={projects} />
-        </div>
+                <ProjectList
+                    projects={projects}
+                    handleOnDeleteItem={handleOnDeleteItem}
+                />
+            </div>
+        </>
     );
 }

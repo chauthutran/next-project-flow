@@ -26,21 +26,22 @@ export const AuthContext = createContext<AuthContextProps>({
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const [user, setUser] = useState<IUserDTO | null>(null);
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
     // Load user from token in cookies if any
     const loadUser = async () => {
-            try {
-                const res = await axios.get('/api/auth/me'); // endpoint reads token from cookie
-                setUser(res.data.data);
-            } catch (err: any) {
-                setUser(null);
-            } finally {
-                setLoading(false);
-            }
+        setLoading(true);
+        try {
+            const res = await axios.get('/api/auth/me'); // endpoint reads token from cookie
+            setUser(res.data.data);
+        } catch (err: any) {
+            setUser(null);
+        } finally {
+            setLoading(false);
         }
-        
+    };
+
     // Load user from token cookie on mount
     useEffect(() => {
         loadUser();

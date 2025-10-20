@@ -1,5 +1,4 @@
-import { ProjectStatus } from "@/models/Project";
-import mongoose from "mongoose";
+import { ProjectStatus } from "./status";
 
 export interface ITaskDTO {
     _id?: string;

@@ -87,7 +87,7 @@ input:disabled:hover {
     --primary-hover-light: rgba(37, 99, 235, 0.2);
     --primary-active: #1e40af;
     --primary-border: #60a5fa;
-    --primary-text: ##ffffff;
+    --primary-text: #ffffff;
     --primary-subtext: #060707;
 
     /* Secondary color - links, secondary buttons */

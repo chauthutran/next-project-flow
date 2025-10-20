@@ -1,36 +1,50 @@
-import { JSONObject } from "@/lib/definations";
-import useAuth from "@/hooks/useAuth";
-import MeetingForm from "./MeetingForm";
-import { IMeetingDTO } from "@/types/meeting";
-import withFormHandler from "@/hoc/withFormHandler";
-import { useMeetings } from "@/hooks/useMeetings";
-import { meetingSchema } from "./meetingSchema";
+import { JSONObject } from '@/lib/definations';
+import useAuth from '@/hooks/useAuth';
+import MeetingForm from './MeetingForm';
+import { IMeetingDTO } from '@/types/meeting';
+import withFormHandler from '@/hoc/withFormHandler';
+import { useMeetings } from '@/hooks/useMeetings';
+import { meetingSchema } from './meetingSchema';
 
-
-export default function MeetingFormWrapper({ projectId, data = null, afterSubmit = () => {} }: {projectId: string, data?: JSONObject | null, afterSubmit: () => void}) {
-
+export default function MeetingFormWrapper({
+    projectId,
+    data = null,
+    afterSubmit = () => {}
+}: {
+    projectId: string;
+    data?: JSONObject | null;
+    afterSubmit: () => void;
+}) {
     const { user } = useAuth();
-    const { selectedMeeting, addMeeting } = useMeetings();
+    const { selectedMeeting, addMeeting, updateMeeting, loading } =
+        useMeetings();
 
     const MeetingFormBasic = withFormHandler<IMeetingDTO>(MeetingForm, {
-           initialValues: { 
-               projectId: projectId,
-               name: selectedMeeting?.name || '',
-               description: selectedMeeting?.description || '',
-               date: selectedMeeting?.date || '',
-               participants: selectedMeeting?.assignedTo || [],
-               meetingNotes: selectedMeeting?.meetingNotes || "",
-               assignedTo: selectedMeeting?.assignedTo || [],
-               createdBy: user!._id!,
-           },
-           validationSchema: meetingSchema,
-           onSubmit: async (values) => {
-               await addMeeting(values);
-               afterSubmit();
-           }
-       });
+        initialValues: {
+            projectId: projectId,
+            name: selectedMeeting?.name || '',
+            description: selectedMeeting?.description || '',
+            date: selectedMeeting?.date.split('T')[0] || '',
+            participants: selectedMeeting?.assignedTo || [],
+            meetingNotes: selectedMeeting?.meetingNotes || '',
+            assignedTo: selectedMeeting?.assignedTo || [],
+            createdBy: user!._id!
+        },
+        validationSchema: meetingSchema,
+        getLoading: () => !!loading,
+        onSubmit: async (values) => {
+            if (selectedMeeting) {
+                const payload = {
+                    ...values,
+                    _id: selectedMeeting._id
+                };
+                await updateMeeting(payload);
+            } else {
+                await addMeeting(values);
+            }
+            afterSubmit();
+        }
+    });
 
-    return (
-       <MeetingFormBasic />
-    );
+    return <MeetingFormBasic />;
 }

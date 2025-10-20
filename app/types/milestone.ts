@@ -1,4 +1,4 @@
-import { ProjectStatus } from '@/models/Project';
+import { ProjectStatus } from "./status";
 
 export interface IMilestoneDTO {
     _id?: string;

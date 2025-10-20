@@ -4,16 +4,25 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 type ProjectStepperProps = {
     currentStep: number;
-    // onStepChange: (step: number) => void;
+    onStepChange: (step: number) => void;
 };
 
 const steps = ['Project Details', 'Tasks', 'Meetings', 'Milestones'];
 
 export default function ProjectStepper({
     currentStep,
-    // onStepChange
-}:
-ProjectStepperProps) {
+    onStepChange
+}: ProjectStepperProps) {
+    const handleBack = () => {
+        if (currentStep > 0) {
+            onStepChange(currentStep - 1);
+        }
+    };
+    const handleNext = () => {
+        if (currentStep < steps.length) {
+            onStepChange(currentStep + 1);
+        }
+    };
 
     return (
         <div className="mx-auto">
@@ -56,7 +65,7 @@ ProjectStepperProps) {
             </div>
 
             {/* Navigation Buttons */}
-            {/* <div className="flex justify-between mt-6">
+            <div className="flex justify-between mt-6">
                 <button
                     onClick={handleBack}
                     disabled={currentStep === 0}
@@ -74,7 +83,7 @@ ProjectStepperProps) {
                 >
                     {currentStep === steps.length - 1 ? 'Finish' : 'Next'}
                 </button>
-            </div> */}
+            </div>
         </div>
     );
 }

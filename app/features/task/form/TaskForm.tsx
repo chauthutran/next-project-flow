@@ -1,9 +1,3 @@
-import { JSONObject } from '@/lib/definations';
-import { useEffect, useState } from 'react';
-import * as Constant from '@/lib/constant';
-import * as Utils from '@/lib/utils';
-import { FaSpinner } from 'react-icons/fa';
-import { useProjects } from '@/hooks/useProjects';
 import useAuth from '@/hooks/useAuth';
 import SimpleFormTitle from '@/components/form/SimpleFormTitle';
 import { SimpleForm } from '@/components/form/SimpleForm';
@@ -11,17 +5,18 @@ import SimpleFormInput from '@/components/form/SimpleFormInput';
 import SimpleFormFieldSet from '@/components/form/SimpleFormFieldSet';
 import SimpleFormTextArea from '@/components/form/SimpleFormTextArea';
 import SimpleFormSingleSelect from '@/components/form/SimpleFormSingleSelect';
-import { STATUSES } from '@/models/Project';
+import { STATUS_KEYS } from '@/types/status';
 import SimpleFormMultipleSelect from '@/components/form/SimpleFormMultipleSelect';
 import AccentButton from '@/components/buttons/AccentButton';
 import PrimaryButton from '@/components/buttons/PrimaryButton';
 import { useRouter } from 'next/navigation';
+import SimpleFormActions from '@/components/form/SimpleFormActions';
 
 interface Props {
-    loading?: boolean;
+    loading: boolean;
 }
 
-export default function TaskForm({ loading = false }: Props) {
+export default function TaskForm({ loading }: Props) {
     const { user } = useAuth();
     const navigate = useRouter();
 
@@ -30,6 +25,7 @@ export default function TaskForm({ loading = false }: Props) {
     return (
         <>
             <SimpleFormTitle title="Task Details" />
+           
             <SimpleForm aria-label="task form">
                 <SimpleFormFieldSet>
                     <SimpleFormInput
@@ -65,7 +61,7 @@ export default function TaskForm({ loading = false }: Props) {
                     <SimpleFormSingleSelect
                         label="Status"
                         name="status"
-                        options={STATUSES.map((name) => ({
+                        options={STATUS_KEYS.map((name: string) => ({
                             label: name,
                             value: name
                         }))}
@@ -74,7 +70,7 @@ export default function TaskForm({ loading = false }: Props) {
                     />
 
                     <SimpleFormMultipleSelect
-                        label="assigned To"
+                        label="Assigned To"
                         name="assignedTo"
                         options={
                             teammembers.map((member) => ({
@@ -96,7 +92,7 @@ export default function TaskForm({ loading = false }: Props) {
                     />
                 </SimpleFormFieldSet>
 
-                <div className="flex justify-end gap-3 pt-4 whitespace-nowrap">
+                <SimpleFormActions>
                     <AccentButton
                         type="button"
                         title="Cancel"
@@ -108,7 +104,7 @@ export default function TaskForm({ loading = false }: Props) {
                         title={loading ? 'Saving...' : 'Save Project'}
                         disabled={loading}
                     />
-                </div>
+                </SimpleFormActions>
             </SimpleForm>
         </>
     );

@@ -1,44 +1,58 @@
-import { JSONObject } from "@/lib/definations";
-import TaskForm from "./form/TaskForm";
-import TaskList from "./TaskList";
-import { useState } from "react";
-import { GrFormAdd } from "react-icons/gr";
-import { IoIosAddCircle } from "react-icons/io";
-import Modal from "@/components/Modal";
-import { IoClose } from "react-icons/io5";
-import { IoIosCloseCircle } from "react-icons/io";
+import { JSONObject } from '@/lib/definations';
+import TaskForm from './form/TaskForm';
+import TaskList from './list/TaskList';
+import { useState } from 'react';
+import { GrFormAdd } from 'react-icons/gr';
+import { IoIosAddCircle } from 'react-icons/io';
+import Modal from '@/components/Modal';
+import { IoClose } from 'react-icons/io5';
+import { IoIosCloseCircle } from 'react-icons/io';
+import TaskFormWrapper from './form/TaskFormWrapper';
+import { useTasks } from '@/hooks/useTasks';
 
-
-export default function TaskPage({projectId, data}: {projectId: string, data: JSONObject}) {
-
-    const taskList = (data.tasks !== undefined ) ? data.tasks : [];
-    
+export default function TaskPage({ projectId }: { projectId: string }) {
+    const { tasks, loading } = useTasks();
     const [showTaskForm, setShowTaskForm] = useState(false);
 
+    if (loading || !tasks) return <div>Loading tasks... </div>;
+
     return (
-        <div className="bg-white w-full">
-            <h2 className="text-2xl font-semibold mb-6 flex space-x-3">
-                <div className="border-b-2 border-light-sky-blue pb-2 w-fit pr-5">Task List</div>
-                <div className="flex flex-1 items-end justify-end cursor-pointer hover:text-blue-500 text-royal-blue" onClick={() => setShowTaskForm(true)}><IoIosAddCircle className="size-10" /></div>
-            </h2>
+        <div>
+            <div className="flex items-center justify-between mb-4">
+                <h2 className="text-xl font-semibold text-gray-800">Task List</h2>
+                <button
+                    onClick={() => setShowTaskForm(true)}
+                    className="text-blue-600 hover:text-blue-800 flex items-center gap-1"
+                >
+                    <IoIosAddCircle className="size-5" />
+                    New
+                </button>
+            </div>
 
-            <TaskList projectId={projectId} data={taskList} />
+            <TaskList tasks={tasks} />
 
-            {showTaskForm && <Modal>
-                <div className="bg-white rounded-lg w-3/4">
-                    <h2 className="py-3 px-5 text-xl flex bg-blue-navy text-white rounded-t-lg items-center justify-between">
-                        <div>Create New Task</div>
-                        <div className="flex cursor-pointer" onClick={() => setShowTaskForm(false)}>
-                            <IoIosCloseCircle className="size-6" />
-                        </div>
-                    </h2>
+            {showTaskForm && (
+                <Modal>
+                    <div className="bg-white rounded-lg w-3/4">
+                        <h2 className="py-3 px-5 text-xl flex bg-blue-navy text-white rounded-t-lg items-center justify-between">
+                            <div>Create New Task</div>
+                            <div
+                                className="flex cursor-pointer"
+                                onClick={() => setShowTaskForm(false)}
+                            >
+                                <IoIosCloseCircle className="size-6" />
+                            </div>
+                        </h2>
 
                         <div className="p-5 rounded-md bg-gray-100">
-                            <TaskForm projectId={projectId} />
+                            <TaskFormWrapper
+                                projectId={projectId}
+                                afterSubmit={() => {}}
+                            />
                         </div>
                     </div>
-            </Modal>}
-
+                </Modal>
+            )}
         </div>
-    )
+    );
 }

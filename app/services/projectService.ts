@@ -1,16 +1,10 @@
 import mongoose from 'mongoose';
 import { JSONObject } from '../lib/definations';
 import connectToDatabase from '../lib/dbService/db';
-import Project, { IProject } from '@/models/Project';
-import Metting from '@/models/Meeting';
-import Milestone from '@/models/Milestone';
-import Task from '@/models/Task';
-import { IProjectDTO, ProjectDetailsDTO } from '@/types/project';
+import { IProjectDTO } from '@/types/project';
 import { NotFoundError, ValidationError } from './errors';
 import { handleError } from './errorUtils';
-import { IMeetingDTO } from '@/types/meeting';
-import { IMilestoneDTO } from '@/types/milestone';
-import { ITaskDTO } from '@/types/task';
+import Project, { IProject } from '@/models/Project';
 
 export async function fetchProjectsByUserId(
     userId: string
@@ -42,34 +36,17 @@ export async function fetchProjectsByUserId(
 
 export async function fetchProjectById(
     projectId: string
-): Promise<ProjectDetailsDTO | undefined> {
+): Promise<IProjectDTO | undefined> {
     if (!projectId) {
         throw new ValidationError('Project ID is required');
     }
 
     try {
-        const projectIdObj = new mongoose.Types.ObjectId(projectId);
-
         await connectToDatabase();
         const project = await Project.findById(projectId).lean<IProjectDTO>();
         if (!project) throw new NotFoundError('Project not found');
 
-        const meetings = await Metting.find({ projectId: projectIdObj }).lean<
-            IMeetingDTO[]
-        >();
-        const milestones = await Milestone.find({
-            projectId: projectIdObj
-        }).lean<IMilestoneDTO[]>();
-        const tasks = await Task.find({ projectId: projectIdObj }).lean<
-            ITaskDTO[]
-        >();
-
-        return {
-            project,
-            meetings,
-            milestones,
-            tasks
-        };
+        return project;
     } catch (error: any) {
         handleError(error);
     }

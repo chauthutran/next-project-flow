@@ -1,6 +1,9 @@
 import { IProjectDTO } from '@/types/project';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { deleteTasksByProjectId } from '../tasks/tasksThunk';
+import { deleteMeetingsByProjectId } from '../meetings/meetingsThunk';
+import { deleteMilestonesByProjectId } from '../milestones/milestonesThunk';
 
 export const fetchProjectsByUserId = createAsyncThunk<
     IProjectDTO[], // type of successful return
@@ -64,11 +67,23 @@ export const deleteProject = createAsyncThunk<
     IProjectDTO, // return type
     string, // argument type
     { rejectValue: string } // type of custom error payload
->('projects/delete', async (id: string, { rejectWithValue }) => {
+>('projects/delete', async (id: string, { dispatch, rejectWithValue }) => {
     try {
+        // Delete related data first
+        await Promise.all([
+            dispatch(deleteTasksByProjectId(id)).unwrap(),
+            dispatch(deleteMeetingsByProjectId(id)).unwrap(),
+            dispatch(deleteMilestonesByProjectId(id)).unwrap()
+        ]);
+
+        // Then delete the project itself
         const reponse = await axios.delete(`/api/projects/${id}`);
+
+        // Return deleted project
         return reponse.data.data;
     } catch (error: any) {
-        return rejectWithValue(error.response.data.message);
+        return rejectWithValue(
+            error.response.data.message || 'Failed to delete project'
+        );
     }
 });

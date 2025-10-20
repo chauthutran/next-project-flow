@@ -1,6 +1,12 @@
 import { IMeetingDTO } from '@/types/meeting';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { addMeeting, fetchMeetingsByProjectId, updateMeeting, deleteMeeting } from './meetingsThunk';
+import {
+    addMeeting,
+    fetchMeetingsByProjectId,
+    updateMeeting,
+    deleteMeeting,
+    deleteMeetingsByProjectId
+} from './meetingsThunk';
 
 interface MeetingState {
     meetings: IMeetingDTO[] | null;
@@ -99,6 +105,24 @@ const meetingSlice = createSlice({
             .addCase(deleteMeeting.rejected, (state, action) => {
                 state.loading = true;
                 state.error = action.error.message ?? 'Delete meeting failed';
+            })
+            // Delete tasks by Project-ID
+            .addCase(deleteMeetingsByProjectId.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(
+                deleteMeetingsByProjectId.fulfilled,
+                (state, action: PayloadAction<IMeetingDTO[]>) => {
+                    const deletedIds = action.payload.map((item) => item._id);
+                    state.meetings = state.meetings!.filter(
+                        (t) => !deletedIds.includes(t._id)
+                    );
+                }
+            )
+            .addCase(deleteMeetingsByProjectId.rejected, (state, action) => {
+                state.loading = true;
+                state.error = action.error.message ?? 'Delete meetings failed';
             });
     }
 });

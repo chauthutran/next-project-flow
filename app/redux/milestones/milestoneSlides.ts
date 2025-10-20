@@ -1,6 +1,12 @@
 import { IMilestoneDTO } from '@/types/milestone';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { addMilestone, fetchMilestonesByProjectId, updateMilestone, deleteMilestone } from './milestonesThunk';
+import {
+    addMilestone,
+    fetchMilestonesByProjectId,
+    updateMilestone,
+    deleteMilestone,
+    deleteMilestonesByProjectId
+} from './milestonesThunk';
 
 interface MilestoneState {
     milestones: IMilestoneDTO[] | null;
@@ -20,7 +26,10 @@ const milestoneSlice = createSlice({
     name: 'milestones',
     initialState,
     reducers: {
-        selectMilestone: (state, action: PayloadAction<IMilestoneDTO | null>) => {
+        selectMilestone: (
+            state,
+            action: PayloadAction<IMilestoneDTO | null>
+        ) => {
             state.selectedMilestone = action.payload;
         },
         clearMilestones: (state) => {
@@ -99,6 +108,24 @@ const milestoneSlice = createSlice({
             .addCase(deleteMilestone.rejected, (state, action) => {
                 state.loading = true;
                 state.error = action.error.message ?? 'Delete milestone failed';
+            })
+            // Delete milestone by Project-ID
+            .addCase(deleteMilestonesByProjectId.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(
+                deleteMilestonesByProjectId.fulfilled,
+                (state, action: PayloadAction<IMilestoneDTO[]>) => {
+                    const deletedIds = action.payload.map((item) => item._id);
+                    state.milestones = state.milestones!.filter(
+                        (t) => !deletedIds.includes(t._id)
+                    );
+                }
+            )
+            .addCase(deleteMilestonesByProjectId.rejected, (state, action) => {
+                state.loading = true;
+                state.error = action.error.message ?? 'Delete milestones failed';
             });
     }
 });
