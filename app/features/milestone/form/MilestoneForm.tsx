@@ -104,7 +104,6 @@ export default function MilestoneForm({ loading = false }: Props) {
                         type="submit"
                         title={loading ? 'Saving...' : 'Save Milestone'}
                         disabled={loading}
-                        // onClick={() => console.log("clicked")}
                     />
                 </SimpleFormActions>
             </SimpleForm>

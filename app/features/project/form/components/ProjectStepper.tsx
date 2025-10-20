@@ -1,88 +1,68 @@
-'use client';
+import { Stepper, Step, StepLabel, Button } from '@mui/material';
+import { useState } from 'react';
+import {
+    FaCheckCircle,
+    FaClipboardList,
+    FaUsers,
+    FaFlag
+} from 'react-icons/fa';
 
-import { motion, AnimatePresence } from 'framer-motion';
+type Step = {
+    label: string;
+    icon: React.ElementType;
+};
 
 type ProjectStepperProps = {
-    currentStep: number;
-    onStepChange: (step: number) => void;
+    activeStep: number;
+    setActiveStep: (step: number) => void;
 };
+
+// const steps: Step[] = [
+//     { label: 'Project Details', icon: FaClipboardList },
+//     { label: 'Tasks', icon: FaCheckCircle },
+//     { label: 'Meetings', icon: FaUsers },
+//     { label: 'Milestones', icon: FaFlag }
+// ];
 
 const steps = ['Project Details', 'Tasks', 'Meetings', 'Milestones'];
 
 export default function ProjectStepper({
-    currentStep,
-    onStepChange
+    activeStep,
+    setActiveStep
 }: ProjectStepperProps) {
-    const handleBack = () => {
-        if (currentStep > 0) {
-            onStepChange(currentStep - 1);
-        }
-    };
-    const handleNext = () => {
-        if (currentStep < steps.length) {
-            onStepChange(currentStep + 1);
-        }
-    };
-
     return (
-        <div className="mx-auto">
-            {/* Stepper Header */}
-            <div className="flex items-center justify-between mb-8">
-                {steps.map((label, i) => (
-                    <div key={label} className="flex-1 flex items-center">
-                        <div
-                            className={`flex items-center justify-center w-9 h-9 rounded-full border-2 font-semibold text-sm
-                ${
-                    i < currentStep
-                        ? 'bg-green-500 border-green-500 text-white'
-                        : i === currentStep
-                        ? 'bg-blue-500 border-blue-500 text-white'
-                        : 'border-gray-300 text-gray-400'
-                }`}
-                        >
-                            {i < currentStep ? '✓' : i + 1}
-                        </div>
-                        <div
-                            className={`ml-2 text-sm font-medium ${
-                                i === currentStep
-                                    ? 'text-blue-600'
-                                    : 'text-gray-500'
-                            }`}
-                        >
-                            {label}
-                        </div>
-                        {i < steps.length - 1 && (
-                            <div
-                                className={`flex-1 h-[2px] mx-2 ${
-                                    i < currentStep
-                                        ? 'bg-green-500'
-                                        : 'bg-gray-300'
-                                }`}
-                            />
-                        )}
-                    </div>
+        <div className="w-full">
+            <Stepper activeStep={activeStep} alternativeLabel>
+                {steps.map((label) => (
+                    <Step
+                        key={label}
+                        //             sx={{
+                        //   fontWeight: activeStep === index ? 'bold' : 'normal',
+                        //   color: activeStep === index ? 'primary.main' : 'text.secondary',
+                        // }}
+                    >
+                        <StepLabel>{label}</StepLabel>
+                    </Step>
                 ))}
-            </div>
+            </Stepper>
 
             {/* Navigation Buttons */}
-            <div className="flex justify-between mt-6">
-                <button
-                    onClick={handleBack}
-                    disabled={currentStep === 0}
-                    className="px-4 py-2 bg-gray-200 rounded-md disabled:opacity-50"
+            <div className="flex justify-between my-3">
+                <Button
+                    disabled={activeStep === 0}
+                    onClick={() => setActiveStep(activeStep - 1)}
                 >
                     Back
-                </button>
-                <button
-                    onClick={handleNext}
-                    className={`px-4 py-2 rounded-md text-white ${
-                        currentStep === steps.length - 1
-                            ? 'bg-green-600 hover:bg-green-700'
-                            : 'bg-blue-600 hover:bg-blue-700'
-                    }`}
+                </Button>
+                <Button
+                    onClick={() =>
+                        setActiveStep(
+                            Math.min(activeStep + 1, steps.length - 1)
+                        )
+                    }
                 >
-                    {currentStep === steps.length - 1 ? 'Finish' : 'Next'}
-                </button>
+                    {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+                </Button>
             </div>
         </div>
     );

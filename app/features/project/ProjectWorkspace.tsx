@@ -70,8 +70,8 @@ export default function ProjectWorkspace() {
 
             <div className="p-6">
                 <ProjectStepper
-                    currentStep={currentStep}
-                    onStepChange={setCurrentStep}
+                    activeStep={currentStep}
+                    setActiveStep={setCurrentStep}
                 />
 
                 <div className="p-6 bg-[var(--card)] text-[var(--card-text)] rounded-lg border border-[var(--border)]">
