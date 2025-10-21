@@ -8,18 +8,21 @@ import { meetingSchema } from './meetingSchema';
 
 export default function MeetingFormWrapper({
     projectId,
-    data = null,
+    onClose,
     afterSubmit = () => {}
 }: {
     projectId: string;
-    data?: JSONObject | null;
+    onClose: () => void;
     afterSubmit: () => void;
 }) {
     const { user } = useAuth();
     const { selectedMeeting, addMeeting, updateMeeting, loading } =
         useMeetings();
 
-    const MeetingFormBasic = withFormHandler<IMeetingDTO>(MeetingForm, {
+    const MeetingFormBasic = withFormHandler<
+        IMeetingDTO,
+        { onClose: () => void }
+    >(MeetingForm, {
         initialValues: {
             projectId: projectId,
             name: selectedMeeting?.name || '',
@@ -46,5 +49,5 @@ export default function MeetingFormWrapper({
         }
     });
 
-    return <MeetingFormBasic />;
+    return <MeetingFormBasic onClose={onClose} />;
 }

@@ -8,12 +8,11 @@ export const milestoneSchema = yup.object({
     dueDate: yup
         .string()
         .matches(/^\d{4}-\d{2}-\d{2}$/, 'Invalid date format (YYYY-MM-DD)')
-        .required('Date is required'),
+        .required('Due Date is required'),
     status: yup
             .string()
             .oneOf(STATUS_KEYS, 'Invalid status')
             .required('Status is required'),
-    meetingNotes: yup.string().required('Meeting Notes are required'),
     assignedTo: yup
         .array()
         .of(

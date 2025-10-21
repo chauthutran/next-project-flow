@@ -8,17 +8,21 @@ import SimpleFormSingleSelect from '@/components/form/SimpleFormSingleSelect';
 import SimpleFormMultipleSelect from '@/components/form/SimpleFormMultipleSelect';
 import AccentButton from '@/components/buttons/AccentButton';
 import PrimaryButton from '@/components/buttons/PrimaryButton';
-import { useRouter } from 'next/navigation';
 import { STATUS_KEYS } from '@/types/status';
 import SimpleFormActions from '@/components/form/SimpleFormActions';
 
 interface Props {
-    loading?: boolean;
+    onClose: () => void;
+    loading: boolean;
+    handleReset: () => void;
 }
 
-export default function MilestoneForm({ loading = false }: Props) {
+export default function MilestoneForm({
+    onClose,
+    loading,
+    handleReset
+}: Props) {
     const { user } = useAuth();
-    const navigate = useRouter();
 
     const teammembers = user?.teamMembers || [];
 
@@ -98,8 +102,15 @@ export default function MilestoneForm({ loading = false }: Props) {
                     <AccentButton
                         type="button"
                         title="Cancel"
-                        onClick={() => navigate.push('/pages/projects')}
+                        onClick={onClose}
                     />
+
+                    <AccentButton
+                        type="button"
+                        title="Reset"
+                        onClick={handleReset}
+                    />
+
                     <PrimaryButton
                         type="submit"
                         title={loading ? 'Saving...' : 'Save Milestone'}

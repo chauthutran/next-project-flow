@@ -101,7 +101,7 @@ export default function ProjectForm({ loading }: ProjectFormProps) {
                         />
                         <PrimaryButton
                             type="submit"
-                            title={loading ? 'Saving...' : 'Save Project'}
+                            title={loading ? 'Saving...' : 'Save & Next'}
                             disabled={loading}
                         />
                     </SimpleFormActions>

@@ -6,14 +6,12 @@ interface Props<T> {
     initialValues: T;
     validationSchema: yup.ObjectSchema<any>;
     onSubmit: (formValues: T) => Promise<void> | void;
-    onCancel?: () => void;
 }
 
 export function useFormHandler<T extends FormikValues>({
     initialValues,
     validationSchema,
     onSubmit,
-    onCancel
 }: Props<T>) {
 
     const formik = useFormik({
@@ -22,10 +20,9 @@ export function useFormHandler<T extends FormikValues>({
         onSubmit,
     });
 
-    const handleCancel = () => {
+    const handleReset = () => {
         formik.resetForm();
-        onCancel?.();
     };
 
-    return { formik, handleCancel };
+    return { formik, handleReset };
 }

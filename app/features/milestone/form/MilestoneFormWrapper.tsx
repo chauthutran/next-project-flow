@@ -7,16 +7,21 @@ import { useMilestones } from '@/hooks/useMilestones';
 
 export default function MilestoneFormWrapper({
     projectId,
+    onClose,
     afterSubmit = () => {}
 }: {
     projectId: string;
+    onClose: () => void;
     afterSubmit: () => void;
 }) {
     const { user } = useAuth();
     const { selectedMilestone, addMilestone, updateMilestone, loading } =
         useMilestones();
 
-    const MilestoneFormBasic = withFormHandler<IMilestoneDTO>(MilestoneForm, {
+    const MilestoneFormBasic = withFormHandler<
+        IMilestoneDTO,
+        { onClose: () => void }
+    >(MilestoneForm, {
         initialValues: {
             projectId: projectId,
             name: selectedMilestone?.name || '',
@@ -29,7 +34,7 @@ export default function MilestoneFormWrapper({
         validationSchema: milestoneSchema,
         getLoading: () => !!loading,
         onSubmit: async (values) => {
-            console.log("=== submit MilestoneFormBasic");
+            console.log('=== submit MilestoneFormBasic');
             if (selectedMilestone) {
                 const payload = {
                     ...values,
@@ -43,5 +48,5 @@ export default function MilestoneFormWrapper({
         }
     });
 
-    return <MilestoneFormBasic />;
+    return <MilestoneFormBasic onClose={onClose} />;
 }

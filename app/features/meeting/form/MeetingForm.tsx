@@ -12,17 +12,18 @@ import SimpleFormActions from '@/components/form/SimpleFormActions';
 
 interface Props {
     loading: boolean;
+    onClose: () => void;
+    handleReset: () => void;
 }
 
-export default function MeetingForm({ loading }: Props) {
+export default function MeetingForm({ loading, onClose, handleReset }: Props) {
     const { user } = useAuth();
-    const navigate = useRouter();
 
     const teammembers = user?.teamMembers || [];
 
     return (
         <>
-            <SimpleFormTitle title="Meeting Details" />
+            <SimpleFormTitle title="Meeting Form" />
 
             <SimpleForm aria-label="meeting form">
                 <SimpleFormFieldSet>
@@ -104,8 +105,15 @@ export default function MeetingForm({ loading }: Props) {
                     <AccentButton
                         type="button"
                         title="Cancel"
-                        onClick={() => navigate.push('/pages/projects')}
+                        onClick={onClose}
                     />
+
+                    <AccentButton
+                        type="button"
+                        title="Reset"
+                        onClick={handleReset}
+                    />
+
                     <PrimaryButton
                         type="submit"
                         title={loading ? 'Saving...' : 'Save Milestone'}

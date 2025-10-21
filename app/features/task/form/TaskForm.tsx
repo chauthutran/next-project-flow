@@ -9,23 +9,23 @@ import { STATUS_KEYS } from '@/types/status';
 import SimpleFormMultipleSelect from '@/components/form/SimpleFormMultipleSelect';
 import AccentButton from '@/components/buttons/AccentButton';
 import PrimaryButton from '@/components/buttons/PrimaryButton';
-import { useRouter } from 'next/navigation';
 import SimpleFormActions from '@/components/form/SimpleFormActions';
 
 interface Props {
+    onClose: () => void;
     loading: boolean;
+    handleReset: () => void;
 }
 
-export default function TaskForm({ loading }: Props) {
+export default function TaskForm({ loading, onClose, handleReset }: Props) {
     const { user } = useAuth();
-    const navigate = useRouter();
 
     const teammembers = user?.teamMembers || [];
 
     return (
         <>
-            <SimpleFormTitle title="Task Details" />
-           
+            <SimpleFormTitle title="Task Form" />
+
             <SimpleForm aria-label="task form">
                 <SimpleFormFieldSet>
                     <SimpleFormInput
@@ -96,7 +96,13 @@ export default function TaskForm({ loading }: Props) {
                     <AccentButton
                         type="button"
                         title="Cancel"
-                        onClick={() => navigate.push('/pages/projects')}
+                        onClick={onClose}
+                    />
+
+                    <AccentButton
+                        type="button"
+                        title="Reset"
+                        onClick={handleReset}
                     />
 
                     <PrimaryButton

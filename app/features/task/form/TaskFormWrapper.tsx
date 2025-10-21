@@ -7,40 +7,45 @@ import { taskSchema } from './taskSchema';
 
 export default function TaskFormWrapper({
     projectId,
+    onClose,
     afterSubmit = () => {}
 }: {
     projectId: string;
+    onClose: () => void;
     afterSubmit: () => void;
 }) {
     const { user } = useAuth();
     const { selectedTask, addTask, updateTask, loading } = useTasks();
 
-    const TaskFormBasic = withFormHandler<ITaskDTO>(TaskForm, {
-        initialValues: {
-            projectId: projectId,
-            name: selectedTask?.name || '',
-            description: selectedTask?.description || '',
-            startDate: selectedTask?.startDate.split('T')[0] || '',
-            endDate: selectedTask?.endDate.split('T')[0] || '',
-            status: selectedTask?.status || 'not_started',
-            createdBy: user!._id!,
-            assignedTo: selectedTask?.assignedTo || []
-        },
-        validationSchema: taskSchema,
-        getLoading: () => !!loading,
-        onSubmit: async (values) => {
-            if (selectedTask) {
-                const payload = {
-                    ...values,
-                    _id: selectedTask._id
-                };
-                await updateTask(payload);
-            } else {
-                await addTask(values);
+    const TaskFormBasic = withFormHandler<ITaskDTO, { onClose: () => void }>(
+        TaskForm,
+        {
+            initialValues: {
+                projectId: projectId,
+                name: selectedTask?.name || '',
+                description: selectedTask?.description || '',
+                startDate: selectedTask?.startDate.split('T')[0] || '',
+                endDate: selectedTask?.endDate.split('T')[0] || '',
+                status: selectedTask?.status || 'not_started',
+                createdBy: user!._id!,
+                assignedTo: selectedTask?.assignedTo || []
+            },
+            validationSchema: taskSchema,
+            getLoading: () => !!loading,
+            onSubmit: async (values) => {
+                if (selectedTask) {
+                    const payload = {
+                        ...values,
+                        _id: selectedTask._id
+                    };
+                    await updateTask(payload);
+                } else {
+                    await addTask(values);
+                }
+                afterSubmit();
             }
-            afterSubmit();
         }
-    });
+    );
 
-    return <TaskFormBasic />;
+    return <TaskFormBasic onClose={onClose} />;
 }
