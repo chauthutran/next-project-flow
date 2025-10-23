@@ -1,9 +1,13 @@
-import withFormHandler from '@/hoc/withFormHandler';
+import withFormHandler from '@/hoc/formHandler/withFormHandler';
 import useAuth from '@/hooks/useAuth';
 import ProjectForm from './ProjectForm';
 import { IProjectDTO } from '@/types/project';
 import { projectSchema } from './projectSchema';
 import { useProjects } from '@/hooks/useProjects';
+import PageTitle from '@/components/PageTitle';
+import { PROJECT_STEPS } from '../ProjectWorkspace';
+import { FaClipboardList } from 'react-icons/fa';
+import useNofifier from '@/hooks/useNotifier';
 
 export default function ProjectFormWrapper({
     afterSubmit = () => {}
@@ -11,8 +15,11 @@ export default function ProjectFormWrapper({
     afterSubmit: () => void;
 }) {
     const { user } = useAuth();
-    const { selectedProject, addProject, updateProject , status} = useProjects();
+    const { selectedProject, addProject, updateProject, status } =
+        useProjects();
 
+    useNofifier(status.update);
+    
     const ProjectFormBasic = withFormHandler<IProjectDTO>(ProjectForm, {
         initialValues: {
             name: selectedProject?.name || '',
@@ -25,7 +32,9 @@ export default function ProjectFormWrapper({
         },
         validationSchema: projectSchema,
         getLoading: () => {
-            return (selectedProject) ? !!status.update.loading : !!status.add.loading;
+            return selectedProject
+                ? !!status.update.loading
+                : !!status.add.loading;
         },
         onSubmit: async (values) => {
             if (selectedProject) {
@@ -41,7 +50,18 @@ export default function ProjectFormWrapper({
         }
     });
 
+    const projectTitleInfo = PROJECT_STEPS[0];
+    const IconComponent = projectTitleInfo.icon;
+
     return (
+        <>
+            <PageTitle
+                title={projectTitleInfo.label}
+                subtitle={projectTitleInfo.description}
+                icon={<IconComponent />}
+            />
+
             <ProjectFormBasic />
+        </>
     );
 }

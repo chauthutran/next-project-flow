@@ -30,10 +30,8 @@ export async function DELETE(
     try {
         const response = await deleteTask(id);
 
-        createSuccessResponse(response);
-
-        return Response.json(response, { status: 200 });
+        return createSuccessResponse(response);
     } catch (error: any) {
-        createErrorResponse(error);
+        return createErrorResponse(error);
     }
 }

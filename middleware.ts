@@ -3,7 +3,7 @@ import { authenticateAccount, authenticateToken } from '@/lib/utils/authUtils';
 
 export async function middleware(request: NextRequest) {
     const { pathname } = request.nextUrl;
-    
+
     // ✅ Skip authentication for login and register routes
     if (
         pathname.startsWith('/api/auth/login') ||
@@ -11,7 +11,7 @@ export async function middleware(request: NextRequest) {
     ) {
         return NextResponse.next();
     }
-    
+
     // ✅ Try cookie token first
     const tokenIsValid = await isTokenValid(request);
     if (tokenIsValid) return NextResponse.next();
@@ -21,7 +21,10 @@ export async function middleware(request: NextRequest) {
     if (basicAuthIsValid) return NextResponse.next();
 
     // ❌ If both fail → block the request
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    return NextResponse.json(
+        { error: { message: 'Unauthorized' } },
+        { status: 401 }
+    );
 }
 
 // Helper: check token validity

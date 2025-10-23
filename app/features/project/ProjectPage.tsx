@@ -9,29 +9,38 @@ import useConfirmDialog from '@/components/dialog/useConfirmDialog';
 import { IProjectDTO } from '@/types/project';
 import { useEffect } from 'react';
 import useNofifier from '@/hooks/useNotifier';
+import { useAppSelector } from '@/redux/hook';
 
 export default function ProjectsPage() {
     const navigate = useRouter();
-    const { projects, status: projectStatus, selectProject } =
-        useProjects();
+    const { projects, status, selectProject } = useProjects();
     const { openDialog, ConfirmDialogComponent } = useConfirmDialog({
         title: 'Warning'
     });
-    
-    useNofifier(projectStatus.delete);
 
+    //// Monitor update status changes
+    // const statusUpdate = useAppSelector(
+    //     (state) => state.projects.status.update
+    // );
     // useEffect(() => {
-    //     if(projectStatus.delete.)
-    //     {
-    //         alert('Project is deleted');
-    //     }
-    // }, [projectStatus.delete]);
+    //     console.log('Update status changed:', status);
+    // }, [status]);
+    
+    const statusUpdate = useAppSelector(state => state.projects.status.update);
+
+useEffect(() => {
+    console.log("Update status changed:", statusUpdate);
+}, [statusUpdate]);
+
+    // ===================================
+
+    // useNofifier(projectStatus.update);
 
     const handleOpenNewForm = () => {
         selectProject(null);
         navigate.push('/pages/projects/new');
     };
-    
+
     const handleOnDeleteItem = async (project: IProjectDTO) => {
         openDialog(
             () => deleteProject(project._id!),
@@ -39,15 +48,17 @@ export default function ProjectsPage() {
         );
     };
 
+    console.log('======= projectStatus.update', status.update);
+
     // if (projects === null || loading.fetch)
-    if(projectStatus.fetch.loading)
+    if (status.fetch.loading)
         return (
             <div className="text-center py-10 text-[var(--muted)]">
                 Loading projects...
             </div>
         );
 
-    if (projectStatus.fetch.error)
+    if (status.fetch.error)
         return (
             <div className="text-center py-10 text-[var(--error)]">
                 Failed to load projects.
@@ -70,7 +81,7 @@ export default function ProjectsPage() {
     return (
         <>
             {ConfirmDialogComponent}
-            
+
             <div className="flex-1 overflow-y-auto bg-[var(--bg)]">
                 <PageTitle
                     title="Project Management"

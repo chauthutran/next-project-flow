@@ -2,7 +2,8 @@ import {
     addProject,
     fetchProjectsByUserId,
     updateProject,
-    deleteProject
+    deleteProject,
+    fetchProjectById
 } from '@/redux/projects/projectThunk';
 import { AppDispatch, RootState } from '@/redux/store';
 import { IProjectDTO } from '@/types/project';
@@ -31,16 +32,20 @@ export function useProjects() {
         dispatch(fetchProjectsByUserId(userId));
     }, [dispatch, userId, projects]);
 
+    const handleFetchProject = async (projectId: string) => {
+        dispatch(fetchProjectById(projectId));
+    };
+    
     const handleAddProject = async (project: IProjectDTO) => {
-        return await dispatch(addProject(project));
+        dispatch(addProject(project));
     };
 
     const handleUpdateProject = async (project: IProjectDTO) => {
-        return await dispatch(updateProject(project));
+        const result = await dispatch(updateProject(project));
     };
 
     const handleDeleteProject = async (projectId: string) => {
-        return await dispatch(deleteProject(projectId));
+        dispatch(deleteProject(projectId));
     };
 
     const handleSelectProject = (project: IProjectDTO | null) => {
@@ -50,7 +55,6 @@ export function useProjects() {
     const handleClearProjects = () => {
         dispatch(clearProjectsAction());
     };
-    
 
     return {
         projects,
@@ -58,6 +62,7 @@ export function useProjects() {
         status,
         selectProject: handleSelectProject,
         clearProjects: handleClearProjects,
+        fetchProjectById: handleFetchProject,
         addProject: handleAddProject,
         updateProject: handleUpdateProject,
         deleteProject: handleDeleteProject

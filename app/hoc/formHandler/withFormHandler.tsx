@@ -1,12 +1,12 @@
-import { useFormHandler } from '@/hooks/useFormHandler';
-import { FormikProvider, FormikValues } from 'formik';
+import { IUseFormHandler, useFormHandler } from '@/hoc/formHandler/useFormHandler';
+import { FormikHelpers, FormikProvider, FormikValues } from 'formik';
 import * as yup from 'yup';
 
 interface WithFormHandlerOptions<T extends FormikValues> {
     initialValues: T;
     validationSchema?: yup.ObjectSchema<any>;
     getLoading?: () => boolean;
-    onSubmit: (formValues: T) => Promise<void> | void;
+    onSubmit: (formValues: T, formikHelpers: FormikHelpers<T>) => Promise<void> | void;
 }
 
 /**
@@ -30,7 +30,7 @@ export default function withFormHandler<
     options: WithFormHandlerOptions<T>
 ) {
     return function FormHandlerHOC(props: P) {
-        const { formik, handleReset } = useFormHandler<T>(options);
+        const { formik, handleReset } = useFormHandler<T>(options as IUseFormHandler<T>);
         const loading = options.getLoading ? options.getLoading() : false; // dynamic loading
 
         return (

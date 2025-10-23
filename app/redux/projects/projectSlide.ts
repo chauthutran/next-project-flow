@@ -3,6 +3,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {
     addProject,
     deleteProject,
+    fetchProjectById,
     fetchProjectsByUserId,
     updateProject
 } from './projectThunk';
@@ -62,7 +63,7 @@ const projectSlice = createSlice({
                 fetchProjectsByUserId.fulfilled,
                 (state, action: PayloadAction<IProjectDTO[]>) => {
                     state.status.fetch.loading = null;
-                    state.status.fetch.success = 'Fetch project successully!';
+                    state.status.fetch.success = 'Fetch projects successully!';
                     state.projects = action.payload || [];
                 }
             )
@@ -71,6 +72,27 @@ const projectSlice = createSlice({
                 state.status.fetch.error =
                     action.error.message ?? 'Fetch projects failed';
             })
+            
+            // Fetch a project by ID
+            .addCase(fetchProjectById.pending, (state) => {
+                state.status.fetch.loading = 'Fetching project ...';
+                state.status.fetch.success = null;
+                state.status.fetch.error = null;
+            })
+            .addCase(
+                fetchProjectById.fulfilled,
+                (state, action: PayloadAction<IProjectDTO>) => {
+                    state.status.fetch.loading = null;
+                    state.status.fetch.success = 'Fetch project successully!';
+                    state.selectedProject = action.payload;
+                }
+            )
+            .addCase(fetchProjectById.rejected, (state, action) => {
+                state.status.fetch.loading = null;
+                state.status.fetch.error =
+                    action.error.message ?? 'Fetch project failed';
+            })
+            
             // Create
             .addCase(addProject.pending, (state) => {
                 state.status.add.loading = 'Adding ...';
@@ -94,34 +116,42 @@ const projectSlice = createSlice({
             })
             // Update
             .addCase(updateProject.pending, (state) => {
-                state.status.update.loading = null;
-                state.status.update.error = null;
-                state.status.update.success = null;
+                state.status.update = {
+                    loading: 'Updating project ...',
+                    error: null,
+                    success: null
+                };
             })
             .addCase(
                 updateProject.fulfilled,
                 (state, action: PayloadAction<IProjectDTO>) => {
+                    // Set selected project
                     state.selectedProject = action.payload;
 
-                    const index = state.projects!.findIndex(
-                        (p) => p._id! === action.payload._id
+                    // Update in the list
+                    state.projects = state.projects!.map(p =>
+                        p._id === action.payload._id ? action.payload : p
                     );
-                    if (index >= 0) state.projects![index] = action.payload;
-
-                    state.status.update.loading = null;
-                    state.status.update.success =
-                        'Project updated successfully!';
+                    // Update state
+                    state.status.update = {
+                        loading: null,
+                        error: null,
+                        success: 'Project updated successfully!'
+                    };
                 }
             )
             .addCase(updateProject.rejected, (state, action) => {
-                state.status.update.loading = null;
-                state.status.update.error =
-                    action.error.message ?? 'Update project failed';
+                state.status.update = {
+                    loading: null,
+                    success: null,
+                    error: action.error.message ?? 'Update project failed'
+                };
             })
             // Delete
             .addCase(deleteProject.pending, (state) => {
-                 // Start deleting project
-                state.status.delete.loading = 'Deleting project and data related...';
+                // Start deleting project
+                state.status.delete.loading =
+                    'Deleting project and data related...';
                 state.status.delete.success = null;
                 state.status.delete.error = null;
             })
@@ -129,7 +159,7 @@ const projectSlice = createSlice({
                 deleteProject.fulfilled,
                 (state, action: PayloadAction<IProjectDTO>) => {
                     // Remove from the list
-                    state.projects = state.projects!.filter(
+                    state.projects = (state.projects || []).filter(
                         (p) => p._id !== action.payload._id
                     );
 
@@ -146,9 +176,6 @@ const projectSlice = createSlice({
     }
 });
 
-export const {
-    selectProject,
-    clearProjects,
-    setProjectFetchStatus,
-} = projectSlice.actions;
+export const { selectProject, clearProjects, setProjectFetchStatus } =
+    projectSlice.actions;
 export default projectSlice.reducer;

@@ -1,7 +1,7 @@
 import useAuth from '@/hooks/useAuth';
 import MilestoneForm from './MilestoneForm';
 import { IMilestoneDTO } from '@/types/milestone';
-import withFormHandler from '@/hoc/withFormHandler';
+import withFormHandler from '@/hoc/formHandler/withFormHandler';
 import { milestoneSchema } from './milestoneSchema';
 import { useMilestones } from '@/hooks/useMilestones';
 

@@ -50,10 +50,7 @@ export const updateTask = createAsyncThunk<
     { rejectValue: string } // type of custom error payload
 >('tasks/update', async (payload: ITaskDTO, { rejectWithValue }) => {
     try {
-        const reponse = await axios.put(
-            `/api/tasks/${payload.projectId}`,
-            payload
-        );
+        const reponse = await axios.put(`/api/tasks/${payload._id}`, payload);
         return reponse.data.data;
     } catch (error: any) {
         return rejectWithValue(error.response.data.message);
@@ -69,7 +66,7 @@ export const deleteTask = createAsyncThunk<
         const reponse = await axios.delete(`/api/tasks/${id}`);
         return reponse.data.data;
     } catch (error: any) {
-        return rejectWithValue(error.response.data.message);
+        return rejectWithValue(error.response?.data?.message || error.message);
     }
 });
 
@@ -82,6 +79,6 @@ export const deleteTasksByProjectId = createAsyncThunk<
         const reponse = await axios.delete(`/api/projects/${projectId}/tasks}`);
         return reponse.data.data;
     } catch (error: any) {
-        return rejectWithValue(error.response.data.message);
+        return rejectWithValue(error.response?.data?.message || error.message);
     }
 });

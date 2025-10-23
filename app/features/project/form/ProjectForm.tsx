@@ -23,90 +23,87 @@ export default function ProjectForm({ loading }: ProjectFormProps) {
     const teammembers = user?.teamMembers || [];
 
     return (
-        <>
-            <SimpleFormTitle title="Project Details" />
+        <SimpleForm aria-label="project form">
+            <SimpleFormFieldSet>
+                <SimpleFormInput
+                    label="Name"
+                    name="name"
+                    required
+                    aria-required="true"
+                />
 
-            <SimpleForm aria-label="project form">
-                <SimpleFormFieldSet>
+                <SimpleFormTextArea
+                    label="Description"
+                    name="description"
+                    required
+                    aria-required="true"
+                />
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <SimpleFormInput
-                        label="Name"
-                        name="name"
+                        type="date"
+                        label="Start Date"
+                        name="startDate"
                         required
                         aria-required="true"
                     />
-
-                    <SimpleFormTextArea
-                        label="Description"
-                        name="description"
-                        required
-                        aria-required="true"
-                    />
-
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <SimpleFormInput
-                            type="date"
-                            label="Start Date"
-                            name="startDate"
-                            required
-                            aria-required="true"
-                        />
-                        <SimpleFormInput
-                            type="date"
-                            label="End Date"
-                            name="endDate"
-                            required
-                            aria-required="true"
-                        />
-                    </div>
-
-                    <SimpleFormSingleSelect
-                        label="Status"
-                        name="status"
-                        options={STATUS_KEYS.map((name: string) => ({
-                            label: name,
-                            value: name
-                        }))}
-                        required
-                        aria-required="true"
-                    />
-
                     <SimpleFormInput
-                        type="hidden"
-                        label=""
-                        name="managedBy"
+                        type="date"
+                        label="End Date"
+                        name="endDate"
                         required
                         aria-required="true"
                     />
+                </div>
 
-                    <SimpleFormMultipleSelect
-                        label="Team Members"
-                        name="teamMembers"
-                        options={
-                            teammembers.map((member) => ({
-                                label: member,
-                                value: member
-                            })) || []
-                        }
-                        required
-                        aria-required="true"
-                        helpText="Hold Ctrl/Cmd to select multiple members"
+                <SimpleFormSingleSelect
+                    label="Status"
+                    name="status"
+                    options={STATUS_KEYS.map((name: string) => ({
+                        label: name,
+                        value: name
+                    }))}
+                    required
+                    aria-required="true"
+                />
+
+                <SimpleFormInput
+                    type="hidden"
+                    label=""
+                    name="managedBy"
+                    required
+                    aria-required="true"
+                />
+
+                <SimpleFormMultipleSelect
+                    label="Team Members"
+                    name="teamMembers"
+                    options={
+                        teammembers.map((member) => ({
+                            label: member,
+                            value: member
+                        })) || []
+                    }
+                    required
+                    aria-required="true"
+                    helpText="Hold Ctrl/Cmd to select multiple members"
+                />
+
+                <SimpleFormActions>
+                    {' '}
+                    <AccentButton
+                        type="button"
+                        title="Cancel"
+                        onClick={() => navigate.push('/pages/projects')}
                     />
-
-                    <SimpleFormActions>
-                        {' '}
-                        <AccentButton
-                            type="button"
-                            title="Cancel"
-                            onClick={() => navigate.push('/pages/projects')}
-                        />
-                        <PrimaryButton
-                            type="submit"
-                            title={loading ? 'Saving...' : 'Save & Next'}
-                            disabled={loading}
-                        />
-                    </SimpleFormActions>
-                </SimpleFormFieldSet>
-            </SimpleForm>
-        </>
+                    
+                    <PrimaryButton
+                        type="submit"
+                        title={loading ? 'Saving...' : 'Save Project & Next'}
+                        disabled={loading}
+                    />
+                </SimpleFormActions>
+            </SimpleFormFieldSet>
+        </SimpleForm>
     );
 }

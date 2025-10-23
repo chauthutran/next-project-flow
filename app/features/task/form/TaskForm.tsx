@@ -10,6 +10,8 @@ import SimpleFormMultipleSelect from '@/components/form/SimpleFormMultipleSelect
 import AccentButton from '@/components/buttons/AccentButton';
 import PrimaryButton from '@/components/buttons/PrimaryButton';
 import SimpleFormActions from '@/components/form/SimpleFormActions';
+import { useFormikContext } from 'formik';
+import { ITaskFormDataProps } from './TaskFormWrapper';
 
 interface Props {
     onClose: () => void;
@@ -19,6 +21,7 @@ interface Props {
 
 export default function TaskForm({ loading, onClose, handleReset }: Props) {
     const { user } = useAuth();
+    const { setFieldValue } = useFormikContext<ITaskFormDataProps>();
 
     const teammembers = user?.teamMembers || [];
 
@@ -90,6 +93,17 @@ export default function TaskForm({ loading, onClose, handleReset }: Props) {
                         required
                         aria-required="true"
                     />
+                    
+                    
+                    {/* hidden field is optional if you set via setFieldValue */}
+                     <SimpleFormInput
+                        type="hidden"
+                        label=""
+                        name="submitType"
+                        required
+                        aria-required="true"
+                    />
+
                 </SimpleFormFieldSet>
 
                 <SimpleFormActions>
@@ -105,9 +119,18 @@ export default function TaskForm({ loading, onClose, handleReset }: Props) {
                         onClick={handleReset}
                     />
 
+
                     <PrimaryButton
                         type="submit"
-                        title={loading ? 'Saving...' : 'Save Project'}
+                        title={loading ? 'Saving...' : 'Save Task & Continue'}
+                        onClick={() => setFieldValue('submitType', 'save_continue')}
+                        disabled={loading}
+                    />
+
+                    <PrimaryButton
+                        type="submit"
+                        title={loading ? 'Saving...' : 'Save'}
+                        onClick={() => setFieldValue('submitType', 'save')}
                         disabled={loading}
                     />
                 </SimpleFormActions>

@@ -7,19 +7,32 @@ export default function useNofifier({
     success,
     error
 }: ILoadingState) {
-    const currrentToastId = useRef<string | number | null>(null);
+    const currentToastId = useRef<string | null>(null);
 
     useEffect(() => {
+      
         if (loading) {
-            currrentToastId.current = toast.loading('Loading ...');
+            currentToastId.current = toast.loading('Loading ...');
+            return; // Prevent multiple triggers
         }
 
+         // When success occurs, remove loading toast first
         if (success) {
+            if (currentToastId.current) {
+                toast.dismiss(currentToastId.current);
+                currentToastId.current = null;
+            }
             toast.success(success);
         }
 
+        // When error occurs, remove loading toast first
         if (error) {
+            if (currentToastId.current) {
+                toast.dismiss(currentToastId.current);
+                currentToastId.current = null;
+            }
             toast.error(error);
         }
+        
     }, [loading, success, error]);
 }

@@ -2,7 +2,7 @@ import { JSONObject } from '@/lib/definations';
 import useAuth from '@/hooks/useAuth';
 import MeetingForm from './MeetingForm';
 import { IMeetingDTO } from '@/types/meeting';
-import withFormHandler from '@/hoc/withFormHandler';
+import withFormHandler from '@/hoc/formHandler/withFormHandler';
 import { useMeetings } from '@/hooks/useMeetings';
 import { meetingSchema } from './meetingSchema';
 

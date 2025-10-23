@@ -50,7 +50,7 @@ export const updateProject = createAsyncThunk<
     }
 });
 
-export const retrieveProjectById = createAsyncThunk<
+export const fetchProjectById = createAsyncThunk<
     IProjectDTO, // return type
     string, // argument type
     { rejectValue: string } // type of custom error payload

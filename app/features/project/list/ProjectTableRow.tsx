@@ -16,11 +16,9 @@ export default function ProjectTableRow({
     project,
     handleOnDeleteItem
 }: ProjectTableRowProps) {
-    const { selectProject } = useProjects();
     const navigate = useRouter();
 
     const handleEditOnClick = () => {
-        selectProject(project);
         navigate.push(`/pages/projects/${project._id}`);
     };
 

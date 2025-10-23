@@ -22,105 +22,97 @@ export default function MeetingForm({ loading, onClose, handleReset }: Props) {
     const teammembers = user?.teamMembers || [];
 
     return (
-        <>
-            <SimpleFormTitle title="Meeting Form" />
+        <SimpleForm aria-label="meeting form">
+            <SimpleFormFieldSet>
+                <SimpleFormInput
+                    type="hidden"
+                    label=""
+                    name="projectId"
+                    required
+                    aria-required="true"
+                />
 
-            <SimpleForm aria-label="meeting form">
-                <SimpleFormFieldSet>
-                    <SimpleFormInput
-                        type="hidden"
-                        label=""
-                        name="projectId"
-                        required
-                        aria-required="true"
-                    />
+                <SimpleFormInput
+                    label="Name"
+                    name="name"
+                    required
+                    aria-required="true"
+                />
 
-                    <SimpleFormInput
-                        label="Name"
-                        name="name"
-                        required
-                        aria-required="true"
-                    />
+                <SimpleFormTextArea
+                    label="Description"
+                    name="description"
+                    required
+                    aria-required="true"
+                />
 
-                    <SimpleFormTextArea
-                        label="Description"
-                        name="description"
-                        required
-                        aria-required="true"
-                    />
+                <SimpleFormInput
+                    type="date"
+                    label="date"
+                    name="date"
+                    required
+                    aria-required="true"
+                />
 
-                    <SimpleFormInput
-                        type="date"
-                        label="date"
-                        name="date"
-                        required
-                        aria-required="true"
-                    />
+                <SimpleFormMultipleSelect
+                    label="Participants"
+                    name="participants"
+                    options={
+                        teammembers.map((member) => ({
+                            label: member,
+                            value: member
+                        })) || []
+                    }
+                    required
+                    aria-required="true"
+                    helpText="Hold Ctrl/Cmd to select multiple members"
+                />
 
-                    <SimpleFormMultipleSelect
-                        label="Participants"
-                        name="participants"
-                        options={
-                            teammembers.map((member) => ({
-                                label: member,
-                                value: member
-                            })) || []
-                        }
-                        required
-                        aria-required="true"
-                        helpText="Hold Ctrl/Cmd to select multiple members"
-                    />
+                <SimpleFormTextArea
+                    label="Meeting Notes"
+                    name="meetingNotes"
+                    required
+                    aria-required="true"
+                />
 
-                    <SimpleFormTextArea
-                        label="Meeting Notes"
-                        name="meetingNotes"
-                        required
-                        aria-required="true"
-                    />
+                <SimpleFormMultipleSelect
+                    label="Assigned To"
+                    name="assignedTo"
+                    options={
+                        teammembers.map((member: string) => ({
+                            label: member,
+                            value: member
+                        })) || []
+                    }
+                    required
+                    aria-required="true"
+                    helpText="Hold Ctrl/Cmd to select multiple members"
+                />
 
-                    <SimpleFormMultipleSelect
-                        label="Assigned To"
-                        name="assignedTo"
-                        options={
-                            teammembers.map((member: string) => ({
-                                label: member,
-                                value: member
-                            })) || []
-                        }
-                        required
-                        aria-required="true"
-                        helpText="Hold Ctrl/Cmd to select multiple members"
-                    />
+                <SimpleFormInput
+                    type="hidden"
+                    label=""
+                    name="createdBy"
+                    required
+                    aria-required="true"
+                />
+            </SimpleFormFieldSet>
 
-                    <SimpleFormInput
-                        type="hidden"
-                        label=""
-                        name="createdBy"
-                        required
-                        aria-required="true"
-                    />
-                </SimpleFormFieldSet>
+            <SimpleFormActions>
+                <AccentButton type="button" title="Cancel" onClick={onClose} />
 
-                <SimpleFormActions>
-                    <AccentButton
-                        type="button"
-                        title="Cancel"
-                        onClick={onClose}
-                    />
+                <AccentButton
+                    type="button"
+                    title="Reset"
+                    onClick={handleReset}
+                />
 
-                    <AccentButton
-                        type="button"
-                        title="Reset"
-                        onClick={handleReset}
-                    />
-
-                    <PrimaryButton
-                        type="submit"
-                        title={loading ? 'Saving...' : 'Save Milestone'}
-                        disabled={loading}
-                    />
-                </SimpleFormActions>
-            </SimpleForm>
-        </>
+                <PrimaryButton
+                    type="submit"
+                    title={loading ? 'Saving...' : 'Save Milestone'}
+                    disabled={loading}
+                />
+            </SimpleFormActions>
+        </SimpleForm>
     );
 }

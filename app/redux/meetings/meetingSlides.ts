@@ -7,18 +7,27 @@ import {
     deleteMeeting,
     deleteMeetingsByProjectId
 } from './meetingsThunk';
+import { ILoadingState } from '@/types/loadingState';
 
 interface MeetingState {
     meetings: IMeetingDTO[] | null;
-    loading: boolean;
-    error: string | null;
+    status: {
+        fetch: ILoadingState;
+        add: ILoadingState;
+        update: ILoadingState;
+        delete: ILoadingState;
+    };
     selectedMeeting: IMeetingDTO | null;
 }
 
 const initialState: MeetingState = {
     meetings: null,
-    loading: false,
-    error: null,
+    status: {
+        fetch: {},
+        add: {},
+        update: {},
+        delete: {}
+    },
     selectedMeeting: null
 };
 
@@ -38,41 +47,49 @@ const meetingSlice = createSlice({
         builder
             // Fetch
             .addCase(fetchMeetingsByProjectId.pending, (state) => {
-                state.loading = true;
-                state.error = null;
+                state.status.fetch.loading = 'Fetch meeting ...';
+                state.status.fetch.success = null;
+                state.status.fetch.error = null;
             })
             .addCase(
                 fetchMeetingsByProjectId.fulfilled,
                 (state, action: PayloadAction<IMeetingDTO[]>) => {
-                    state.loading = false;
+                    state.status.fetch.loading = null;
+                    state.status.fetch.success = 'Fetch meetings successully!';
                     state.meetings = action.payload || [];
                 }
             )
             .addCase(fetchMeetingsByProjectId.rejected, (state, action) => {
-                state.loading = true;
-                state.error = action.error.message ?? 'Fetch meetings failed';
+                state.status.fetch.loading = null;
+                state.status.fetch.error =
+                    action.error.message ?? 'Fetch meetings failed';
             })
-            // Create & Update
+            // Create
             .addCase(addMeeting.pending, (state) => {
-                state.loading = true;
-                state.error = null;
+                state.status.add.loading = 'Adding meeting ...';
+                state.status.add.success = null;
+                state.status.add.error = null;
             })
             .addCase(
                 addMeeting.fulfilled,
                 (state, action: PayloadAction<IMeetingDTO>) => {
-                    state.loading = false;
+                    state.status.add.loading = null;
+                    state.status.add.success = 'Meeting added successully!';
+
                     state.selectedMeeting = action.payload;
                     state.meetings!.push(action.payload);
                 }
             )
             .addCase(addMeeting.rejected, (state, action) => {
-                state.loading = true;
-                state.error = action.error.message ?? 'Add meetings failed';
+                state.status.add.loading = null;
+                state.status.add.error =
+                    action.error.message ?? 'Add meetings failed';
             })
             // Update
             .addCase(updateMeeting.pending, (state) => {
-                state.loading = true;
-                state.error = null;
+                state.status.update.loading = 'Updating meeting ...';
+                state.status.update.success = null;
+                state.status.update.error = null;
             })
             .addCase(
                 updateMeeting.fulfilled,
@@ -83,16 +100,21 @@ const meetingSlice = createSlice({
                         (p) => p._id! === action.payload._id
                     );
                     if (index >= 0) state.meetings![index] = action.payload;
+
+                    state.status.update.loading = null;
+                    state.status.update.success = 'Meeting updated successully!';
                 }
             )
             .addCase(updateMeeting.rejected, (state, action) => {
-                state.loading = true;
-                state.error = action.error.message ?? 'Update meeting failed';
+                state.status.update.loading = null;
+                state.status.update.error =
+                    action.error.message ?? 'Update meeting failed';
             })
             // Delete
             .addCase(deleteMeeting.pending, (state) => {
-                state.loading = true;
-                state.error = null;
+                state.status.delete.loading = 'Deleting meeting ...';
+                state.status.delete.success = null;
+                state.status.delete.error = null;
             })
             .addCase(
                 deleteMeeting.fulfilled,
@@ -100,16 +122,21 @@ const meetingSlice = createSlice({
                     state.meetings = state.meetings!.filter(
                         (p) => p._id !== action.payload._id
                     );
+                    state.status.delete.loading = null;
+                    state.status.delete.success =
+                        'Meeting deleted successfully';
                 }
             )
             .addCase(deleteMeeting.rejected, (state, action) => {
-                state.loading = true;
-                state.error = action.error.message ?? 'Delete meeting failed';
+                state.status.delete.loading = null;
+                state.status.delete.error =
+                    action.error.message ?? 'Delete meeting failed';
             })
-            // Delete tasks by Project-ID
+            // Delete meetings by Project-ID
             .addCase(deleteMeetingsByProjectId.pending, (state) => {
-                state.loading = true;
-                state.error = null;
+                state.status.delete.loading = 'Deleting meetings ...';
+                state.status.delete.success = null;
+                state.status.delete.error = null;
             })
             .addCase(
                 deleteMeetingsByProjectId.fulfilled,
@@ -118,11 +145,15 @@ const meetingSlice = createSlice({
                     state.meetings = state.meetings!.filter(
                         (t) => !deletedIds.includes(t._id)
                     );
+                    state.status.delete.loading = null;
+                    state.status.delete.success =
+                        'Meetings deleted successfully';
                 }
             )
             .addCase(deleteMeetingsByProjectId.rejected, (state, action) => {
-                state.loading = true;
-                state.error = action.error.message ?? 'Delete meetings failed';
+                state.status.delete.loading = null;
+                state.status.delete.error =
+                    action.error.message ?? 'Delete meetings failed';
             });
     }
 });

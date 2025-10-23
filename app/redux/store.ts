@@ -19,7 +19,7 @@ export const store = configureStore({
         projects: projectReducer,
         tasks: taskReducer,
         meetings: meetingReducer,
-        milestones: milestoneReducer
+        milestones: milestoneReducer,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware().prepend(listenerMiddleware.middleware),

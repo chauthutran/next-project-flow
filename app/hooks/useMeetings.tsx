@@ -14,7 +14,7 @@ export function useMeetings() {
     const dispatch = useDispatch<AppDispatch>();
     const { selectedProject } = useProjects();
 
-    const { meetings, selectedMeeting, loading, error } = useSelector(
+    const { meetings, selectedMeeting, status } = useSelector(
         (state: RootState) => state.meetings
     );
 
@@ -39,8 +39,7 @@ export function useMeetings() {
     return {
         meetings,
         selectedMeeting,
-        loading,
-        error,
+        status,
         addMeeting: handleAddMeeting,
         updateMeeting: handleUpdateMeeting,
         deleteMeeting: handleDeleteMeeting

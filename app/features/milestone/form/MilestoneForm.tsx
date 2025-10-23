@@ -28,8 +28,6 @@ export default function MilestoneForm({
 
     return (
         <>
-            <SimpleFormTitle title="Milestone Details" />
-
             <SimpleForm aria-label="milestone form">
                 <SimpleFormFieldSet>
                     <SimpleFormInput

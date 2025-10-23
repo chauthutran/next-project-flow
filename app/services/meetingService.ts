@@ -94,7 +94,7 @@ export async function saveMeeting(
         );
 
         if (!updatedMeeting) {
-            throw new Error('Task not found');
+            throw new Error('Meeting not found');
         }
 
         return updatedMeeting;

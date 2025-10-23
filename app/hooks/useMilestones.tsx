@@ -14,7 +14,7 @@ export function useMilestones() {
     const dispatch = useDispatch<AppDispatch>();
     const { selectedProject } = useProjects();
 
-    const { milestones, selectedMilestone, loading, error } = useSelector(
+    const { milestones, selectedMilestone, status } = useSelector(
         (state: RootState) => state.milestones
     );
 
@@ -39,8 +39,7 @@ export function useMilestones() {
     return {
         milestones,
         selectedMilestone,
-        loading,
-        error,
+        status,
         addMilestone: handleAddMilestone,
         updateMilestone: handleUpdateMilestone,
         deleteMilestone: handleDeleteMilestone

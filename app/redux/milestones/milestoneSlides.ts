@@ -7,18 +7,27 @@ import {
     deleteMilestone,
     deleteMilestonesByProjectId
 } from './milestonesThunk';
+import { ILoadingState } from '@/types/loadingState';
 
 interface MilestoneState {
     milestones: IMilestoneDTO[] | null;
-    loading: boolean;
-    error: string | null;
+    status: {
+        fetch: ILoadingState;
+        add: ILoadingState;
+        update: ILoadingState;
+        delete: ILoadingState;
+    };
     selectedMilestone: IMilestoneDTO | null;
 }
 
 const initialState: MilestoneState = {
     milestones: null,
-    loading: false,
-    error: null,
+    status: {
+        fetch: {},
+        add: {},
+        update: {},
+        delete: {}
+    },
     selectedMilestone: null
 };
 
@@ -41,41 +50,48 @@ const milestoneSlice = createSlice({
         builder
             // Fetch
             .addCase(fetchMilestonesByProjectId.pending, (state) => {
-                state.loading = true;
-                state.error = null;
+                state.status.fetch.loading = 'Fetch milestones ...';
+                state.status.fetch.success = null;
+                state.status.fetch.error = null;
             })
             .addCase(
                 fetchMilestonesByProjectId.fulfilled,
                 (state, action: PayloadAction<IMilestoneDTO[]>) => {
-                    state.loading = false;
+                    state.status.fetch.loading = null;
+                    state.status.fetch.success =
+                        'Fetch milestones successully!';
                     state.milestones = action.payload || [];
                 }
             )
             .addCase(fetchMilestonesByProjectId.rejected, (state, action) => {
-                state.loading = true;
-                state.error = action.error.message ?? 'Fetch milestones failed';
+                state.status.fetch.loading = null;
+                state.status.fetch.error =
+                    action.error.message ?? 'Fetch milestones failed';
             })
-            // Create & Update
+            // Create
             .addCase(addMilestone.pending, (state) => {
-                state.loading = true;
-                state.error = null;
+                state.status.add.loading = 'Adding milestone ...';
+                state.status.add.success = null;
+                state.status.add.error = null;
             })
             .addCase(
                 addMilestone.fulfilled,
                 (state, action: PayloadAction<IMilestoneDTO>) => {
-                    state.loading = false;
-                    state.selectedMilestone = action.payload;
+                    state.status.add.loading = null;
+                    state.status.add.success = 'Milestone added successully!';
                     state.milestones!.push(action.payload);
                 }
             )
             .addCase(addMilestone.rejected, (state, action) => {
-                state.loading = true;
-                state.error = action.error.message ?? 'Add milestones failed';
+                state.status.add.loading = null;
+                state.status.add.error =
+                    action.error.message ?? 'Add milestones failed';
             })
             // Update
             .addCase(updateMilestone.pending, (state) => {
-                state.loading = true;
-                state.error = null;
+                state.status.update.loading = 'Updating milestone ...';
+                state.status.update.success = null;
+                state.status.update.error = null;
             })
             .addCase(
                 updateMilestone.fulfilled,
@@ -86,16 +102,22 @@ const milestoneSlice = createSlice({
                         (p) => p._id! === action.payload._id
                     );
                     if (index >= 0) state.milestones![index] = action.payload;
+
+                    state.status.update.loading = null;
+                    state.status.update.success =
+                        'Milestone updated successully!';
                 }
             )
             .addCase(updateMilestone.rejected, (state, action) => {
-                state.loading = true;
-                state.error = action.error.message ?? 'Update milestone failed';
+                state.status.update.loading = null;
+                state.status.update.error =
+                    action.error.message ?? 'Update milestone failed';
             })
             // Delete
             .addCase(deleteMilestone.pending, (state) => {
-                state.loading = true;
-                state.error = null;
+                state.status.delete.loading = 'Deleting milestone ...';
+                state.status.delete.success = null;
+                state.status.delete.error = null;
             })
             .addCase(
                 deleteMilestone.fulfilled,
@@ -103,16 +125,22 @@ const milestoneSlice = createSlice({
                     state.milestones = state.milestones!.filter(
                         (p) => p._id !== action.payload._id
                     );
+
+                    state.status.delete.loading = null;
+                    state.status.delete.success =
+                        'Milestone deleted successully!';
                 }
             )
             .addCase(deleteMilestone.rejected, (state, action) => {
-                state.loading = true;
-                state.error = action.error.message ?? 'Delete milestone failed';
+                state.status.delete.loading = null;
+                state.status.delete.error =
+                    action.error.message ?? 'Delete milestone failed';
             })
             // Delete milestone by Project-ID
             .addCase(deleteMilestonesByProjectId.pending, (state) => {
-                state.loading = true;
-                state.error = null;
+                state.status.delete.loading = 'Deleting milestones ...';
+                state.status.delete.success = null;
+                state.status.delete.error = null;
             })
             .addCase(
                 deleteMilestonesByProjectId.fulfilled,
@@ -121,11 +149,16 @@ const milestoneSlice = createSlice({
                     state.milestones = state.milestones!.filter(
                         (t) => !deletedIds.includes(t._id)
                     );
+
+                    state.status.delete.loading = null;
+                    state.status.delete.success =
+                        'Milestones deleted successully!';
                 }
             )
             .addCase(deleteMilestonesByProjectId.rejected, (state, action) => {
-                state.loading = true;
-                state.error = action.error.message ?? 'Delete milestones failed';
+                state.status.delete.loading = null;
+                state.status.delete.error =
+                    action.error.message ?? 'Delete milestones failed';
             });
     }
 });

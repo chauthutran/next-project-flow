@@ -19,7 +19,7 @@ export function useTasks() {
     const dispatch = useDispatch<AppDispatch>();
     const { selectedProject } = useProjects();
 
-    const { tasks, selectedTask, loading, error } = useAppSelector(
+    const { tasks, selectedTask, status} = useAppSelector(
         (state: RootState) => state.tasks
     );
 
@@ -52,8 +52,7 @@ export function useTasks() {
     return {
         tasks,
         selectedTask,
-        loading,
-        error,
+        status,
         selectTask: handleSelectTask,
         clearTasks: handleClearTasks,
         addTask: handleAddTask,

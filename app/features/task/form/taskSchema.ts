@@ -27,5 +27,6 @@ export const taskSchema = yup.object({
         )
         .min(1, 'At least one assigned member is required')
         .required('Assigned members are required'),
-    createdBy: yup.string().required('Created By is required')
+    createdBy: yup.string().required('Created By is required'),
+     submitType: yup.string().required('Created By is required')
 });

@@ -13,6 +13,7 @@ export default function useConfirmDialog({
     );
 
     const openDialog = (callback: () => void, message: string) => {
+        setMessage(message);
         setOnConfirmCallback(() => callback);
         setOpen(true);
     };

@@ -3,6 +3,9 @@ import { useState } from 'react';
 import { IoIosAddCircle } from 'react-icons/io';
 import MilestoneFormWrapper from './form/MilestoneFormWrapper';
 import { useMilestones } from '@/hooks/useMilestones';
+import PageTitle from '@/components/PageTitle';
+import { PROJECT_STEPS } from '../project/ProjectWorkspace';
+import SecondButton from '@/components/buttons/SecondButton';
 
 export default function MilestonePage({ projectId }: { projectId: string }) {
     const { milestones, loading } = useMilestones();
@@ -10,26 +13,25 @@ export default function MilestonePage({ projectId }: { projectId: string }) {
 
     if (loading || !milestones) return <div>Loading milestones... </div>;
 
+    const projectTitleInfo = PROJECT_STEPS[3];
+    const IconComponent = projectTitleInfo.icon;
+
     return (
         <div>
-            {!showMilestoneForm && (
-                <>
-                    <div className="flex items-center justify-between mb-4">
-                        <h2 className="text-xl font-semibold text-gray-800">
-                            Milestone List
-                        </h2>
-                        <button
-                            onClick={() => setShowMilestoneForm(true)}
-                            className="text-blue-600 hover:text-blue-800 flex items-center gap-1"
-                        >
-                            <IoIosAddCircle className="size-5" />
-                            New
-                        </button>
-                    </div>
+            <PageTitle
+                title={projectTitleInfo.label}
+                subtitle={projectTitleInfo.description}
+                icon={<IconComponent />}
+                action={
+                    <SecondButton
+                        type="button"
+                        title="+ New Project"
+                        onClick={() => setShowMilestoneForm(true)}
+                    />
+                }
+            />
 
-                    <MilestoneList milestones={milestones} />
-                </>
-            )}
+            {!showMilestoneForm && <MilestoneList milestones={milestones} />}
 
             {showMilestoneForm && (
                 <div className="">
@@ -50,7 +52,7 @@ export default function MilestonePage({ projectId }: { projectId: string }) {
                                 </span>
                             </li>
                             <li className="text-[var(--link-active-text)] font-medium">
-                                Task Form
+                                Form
                             </li>
                         </ol>
                     </nav>

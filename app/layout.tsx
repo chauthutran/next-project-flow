@@ -6,6 +6,7 @@ import { ThemeProvider } from './context/ThemeContext';
 import StoreProvider from './redux/StoreProvider';
 import ErroBoundary from './ErrorBoundary';
 import { AuthProvider } from './context/UserContext';
+import { Toaster } from 'react-hot-toast';
 
 export const metadata: Metadata = {
     title: 'Project FlowMaster',
@@ -27,6 +28,7 @@ export default function RootLayout({
                             <Header />
                             <ErroBoundary>
                                 <main className="">{children}</main>
+                                <Toaster position="top-right" reverseOrder={false} />
                             </ErroBoundary>
                             <Footer />
                         </ThemeProvider>

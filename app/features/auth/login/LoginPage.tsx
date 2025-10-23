@@ -2,7 +2,7 @@ import { RiBubbleChartFill } from 'react-icons/ri';
 import LoginForm from './LoginForm';
 import { loginSchema } from './loginForm.schema';
 import { LoginFormValues } from '@/lib/definations';
-import withFormHandler from '@/hoc/withFormHandler';
+import withFormHandler from '@/hoc/formHandler/withFormHandler';
 import useAuth from '@/hooks/useAuth';
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';

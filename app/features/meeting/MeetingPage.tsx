@@ -5,6 +5,9 @@ import Modal from '@/components/Modal';
 import { IoIosCloseCircle } from 'react-icons/io';
 import { useMeetings } from '@/hooks/useMeetings';
 import MeetingFormWrapper from './form/MeetingFormWrapper';
+import PageTitle from '@/components/PageTitle';
+import { PROJECT_STEPS } from '../project/ProjectWorkspace';
+import SecondButton from '@/components/buttons/SecondButton';
 
 export default function MeetingPage({ projectId }: { projectId: string }) {
     const { meetings, loading } = useMeetings();
@@ -12,25 +15,24 @@ export default function MeetingPage({ projectId }: { projectId: string }) {
 
     if (loading || !meetings) return <div>Loading meeetings... </div>;
 
+    const projectTitleInfo = PROJECT_STEPS[2];
+    const IconComponent = projectTitleInfo.icon;
+
     return (
         <div className="bg-white w-full">
-            {!showMeetingForm && (
-                <>
-                    {' '}
-                    <h2 className="text-2xl font-semibold mb-6 flex space-x-3">
-                        <div className="border-b-2 border-light-sky-blue pb-2 w-fit pr-5">
-                            Meeting List
-                        </div>
-                        <div
-                            className="flex flex-1 items-end justify-end cursor-pointer hover:text-blue-500 text-royal-blue"
-                            onClick={() => setShowMeetingForm(true)}
-                        >
-                            <IoIosAddCircle className="size-10" />
-                        </div>
-                    </h2>
-                    <MeetingList meetings={meetings} />
-                </>
-            )}
+            <PageTitle
+                title={projectTitleInfo.label}
+                subtitle={projectTitleInfo.description}
+                icon={<IconComponent />}
+                action={
+                    <SecondButton
+                        type="button"
+                        title="+ New Project"
+                        onClick={() => setShowMeetingForm(true)}
+                    />
+                }
+            />
+            {!showMeetingForm && <MeetingList meetings={meetings} />}
 
             {showMeetingForm && (
                 <div className="">
@@ -43,7 +45,7 @@ export default function MeetingPage({ projectId }: { projectId: string }) {
                                 className="hover:text-[var(--link-hover-text)] transition-colors font-medium cursor-pointer"
                                 onClick={() => setShowMeetingForm(false)}
                             >
-                                List
+                                Meeting List
                             </li>
                             <li>
                                 <span className="text-[var(--link-text)]">
@@ -51,7 +53,7 @@ export default function MeetingPage({ projectId }: { projectId: string }) {
                                 </span>
                             </li>
                             <li className="text-[var(--link-active-text)] font-medium">
-                                Meeting Form
+                                Form
                             </li>
                         </ol>
                     </nav>
