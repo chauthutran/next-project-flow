@@ -10,6 +10,8 @@ import AccentButton from '@/components/buttons/AccentButton';
 import PrimaryButton from '@/components/buttons/PrimaryButton';
 import { STATUS_KEYS } from '@/types/status';
 import SimpleFormActions from '@/components/form/SimpleFormActions';
+import { useFormikContext } from 'formik';
+import { IMilestoneFormDataProps } from './MilestoneFormWrapper';
 
 interface Props {
     onClose: () => void;
@@ -23,13 +25,14 @@ export default function MilestoneForm({
     handleReset
 }: Props) {
     const { user } = useAuth();
+    const { setFieldValue } = useFormikContext<IMilestoneFormDataProps>();
 
     const teammembers = user?.teamMembers || [];
 
     return (
         <>
             <SimpleForm aria-label="milestone form">
-                <SimpleFormFieldSet>
+                <SimpleFormFieldSet disabled={loading}>
                     <SimpleFormInput
                         type="hidden"
                         label=""
@@ -94,26 +97,52 @@ export default function MilestoneForm({
                         required
                         aria-required="true"
                     />
+
+                    {/* hidden field is optional if you set via setFieldValue */}
+                    <SimpleFormInput
+                        type="hidden"
+                        label=""
+                        name="submitType"
+                        required
+                        aria-required="true"
+                    />
                 </SimpleFormFieldSet>
 
-                <SimpleFormActions>
-                    <AccentButton
-                        type="button"
-                        title="Cancel"
-                        onClick={onClose}
-                    />
+                <SimpleFormActions className="flex justify-between items-center w-full">
+                    {/* Left side buttons */}
+                    <div className="flex gap-2">
+                        <AccentButton
+                            type="button"
+                            title="Close"
+                            onClick={onClose}
+                        />
 
-                    <AccentButton
-                        type="button"
-                        title="Reset"
-                        onClick={handleReset}
-                    />
+                        <AccentButton
+                            type="button"
+                            title="Reset"
+                            onClick={handleReset}
+                        />
+                    </div>
+                    {/* Right side buttons */}
+                    <div className="flex gap-2">
+                        <PrimaryButton
+                            type="submit"
+                            title={
+                                loading ? 'Saving...' : 'Save Task & Continue'
+                            }
+                            onClick={() =>
+                                setFieldValue('submitType', 'save_continue')
+                            }
+                            disabled={loading}
+                        />
 
-                    <PrimaryButton
-                        type="submit"
-                        title={loading ? 'Saving...' : 'Save Milestone'}
-                        disabled={loading}
-                    />
+                        <PrimaryButton
+                            type="submit"
+                            title={loading ? 'Saving...' : 'Save'}
+                            onClick={() => setFieldValue('submitType', 'save')}
+                            disabled={loading}
+                        />
+                    </div>
                 </SimpleFormActions>
             </SimpleForm>
         </>

@@ -47,37 +47,43 @@ const meetingSlice = createSlice({
         builder
             // Fetch
             .addCase(fetchMeetingsByProjectId.pending, (state) => {
-                state.status.fetch.loading = 'Fetch meeting ...';
-                state.status.fetch.success = null;
-                state.status.fetch.error = null;
+                state.status.fetch = {
+                    loading: 'Fetch meetings ...',
+                    success: null,
+                    error: null
+                };
             })
             .addCase(
                 fetchMeetingsByProjectId.fulfilled,
                 (state, action: PayloadAction<IMeetingDTO[]>) => {
-                    state.status.fetch.loading = null;
-                    state.status.fetch.success = 'Fetch meetings successully!';
+                    state.status.fetch = {
+                        success: 'Fetch meetings successully!'
+                    };
                     state.meetings = action.payload || [];
                 }
             )
             .addCase(fetchMeetingsByProjectId.rejected, (state, action) => {
-                state.status.fetch.loading = null;
-                state.status.fetch.error =
-                    action.error.message ?? 'Fetch meetings failed';
+                state.status.fetch = {
+                    error: action.payload ?? 'Fetch meetings failed'
+                };
             })
             // Create
             .addCase(addMeeting.pending, (state) => {
-                state.status.add.loading = 'Adding meeting ...';
-                state.status.add.success = null;
-                state.status.add.error = null;
+                 state.status.add = {
+                    loading: 'Adding meeting ...',
+                    success: null,
+                    error: null
+                };
             })
             .addCase(
                 addMeeting.fulfilled,
                 (state, action: PayloadAction<IMeetingDTO>) => {
-                    state.status.add.loading = null;
-                    state.status.add.success = 'Meeting added successully!';
+                     state.selectedMeeting = action.payload;
+                    state.meetings = [...state.meetings!, action.payload];
 
-                    state.selectedMeeting = action.payload;
-                    state.meetings!.push(action.payload);
+                    state.status.add = {
+                        success: 'Meeting added successfully!'
+                    };
                 }
             )
             .addCase(addMeeting.rejected, (state, action) => {
@@ -87,73 +93,86 @@ const meetingSlice = createSlice({
             })
             // Update
             .addCase(updateMeeting.pending, (state) => {
-                state.status.update.loading = 'Updating meeting ...';
-                state.status.update.success = null;
-                state.status.update.error = null;
+              state.status.update = {
+                    loading: 'Updating meeting ...',
+                    error: null,
+                    success: null
+                };
             })
             .addCase(
                 updateMeeting.fulfilled,
                 (state, action: PayloadAction<IMeetingDTO>) => {
-                    state.selectedMeeting = action.payload;
-
-                    const index = state.meetings!.findIndex(
-                        (p) => p._id! === action.payload._id
-                    );
-                    if (index >= 0) state.meetings![index] = action.payload;
-
-                    state.status.update.loading = null;
-                    state.status.update.success = 'Meeting updated successully!';
-                }
+                                    state.selectedMeeting = action.payload;
+                                    state.meetings = state.meetings!.map((p) =>
+                                        p._id === action.payload._id ? action.payload : p
+                                    );
+                                    state.status.update = {
+                                        success: 'Meeting updated successfully!'
+                                    };
+                                }
             )
             .addCase(updateMeeting.rejected, (state, action) => {
-                state.status.update.loading = null;
-                state.status.update.error =
-                    action.error.message ?? 'Update meeting failed';
+               state.status.update = {
+                    error: action.payload ?? 'Update meeting failed'
+                };
             })
             // Delete
             .addCase(deleteMeeting.pending, (state) => {
-                state.status.delete.loading = 'Deleting meeting ...';
-                state.status.delete.success = null;
-                state.status.delete.error = null;
+                state.status.delete = {
+                    loading: 'Deleting meeting...',
+                    success: null,
+                    error: null
+                };
             })
             .addCase(
                 deleteMeeting.fulfilled,
                 (state, action: PayloadAction<IMeetingDTO>) => {
-                    state.meetings = state.meetings!.filter(
+                     const meetings = [...state.meetings!].filter(
                         (p) => p._id !== action.payload._id
                     );
-                    state.status.delete.loading = null;
-                    state.status.delete.success =
-                        'Meeting deleted successfully';
+                    
+                    state.meetings = meetings;
+                    state.status.delete = {
+                        success: 'Meeting deleted successfully!'
+                    };
                 }
             )
             .addCase(deleteMeeting.rejected, (state, action) => {
-                state.status.delete.loading = null;
-                state.status.delete.error =
-                    action.error.message ?? 'Delete meeting failed';
+              state.status.delete = {
+                    error:
+                        action.payload ??
+                        action.error.message ??
+                        'Delete meeting failed'
+                };
             })
             // Delete meetings by Project-ID
             .addCase(deleteMeetingsByProjectId.pending, (state) => {
-                state.status.delete.loading = 'Deleting meetings ...';
-                state.status.delete.success = null;
-                state.status.delete.error = null;
+                state.status.delete = {
+                    loading: 'Deleting meetings...',
+                    success: null,
+                    error: null
+                };
             })
             .addCase(
                 deleteMeetingsByProjectId.fulfilled,
                 (state, action: PayloadAction<IMeetingDTO[]>) => {
                     const deletedIds = action.payload.map((item) => item._id);
-                    state.meetings = state.meetings!.filter(
+                    state.meetings = (state.meetings || []).filter(
                         (t) => !deletedIds.includes(t._id)
                     );
-                    state.status.delete.loading = null;
-                    state.status.delete.success =
-                        'Meetings deleted successfully';
+
+                    state.status.delete = {
+                        success: 'Meetings deleted successfully!'
+                    };
                 }
             )
             .addCase(deleteMeetingsByProjectId.rejected, (state, action) => {
-                state.status.delete.loading = null;
-                state.status.delete.error =
-                    action.error.message ?? 'Delete meetings failed';
+                state.status.delete = {
+                    error:
+                        action.payload ??
+                        action.error.message ??
+                        'Delete meetings failed'
+                };
             });
     }
 });

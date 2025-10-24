@@ -17,7 +17,7 @@ export default function PageTitle({
 }: PageTitleProps) {
     return (
         <div
-            className={`py-4 px-3 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6 ${className}`}
+            className={`px-3  flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-3 ${className}`}
         >
             {/* Left side */}
             <div className="flex items-center gap-4">

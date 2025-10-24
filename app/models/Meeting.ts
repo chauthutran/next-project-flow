@@ -6,7 +6,7 @@ export interface IMeeting extends Document {
     description: string;
     date: Date;
     participants: string[];
-    meetingNotes: string;
+    meetingNotes?: string;
     assignedTo: string[];
     createdBy: Types.ObjectId;
 }

@@ -18,7 +18,7 @@ export const meetingSchema = yup.object({
         )
         .min(1, 'At least one assigned member is required')
         .required('Assigned members are required'),
-    meetingNotes: yup.string().required('Meeting Notes are required'),
+    meetingNotes: yup.string().default(''),
     assignedTo: yup
         .array()
         .of(

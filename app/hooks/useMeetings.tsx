@@ -9,6 +9,10 @@ import {
     updateMeeting
 } from '@/redux/meetings/meetingsThunk';
 import { IMeetingDTO } from '@/types/meeting';
+import {
+    selectMeeting as selectMeetingAction,
+    clearMeetings as clearMeetingsAction,
+} from '@/redux/meetings/meetingSlides';
 
 export function useMeetings() {
     const dispatch = useDispatch<AppDispatch>();
@@ -35,11 +39,20 @@ export function useMeetings() {
     const handleDeleteMeeting = async (id: string) => {
         return await dispatch(deleteMeeting(id));
     };
+    
+    const handleSelectMeeting = (meeting: IMeetingDTO | null) => {
+        dispatch(selectMeetingAction(meeting));
+    };
+        const handleClearMeetings = () => {
+            dispatch(clearMeetingsAction());
+        };
 
     return {
         meetings,
         selectedMeeting,
         status,
+        selectMeeting: handleSelectMeeting,
+        clearMeetings: handleClearMeetings,
         addMeeting: handleAddMeeting,
         updateMeeting: handleUpdateMeeting,
         deleteMeeting: handleDeleteMeeting

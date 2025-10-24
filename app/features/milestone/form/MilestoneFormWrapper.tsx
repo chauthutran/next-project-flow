@@ -4,6 +4,11 @@ import { IMilestoneDTO } from '@/types/milestone';
 import withFormHandler from '@/hoc/formHandler/withFormHandler';
 import { milestoneSchema } from './milestoneSchema';
 import { useMilestones } from '@/hooks/useMilestones';
+import { FormikHelpers } from 'formik';
+
+export interface IMilestoneFormDataProps extends IMilestoneDTO {
+    submitType?: 'save' | 'save_continue';
+}
 
 export default function MilestoneFormWrapper({
     projectId,
@@ -15,11 +20,15 @@ export default function MilestoneFormWrapper({
     afterSubmit: () => void;
 }) {
     const { user } = useAuth();
-    const { selectedMilestone, addMilestone, updateMilestone, loading } =
+    const { selectedMilestone, selectMilestone, addMilestone, updateMilestone, status } =
         useMilestones();
 
+         const loading = selectedMilestone
+        ? !!status.update.loading
+        : !!status.add.loading;
+        
     const MilestoneFormBasic = withFormHandler<
-        IMilestoneDTO,
+        IMilestoneFormDataProps,
         { onClose: () => void }
     >(MilestoneForm, {
         initialValues: {
@@ -29,12 +38,12 @@ export default function MilestoneFormWrapper({
             dueDate: selectedMilestone?.dueDate.split('T')[0] || '',
             status: selectedMilestone?.status || 'not_started',
             createdBy: user!._id!,
-            assignedTo: selectedMilestone?.assignedTo || []
+            assignedTo: selectedMilestone?.assignedTo || [],
+            submitType: 'save'
         },
         validationSchema: milestoneSchema,
         getLoading: () => !!loading,
-        onSubmit: async (values) => {
-            console.log('=== submit MilestoneFormBasic');
+        onSubmit: async (values,  { resetForm }: FormikHelpers<IMilestoneFormDataProps>) => {
             if (selectedMilestone) {
                 const payload = {
                     ...values,
@@ -44,7 +53,13 @@ export default function MilestoneFormWrapper({
             } else {
                 await addMilestone(values);
             }
+
+            if (values.submitType === 'save_continue') {
+                selectMilestone(null);
+                resetForm();
+            }
             afterSubmit();
+            
         }
     });
 

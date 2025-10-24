@@ -7,7 +7,7 @@ import { useProjects } from '@/hooks/useProjects';
 import PageTitle from '@/components/PageTitle';
 import { PROJECT_STEPS } from '../ProjectWorkspace';
 import { FaClipboardList } from 'react-icons/fa';
-import useNofifier from '@/hooks/useNotifier';
+import useNotifier from '@/hooks/useNotifier';
 
 export default function ProjectFormWrapper({
     afterSubmit = () => {}
@@ -18,7 +18,7 @@ export default function ProjectFormWrapper({
     const { selectedProject, addProject, updateProject, status } =
         useProjects();
 
-    useNofifier(status.update);
+    useNotifier(status.update);
     
     const ProjectFormBasic = withFormHandler<IProjectDTO>(ProjectForm, {
         initialValues: {

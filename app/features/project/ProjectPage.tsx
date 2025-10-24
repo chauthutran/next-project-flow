@@ -8,7 +8,7 @@ import { deleteProject } from '@/redux/projects/projectThunk';
 import useConfirmDialog from '@/components/dialog/useConfirmDialog';
 import { IProjectDTO } from '@/types/project';
 import { useEffect } from 'react';
-import useNofifier from '@/hooks/useNotifier';
+import useNotifier from '@/hooks/useNotifier';
 import { useAppSelector } from '@/redux/hook';
 
 export default function ProjectsPage() {
@@ -25,16 +25,18 @@ export default function ProjectsPage() {
     // useEffect(() => {
     //     console.log('Update status changed:', status);
     // }, [status]);
-    
-    const statusUpdate = useAppSelector(state => state.projects.status.update);
 
-useEffect(() => {
-    console.log("Update status changed:", statusUpdate);
-}, [statusUpdate]);
+    const statusUpdate = useAppSelector(
+        (state) => state.projects.status.update
+    );
+
+    useEffect(() => {
+        console.log('Update status changed:', statusUpdate);
+    }, [statusUpdate]);
 
     // ===================================
 
-    // useNofifier(projectStatus.update);
+    // useNotifier(projectStatus.update);
 
     const handleOpenNewForm = () => {
         selectProject(null);
@@ -82,7 +84,7 @@ useEffect(() => {
         <>
             {ConfirmDialogComponent}
 
-            <div className="flex-1 overflow-y-auto bg-[var(--bg)]">
+            <div className="flex-1 overflow-y-auto bg-[var(--bg)] py-6 space-y-6">
                 <PageTitle
                     title="Project Management"
                     subtitle="Track, organize, and manage your ongoing projects efficiently."

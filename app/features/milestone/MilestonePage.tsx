@@ -1,71 +1,87 @@
 import MilestoneList from './list/MilestoneList';
 import { useState } from 'react';
-import { IoIosAddCircle } from 'react-icons/io';
 import MilestoneFormWrapper from './form/MilestoneFormWrapper';
 import { useMilestones } from '@/hooks/useMilestones';
 import PageTitle from '@/components/PageTitle';
 import { PROJECT_STEPS } from '../project/ProjectWorkspace';
 import SecondButton from '@/components/buttons/SecondButton';
+import useListPage from '@/hooks/useListPage';
+import { IMilestoneDTO } from '@/types/milestone';
+import AccentButton from '@/components/buttons/AccentButton';
 
 export default function MilestonePage({ projectId }: { projectId: string }) {
-    const { milestones, loading } = useMilestones();
-    const [showMilestoneForm, setShowMilestoneForm] = useState(false);
+    const { milestones, status, selectMilestone, deleteMilestone } =
+        useMilestones();
 
-    if (loading || !milestones) return <div>Loading milestones... </div>;
+    const {
+        showForm,
+        setShowForm,
+        handleAddNew,
+        handleEdit,
+        handleDelete,
+        ConfirmDialogComponent
+    } = useListPage<IMilestoneDTO>({
+        deleteFn: deleteMilestone,
+        deleteStatus: status.delete,
+        selectFn: selectMilestone
+    });
+
+    if (status.fetch.loading || !milestones)
+        return <div>{status.fetch.loading}... </div>;
 
     const projectTitleInfo = PROJECT_STEPS[3];
     const IconComponent = projectTitleInfo.icon;
 
     return (
         <div>
-            <PageTitle
-                title={projectTitleInfo.label}
-                subtitle={projectTitleInfo.description}
-                icon={<IconComponent />}
-                action={
-                    <SecondButton
-                        type="button"
-                        title="+ New Project"
-                        onClick={() => setShowMilestoneForm(true)}
-                    />
-                }
-            />
+            {ConfirmDialogComponent}
 
-            {!showMilestoneForm && <MilestoneList milestones={milestones} />}
+            <div className="bg-white px-6">
+                {!showForm && (
+                    <>
+                        <PageTitle
+                            title={projectTitleInfo.label}
+                            subtitle={projectTitleInfo.description}
+                            icon={<IconComponent />}
+                            action={
+                                <SecondButton
+                                    type="button"
+                                    title="+ New Milestone"
+                                    onClick={handleAddNew}
+                                />
+                            }
+                        />
+                        <MilestoneList
+                            milestones={milestones}
+                            handleOnItemEdit={handleEdit}
+                            handleOnDeleteItem={handleDelete}
+                        />
+                    </>
+                )}
 
-            {showMilestoneForm && (
-                <div className="">
-                    <nav
-                        className="text-[var(--link-text mb-2"
-                        aria-label="Breadcrumb"
-                    >
-                        <ol className="inline-flex items-center space-x-2">
-                            <li
-                                className="hover:text-[var(--link-hover-text)] transition-colors font-medium cursor-pointer"
-                                onClick={() => setShowMilestoneForm(false)}
-                            >
-                                Milestone List
-                            </li>
-                            <li>
-                                <span className="text-[var(--link-text)]">
-                                    ›
-                                </span>
-                            </li>
-                            <li className="text-[var(--link-active-text)] font-medium">
-                                Form
-                            </li>
-                        </ol>
-                    </nav>
+                {showForm && (
+                    <>
+                        <PageTitle
+                            title={'Milestone Form'}
+                            subtitle={projectTitleInfo.description}
+                            icon={<IconComponent />}
+                            action={
+                                <AccentButton
+                                    type="button"
+                                    title="Cancel"
+                                    onClick={() => setShowForm(false)}
+                                />
+                            }
+                        />
 
-                    <div className="p-5 rounded-md bg-gray-100">
                         <MilestoneFormWrapper
                             projectId={projectId}
-                            onClose={() => setShowMilestoneForm(false)}
+                            onClose={() => setShowForm(false)}
                             afterSubmit={() => {}}
                         />
-                    </div>
-                </div>
-            )}
+                    </>
+                )}
+            </div>
         </div>
     );
 }

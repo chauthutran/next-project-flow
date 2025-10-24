@@ -9,6 +9,10 @@ import {
     updateMilestone
 } from '@/redux/milestones/milestonesThunk';
 import { IMilestoneDTO } from '@/types/milestone';
+import {
+    selectMilestone as selectMilestoneAction,
+    clearMilestones as clearMilestonesAction,
+} from '@/redux/milestones/milestoneSlides';
 
 export function useMilestones() {
     const dispatch = useDispatch<AppDispatch>();
@@ -36,10 +40,20 @@ export function useMilestones() {
         return await dispatch(deleteMilestone(id));
     };
 
+    const handleSelectMilestone = (Milestone: IMilestoneDTO | null) => {
+        dispatch(selectMilestoneAction(Milestone));
+    };
+
+    const handleClearMilestones = () => {
+        dispatch(clearMilestonesAction());
+    };
+    
     return {
         milestones,
         selectedMilestone,
         status,
+        selectMilestone: handleSelectMilestone,
+        clearMilestones: handleClearMilestones,
         addMilestone: handleAddMilestone,
         updateMilestone: handleUpdateMilestone,
         deleteMilestone: handleDeleteMilestone

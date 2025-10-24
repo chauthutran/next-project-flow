@@ -108,7 +108,7 @@ export default function ProjectWorkspace({
         <>
             {ConfirmDialogComponent}
 
-            <div className="space-y-4 my-5">
+           <div className="flex flex-col gap-6 px-6 py-4">
                 <ProjectStepper
                     activeStep={currentStep}
                     setActiveStep={setCurrentStep}

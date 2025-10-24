@@ -1,7 +1,19 @@
+import { cn } from '@/lib/utils';
+
 export default function SimpleFormActions({
-    children
+    children,
+    className,
+    ...props
 }: {
     children: React.ReactNode;
+    className?: string;
 }) {
-    return <div className="flex justify-end space-x-5 mt-5">{children}</div>;
+    return (
+        <div
+            className={cn('flex justify-end space-x-5 mt-5', className)}
+            {...props}
+        >
+            {children}
+        </div>
+    );
 }

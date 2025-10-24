@@ -1,13 +1,27 @@
 import { IMilestoneDTO } from '@/types/milestone';
 import { STATUS_DETAILS } from '@/types/status';
 import * as Utils from '@/lib/utils';
+import ExpandableTable from '@/components/ExpandableTable';
+import { Typography } from '@mui/material';
 
 export default function MilestoneList({
-    milestones
+    milestones,
+    handleOnItemEdit,
+    handleOnDeleteItem
 }: {
     milestones: IMilestoneDTO[];
+    handleOnItemEdit: (selected: IMilestoneDTO) => void;
+    handleOnDeleteItem: (milestone: IMilestoneDTO) => void;
 }) {
-    const sortedData =
+    if (!milestones.length) {
+        return (
+            <div className="text-gray-500">
+                No milestones yet. Click <strong>+ New milestone</strong> to
+                create one.
+            </div>
+        );
+    }
+    const sortedList =
         milestones.length === 0
             ? []
             : [...milestones].sort(
@@ -17,39 +31,56 @@ export default function MilestoneList({
               );
 
     return (
-        <div className="divide-y divide-gray-200">
-            {sortedData.map((m) => (
-                <div
-                    key={m._id}
-                    className="py-3 flex flex-col sm:flex-row sm:items-center sm:justify-between"
-                >
-                    <div>
-                        <h3 className="font-medium text-gray-800">{m.name}</h3>
-                        <p className="text-sm text-gray-500">{m.description}</p>
-                        <p className="text-xs text-gray-400">
-                            Created by {m.createdBy}
-                        </p>
-                    </div>
-
-                    <div className="flex flex-col sm:items-end mt-2 sm:mt-0">
-                        <p className="text-sm text-gray-700">
-                            Due Date:{' '}
-                            <span className="font-semibold">
-                                {new Date(m.dueDate).toLocaleDateString()}
+        <ExpandableTable
+            data={sortedList}
+            getRowId={(m) => m._id!}
+            columns={[
+                { key: 'name', label: 'Name' },
+                { key: 'dueDate', label: 'Due Date' },
+                {
+                    key: 'status',
+                    label: 'Status',
+                    render: (milestone: IMilestoneDTO) => {
+                        const statusInfo = STATUS_DETAILS[milestone.status];
+                        return (
+                            <span
+                                className={`px-3 py-1 rounded-full text-xs font-medium ${statusInfo.bgColor} ${statusInfo.textColor}`}
+                            >
+                                {statusInfo.name.toUpperCase()}
                             </span>
-                        </p>
-                        <span
-                            className={`px-3 py-1 rounded-full text-xs font-medium
-                        ${STATUS_DETAILS[m.status].bgColor} ${
-                                STATUS_DETAILS[m.status].textColor
-                            }
-                    }`}
+                        );
+                    }
+                }
+            ]}
+            renderExpandedContent={(milestone) => (
+                <div className="flex flex-col gap-1 space-y-2  pl-3">
+                    <Typography
+                        variant="body2"
+                        className="text-gray-700"
+                        component="p"
+                    >
+                        <span className="font-medium text-blue-600">
+                            📝 Description:
+                        </span>{' '}
+                        {milestone.description}
+                    </Typography>
+
+                    {milestone.assignedTo.length > 0 && (
+                        <Typography
+                            variant="body2"
+                            className="text-gray-700"
+                            component="p"
                         >
-                            {STATUS_DETAILS[m.status].name.toUpperCase()}
-                        </span>
-                    </div>
+                            <span className="font-medium text-blue-600">
+                                👥 Assigned To:
+                            </span>{' '}
+                            {milestone.assignedTo.join(', ')}
+                        </Typography>
+                    )}
                 </div>
-            ))}
-        </div>
+            )}
+            onEdit={(m) => handleOnItemEdit(m)}
+            onDelete={(m) => handleOnDeleteItem(m)}
+        />
     );
 }

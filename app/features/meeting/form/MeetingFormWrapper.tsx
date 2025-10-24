@@ -1,10 +1,14 @@
-import { JSONObject } from '@/lib/definations';
 import useAuth from '@/hooks/useAuth';
 import MeetingForm from './MeetingForm';
 import { IMeetingDTO } from '@/types/meeting';
 import withFormHandler from '@/hoc/formHandler/withFormHandler';
 import { useMeetings } from '@/hooks/useMeetings';
 import { meetingSchema } from './meetingSchema';
+import { FormikHelpers } from 'formik';
+
+export interface IMeetingFormDataProps extends IMeetingDTO {
+    submitType?: 'save' | 'save_continue';
+}
 
 export default function MeetingFormWrapper({
     projectId,
@@ -16,11 +20,20 @@ export default function MeetingFormWrapper({
     afterSubmit: () => void;
 }) {
     const { user } = useAuth();
-    const { selectedMeeting, addMeeting, updateMeeting, loading } =
-        useMeetings();
+    const {
+        selectedMeeting,
+        addMeeting,
+        updateMeeting,
+        selectMeeting,
+        status
+    } = useMeetings();
+
+    const loading = selectedMeeting
+        ? !!status.update.loading
+        : !!status.add.loading;
 
     const MeetingFormBasic = withFormHandler<
-        IMeetingDTO,
+        IMeetingFormDataProps,
         { onClose: () => void }
     >(MeetingForm, {
         initialValues: {
@@ -31,11 +44,15 @@ export default function MeetingFormWrapper({
             participants: selectedMeeting?.assignedTo || [],
             meetingNotes: selectedMeeting?.meetingNotes || '',
             assignedTo: selectedMeeting?.assignedTo || [],
-            createdBy: user!._id!
+            createdBy: user!._id!,
+            submitType: 'save'
         },
         validationSchema: meetingSchema,
         getLoading: () => !!loading,
-        onSubmit: async (values) => {
+        onSubmit: async (
+            values,
+            { resetForm }: FormikHelpers<IMeetingFormDataProps>
+        ) => {
             if (selectedMeeting) {
                 const payload = {
                     ...values,
@@ -44,6 +61,11 @@ export default function MeetingFormWrapper({
                 await updateMeeting(payload);
             } else {
                 await addMeeting(values);
+            }
+
+            if (values.submitType === 'save_continue') {
+                selectMeeting(null);
+                resetForm();
             }
             afterSubmit();
         }

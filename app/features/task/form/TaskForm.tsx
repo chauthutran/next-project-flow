@@ -14,102 +14,99 @@ import { useFormikContext } from 'formik';
 import { ITaskFormDataProps } from './TaskFormWrapper';
 
 interface Props {
-    onClose: () => void;
     loading: boolean;
+    onClose: () => void;
     handleReset: () => void;
 }
 
-export default function TaskForm({ loading, onClose, handleReset }: Props) {
+export default function TaskForm({ loading, handleReset, onClose }: Props) {
     const { user } = useAuth();
     const { setFieldValue } = useFormikContext<ITaskFormDataProps>();
 
     const teammembers = user?.teamMembers || [];
 
     return (
-        <>
-            <SimpleFormTitle title="Task Form" />
+        <SimpleForm aria-label="task form">
+            <SimpleFormFieldSet disabled={loading}>
+                <SimpleFormInput
+                    label="Name"
+                    name="name"
+                    required
+                    aria-required="true"
+                />
 
-            <SimpleForm aria-label="task form">
-                <SimpleFormFieldSet>
+                <SimpleFormTextArea
+                    label="Description"
+                    name="description"
+                    required
+                    aria-required="true"
+                />
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <SimpleFormInput
-                        label="Name"
-                        name="name"
+                        type="date"
+                        label="Start Date"
+                        name="startDate"
                         required
                         aria-required="true"
                     />
-
-                    <SimpleFormTextArea
-                        label="Description"
-                        name="description"
-                        required
-                        aria-required="true"
-                    />
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <SimpleFormInput
-                            type="date"
-                            label="Start Date"
-                            name="startDate"
-                            required
-                            aria-required="true"
-                        />
-                        <SimpleFormInput
-                            type="date"
-                            label="End Date"
-                            name="endDate"
-                            required
-                            aria-required="true"
-                        />
-                    </div>
-
-                    <SimpleFormSingleSelect
-                        label="Status"
-                        name="status"
-                        options={STATUS_KEYS.map((name: string) => ({
-                            label: name,
-                            value: name
-                        }))}
-                        required
-                        aria-required="true"
-                    />
-
-                    <SimpleFormMultipleSelect
-                        label="Assigned To"
-                        name="assignedTo"
-                        options={
-                            teammembers.map((member) => ({
-                                label: member,
-                                value: member
-                            })) || []
-                        }
-                        required
-                        aria-required="true"
-                        helpText="Hold Ctrl/Cmd to select multiple members"
-                    />
-
                     <SimpleFormInput
-                        type="hidden"
-                        label=""
-                        name="projectId"
+                        type="date"
+                        label="End Date"
+                        name="endDate"
                         required
                         aria-required="true"
                     />
-                    
-                    
-                    {/* hidden field is optional if you set via setFieldValue */}
-                     <SimpleFormInput
-                        type="hidden"
-                        label=""
-                        name="submitType"
-                        required
-                        aria-required="true"
-                    />
+                </div>
 
-                </SimpleFormFieldSet>
+                <SimpleFormSingleSelect
+                    label="Status"
+                    name="status"
+                    options={STATUS_KEYS.map((name: string) => ({
+                        label: name,
+                        value: name
+                    }))}
+                    required
+                    aria-required="true"
+                />
 
-                <SimpleFormActions>
+                <SimpleFormMultipleSelect
+                    label="Assigned To"
+                    name="assignedTo"
+                    options={
+                        teammembers.map((member) => ({
+                            label: member,
+                            value: member
+                        })) || []
+                    }
+                    required
+                    aria-required="true"
+                    helpText="Hold Ctrl/Cmd to select multiple members"
+                />
+
+                <SimpleFormInput
+                    type="hidden"
+                    label=""
+                    name="projectId"
+                    required
+                    aria-required="true"
+                />
+
+                {/* hidden field is optional if you set via setFieldValue */}
+                <SimpleFormInput
+                    type="hidden"
+                    label=""
+                    name="submitType"
+                    required
+                    aria-required="true"
+                />
+            </SimpleFormFieldSet>
+
+            <SimpleFormActions className="flex justify-between items-center w-full">
+                {/* Left side buttons */}
+                <div className="flex gap-2">
                     <AccentButton
                         type="button"
-                        title="Cancel"
+                        title="Close"
                         onClick={onClose}
                     />
 
@@ -118,12 +115,15 @@ export default function TaskForm({ loading, onClose, handleReset }: Props) {
                         title="Reset"
                         onClick={handleReset}
                     />
-
-
+                </div>
+                {/* Right side buttons */}
+                <div className="flex gap-2">
                     <PrimaryButton
                         type="submit"
                         title={loading ? 'Saving...' : 'Save Task & Continue'}
-                        onClick={() => setFieldValue('submitType', 'save_continue')}
+                        onClick={() =>
+                            setFieldValue('submitType', 'save_continue')
+                        }
                         disabled={loading}
                     />
 
@@ -133,8 +133,8 @@ export default function TaskForm({ loading, onClose, handleReset }: Props) {
                         onClick={() => setFieldValue('submitType', 'save')}
                         disabled={loading}
                     />
-                </SimpleFormActions>
-            </SimpleForm>
-        </>
+                </div>
+            </SimpleFormActions>
+        </SimpleForm>
     );
 }

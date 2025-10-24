@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-import { JSONObject } from '../lib/definations';
 import connectToDatabase from '../lib/dbService/db';
 import Meeting, { IMeeting } from '@/models/Meeting';
 import { NotFoundError, ValidationError } from './errors';

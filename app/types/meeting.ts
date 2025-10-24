@@ -5,7 +5,7 @@ export interface IMeetingDTO {
     description: string,
     date: string,
     participants: string[],
-    meetingNotes: string,
+    meetingNotes?: string,
     assignedTo: string[],
     createdBy: string,
 }
