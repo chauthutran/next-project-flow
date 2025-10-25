@@ -3,8 +3,8 @@
 import React, { useEffect } from 'react';
 import { VerticalTimeline, VerticalTimelineElement } from 'react-vertical-timeline-component';
 import 'react-vertical-timeline-component/style.min.css';
-import { JSONObject } from '@/lib/definations';
-import * as Utils from "@/lib/utils";
+import { JSONObject } from '@/app/lib/definations';
+import * as Utils from "@/app/lib/utils";
 import { FaMeetup } from "react-icons/fa";
 import { FaTasks } from 'react-icons/fa';
 import { TbTargetArrow } from "react-icons/tb";

@@ -1,9 +1,9 @@
 import {
     createErrorResponse,
     createSuccessResponse
-} from '@/lib/utils/apiResponseUtil';
-import { deleteMeetingsByProjectId } from '@/services/meetingService';
-import { fetchTasksByProjectId, saveTask } from '@/services/taskService';
+} from '@/app/lib/utils/apiResponseUtil';
+import { deleteMeetingsByProjectId } from '@/app/services/meetingService';
+import { fetchTasksByProjectId, saveTask } from '@/app/services/taskService';
 
 export async function GET(
     request: Request,

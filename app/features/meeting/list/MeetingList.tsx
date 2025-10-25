@@ -1,8 +1,8 @@
-import * as Utils from '@/lib/utils';
-import { IMeetingDTO } from '@/types/meeting';
+import * as Utils from '@/app/lib/utils';
+import { IMeetingDTO } from '@/app/types/meeting';
 import { Typography } from '@mui/material';
 import React from 'react';
-import ExpandableTable from '@/components/ExpandableTable';
+import ExpandableTable from '@/app/components/ExpandableTable';
 
 export default function MeetingList({
     meetings,

@@ -1,8 +1,8 @@
-import { ITaskDTO } from '@/types/task';
-import { STATUS_DETAILS } from '@/types/status';
-import * as Utils from '@/lib/utils';
+import { ITaskDTO } from '@/app/types/task';
+import { STATUS_DETAILS } from '@/app/types/status';
+import * as Utils from '@/app/lib/utils';
 import { Typography } from '@mui/material';
-import ExpandableTable from '@/components/ExpandableTable';
+import ExpandableTable from '@/app/components/ExpandableTable';
 import { BiCalendar } from 'react-icons/bi';
 
 export default function TaskList({

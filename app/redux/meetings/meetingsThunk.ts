@@ -1,4 +1,4 @@
-import { IMeetingDTO } from '@/types/meeting';
+import { IMeetingDTO } from '@/app/types/meeting';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 

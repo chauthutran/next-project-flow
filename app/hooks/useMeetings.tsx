@@ -1,4 +1,4 @@
-import { AppDispatch, RootState } from '@/redux/store';
+import { AppDispatch, RootState } from '@/app/redux/store';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useProjects } from './useProjects';
@@ -7,12 +7,12 @@ import {
     deleteMeeting,
     fetchMeetingsByProjectId,
     updateMeeting
-} from '@/redux/meetings/meetingsThunk';
-import { IMeetingDTO } from '@/types/meeting';
+} from '@/app/redux/meetings/meetingsThunk';
+import { IMeetingDTO } from '@/app/types/meeting';
 import {
     selectMeeting as selectMeetingAction,
     clearMeetings as clearMeetingsAction,
-} from '@/redux/meetings/meetingSlides';
+} from '@/app/redux/meetings/meetingSlides';
 
 export function useMeetings() {
     const dispatch = useDispatch<AppDispatch>();

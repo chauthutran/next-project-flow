@@ -1,13 +1,12 @@
-import withFormHandler from '@/hoc/formHandler/withFormHandler';
-import useAuth from '@/hooks/useAuth';
+import withFormHandler from '@/app/hoc/formHandler/withFormHandler';
+import useAuth from '@/app/hooks/useAuth';
 import ProjectForm from './ProjectForm';
-import { IProjectDTO } from '@/types/project';
+import { IProjectDTO } from '@/app/types/project';
 import { projectSchema } from './projectSchema';
-import { useProjects } from '@/hooks/useProjects';
-import PageTitle from '@/components/PageTitle';
+import { useProjects } from '@/app/hooks/useProjects';
+import PageTitle from '@/app/components/PageTitle';
 import { PROJECT_STEPS } from '../ProjectWorkspace';
-import { FaClipboardList } from 'react-icons/fa';
-import useNotifier from '@/hooks/useNotifier';
+import useNotifier from '@/app/hooks/useNotifier';
 
 export default function ProjectFormWrapper({
     afterSubmit = () => {}

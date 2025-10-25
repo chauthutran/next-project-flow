@@ -1,4 +1,3 @@
-import { JSONObject } from "@/lib/definations";
 import React from "react";
 
 type ProgressBarProps = {

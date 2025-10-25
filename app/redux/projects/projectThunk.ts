@@ -1,4 +1,4 @@
-import { IProjectDTO } from '@/types/project';
+import { IProjectDTO } from '@/app/types/project';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { deleteTasksByProjectId } from '../tasks/tasksThunk';

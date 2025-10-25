@@ -1,4 +1,4 @@
-import { ILoadingState } from '@/types/loadingState';
+import { ILoadingState } from '@/app/types/loadingState';
 import { useEffect, useRef } from 'react';
 import toast from 'react-hot-toast';
 

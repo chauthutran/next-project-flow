@@ -1,26 +1,23 @@
 import MeetingList from './list/MeetingList';
-import { useState } from 'react';
-import { useMeetings } from '@/hooks/useMeetings';
+import { useMeetings } from '@/app/hooks/useMeetings';
 import MeetingFormWrapper from './form/MeetingFormWrapper';
-import PageTitle from '@/components/PageTitle';
+import PageTitle from '@/app/components/PageTitle';
 import { PROJECT_STEPS } from '../project/ProjectWorkspace';
-import SecondButton from '@/components/buttons/SecondButton';
-import useConfirmDialog from '@/components/dialog/useConfirmDialog';
-import useNotifier from '@/hooks/useNotifier';
-import { IMeetingDTO } from '@/types/meeting';
-import useListPage from '@/hooks/useListPage';
-import AccentButton from '@/components/buttons/AccentButton';
+import SecondButton from '@/app/components/buttons/SecondButton';
+import { IMeetingDTO } from '@/app/types/meeting';
+import useResourcePage from '@/app/hooks/useResourcePage';
+import AccentButton from '@/app/components/buttons/AccentButton';
 
 export default function MeetingPage({ projectId }: { projectId: string }) {
     const { meetings, status, selectMeeting, deleteMeeting } = useMeetings();
     const {
         showForm,
-        setShowForm,
         handleAddNew,
         handleEdit,
         handleDelete,
+        handleCloseForm,
         ConfirmDialogComponent
-    } = useListPage<IMeetingDTO>({
+    } = useResourcePage<IMeetingDTO>({
         deleteFn: deleteMeeting,
         deleteStatus: status.delete,
         selectFn: selectMeeting
@@ -37,49 +34,39 @@ export default function MeetingPage({ projectId }: { projectId: string }) {
             {ConfirmDialogComponent}
 
             <div className="bg-white px-6">
-                {!showForm && (
-                    <>
-                        <PageTitle
-                            title={projectTitleInfo.label}
-                            subtitle={projectTitleInfo.description}
-                            icon={<IconComponent />}
-                            action={
-                                <SecondButton
-                                    type="button"
-                                    title="+ New Meeting"
-                                    onClick={handleAddNew}
-                                />
-                            }
-                        />
-                        <MeetingList
-                            meetings={meetings}
-                            handleOnItemEdit={handleEdit}
-                            handleOnDeleteItem={handleDelete}
-                        />
-                    </>
-                )}
+                <PageTitle
+                    title={showForm ? 'Meeting Form' : 'Meetings'}
+                    subtitle={projectTitleInfo.description}
+                    icon={<IconComponent />}
+                    action={
+                        showForm ? (
+                            <AccentButton
+                                type="button"
+                                title="Cancel"
+                                onClick={handleCloseForm}
+                            />
+                        ) : (
+                            <SecondButton
+                                type="button"
+                                title="+ New Task"
+                                onClick={handleAddNew}
+                            />
+                        )
+                    }
+                />
 
-                {showForm && (
-                    <>
-                        <PageTitle
-                            title={'Meeting Form'}
-                            subtitle={projectTitleInfo.description}
-                            icon={<IconComponent />}
-                            action={
-                                <AccentButton
-                                    type="button"
-                                    title="Cancel"
-                                    onClick={() => setShowForm(false)}
-                                />
-                            }
-                        />
-
-                        <MeetingFormWrapper
-                            projectId={projectId}
-                            onClose={() => setShowForm(false)}
-                            afterSubmit={() => {}}
-                        />
-                    </>
+                {showForm ? (
+                    <MeetingFormWrapper
+                        projectId={projectId}
+                        onClose={handleCloseForm}
+                        afterSubmit={() => {}}
+                    />
+                ) : (
+                    <MeetingList
+                        meetings={meetings}
+                        handleOnItemEdit={handleEdit}
+                        handleOnDeleteItem={handleDelete}
+                    />
                 )}
             </div>
         </div>

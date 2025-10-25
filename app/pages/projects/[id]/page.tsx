@@ -1,7 +1,7 @@
 'use client';
 
-import ProtectedLayout from '@/components/ProtectedLayout';
-import ProjectWorkspace from '@/features/project/ProjectWorkspace';
+import ProtectedLayout from '@/app/components/ProtectedLayout';
+import ProjectWorkspace from '@/app/features/project/ProjectWorkspace';
 import { useParams } from 'next/navigation';
 
 export default function ProjectEditPage() {

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { authenticateAccount, authenticateToken } from '@/lib/utils/authUtils';
+import { authenticateAccount, authenticateToken } from '@/app/lib/utils/authUtils';
 
 export async function middleware(request: NextRequest) {
     const { pathname } = request.nextUrl;

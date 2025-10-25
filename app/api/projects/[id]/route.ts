@@ -1,12 +1,12 @@
 import {
     createErrorResponse,
     createSuccessResponse
-} from '@/lib/utils/apiResponseUtil';
+} from '@/app/lib/utils/apiResponseUtil';
 import {
     deleteProject,
     fetchProjectById,
     updateProject
-} from '@/services/projectService';
+} from '@/app/services/projectService';
 
 export async function GET(
     request: Request,
@@ -46,7 +46,7 @@ export async function DELETE(
     const projectId = params.id;
     try {
         const response = await deleteProject(projectId);
-        
+
         createSuccessResponse(response);
 
         return Response.json(response, { status: 200 });

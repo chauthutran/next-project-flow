@@ -1,4 +1,4 @@
-import { IMilestoneDTO } from '@/types/milestone';
+import { IMilestoneDTO } from '@/app/types/milestone';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 

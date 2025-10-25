@@ -1,7 +1,7 @@
 'use client';
 
-import ProtectedLayout from "@/components/ProtectedLayout";
-import UserProfile from "@/features/auth/profile/UserProfile";
+import ProtectedLayout from "@/app/components/ProtectedLayout";
+import UserProfile from "@/app/features/auth/profile/UserProfile";
 
 export default function Profile() {
     

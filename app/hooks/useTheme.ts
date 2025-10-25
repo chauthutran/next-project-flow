@@ -1,5 +1,5 @@
 // hooks/useTheme.ts
-import { ThemeContext } from '@/context/ThemeContext';
+import { ThemeContext } from '@/app/context/ThemeContext';
 import { useContext, useEffect, useState } from 'react';
 
 // type ITheme = 'light' | 'dark';

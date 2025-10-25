@@ -1,4 +1,4 @@
-import { IUseFormHandler, useFormHandler } from '@/hoc/formHandler/useFormHandler';
+import { IUseFormHandler, useFormHandler } from '@/app/hoc/formHandler/useFormHandler';
 import { FormikHelpers, FormikProvider, FormikValues } from 'formik';
 import * as yup from 'yup';
 

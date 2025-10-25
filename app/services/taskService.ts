@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import connectToDatabase from '../lib/dbService/db';
-import Task, { ITask } from '@/models/Task';
-import { ITaskDTO } from '@/types/task';
+import Task, { ITask } from '@/app/models/Task';
+import { ITaskDTO } from '@/app/types/task';
 import { NotFoundError, ValidationError } from './errors';
 import { handleError } from './errorUtils';
 

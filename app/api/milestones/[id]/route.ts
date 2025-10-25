@@ -1,8 +1,8 @@
 import {
     createErrorResponse,
     createSuccessResponse
-} from '@/lib/utils/apiResponseUtil';
-import { deleteMilestone, saveMilestone } from '@/services/milestoneService';
+} from '@/app/lib/utils/apiResponseUtil';
+import { deleteMilestone, saveMilestone } from '@/app/services/milestoneService';
 
 export async function PUT(
     request: Request,

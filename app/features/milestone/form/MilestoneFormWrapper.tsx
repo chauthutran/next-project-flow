@@ -1,9 +1,9 @@
-import useAuth from '@/hooks/useAuth';
+import useAuth from '@/app/hooks/useAuth';
 import MilestoneForm from './MilestoneForm';
-import { IMilestoneDTO } from '@/types/milestone';
-import withFormHandler from '@/hoc/formHandler/withFormHandler';
+import { IMilestoneDTO } from '@/app/types/milestone';
+import withFormHandler from '@/app/hoc/formHandler/withFormHandler';
 import { milestoneSchema } from './milestoneSchema';
-import { useMilestones } from '@/hooks/useMilestones';
+import { useMilestones } from '@/app/hooks/useMilestones';
 import { FormikHelpers } from 'formik';
 
 export interface IMilestoneFormDataProps extends IMilestoneDTO {

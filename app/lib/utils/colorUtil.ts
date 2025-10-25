@@ -1,5 +1,5 @@
 import { JSONObject } from "../definations";
-import * as Constant from "@/lib/constant";
+import * as Constant from "@/app/lib/constant";
 
 let STATUS_COLORS: JSONObject = {};
 STATUS_COLORS[Constant.MILESTONE_STATUS_PENDING] =  "#FFC107";

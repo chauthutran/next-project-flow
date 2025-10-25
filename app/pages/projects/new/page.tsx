@@ -1,7 +1,7 @@
 'use client';
 
-import ProtectedLayout from '@/components/ProtectedLayout';
-import ProjectWorkspace from '@/features/project/ProjectWorkspace';
+import ProtectedLayout from '@/app/components/ProtectedLayout';
+import ProjectWorkspace from '@/app/features/project/ProjectWorkspace';
 
 export default function ProjectNewForm() {
     return (

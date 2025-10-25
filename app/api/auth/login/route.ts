@@ -1,6 +1,5 @@
-import { createErrorResponse, createSuccessResponse } from '@/lib/utils/apiResponseUtil';
-import { AppError } from '@/services/errors';
-import { login } from '@/services/userService';
+import { createErrorResponse, createSuccessResponse } from '@/app/lib/utils/apiResponseUtil';
+import { login } from '@/app/services/userService';
 
 export async function POST(request: Request) {
     try {

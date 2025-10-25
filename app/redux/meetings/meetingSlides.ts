@@ -1,4 +1,4 @@
-import { IMeetingDTO } from '@/types/meeting';
+import { IMeetingDTO } from '@/app/types/meeting';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {
     addMeeting,
@@ -7,7 +7,7 @@ import {
     deleteMeeting,
     deleteMeetingsByProjectId
 } from './meetingsThunk';
-import { ILoadingState } from '@/types/loadingState';
+import { ILoadingState } from '@/app/types/loadingState';
 
 interface MeetingState {
     meetings: IMeetingDTO[] | null;

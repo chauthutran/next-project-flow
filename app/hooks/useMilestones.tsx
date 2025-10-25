@@ -1,4 +1,4 @@
-import { AppDispatch, RootState } from '@/redux/store';
+import { AppDispatch, RootState } from '@/app/redux/store';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useProjects } from './useProjects';
@@ -7,12 +7,12 @@ import {
     deleteMilestone,
     fetchMilestonesByProjectId,
     updateMilestone
-} from '@/redux/milestones/milestonesThunk';
-import { IMilestoneDTO } from '@/types/milestone';
+} from '@/app/redux/milestones/milestonesThunk';
+import { IMilestoneDTO } from '@/app/types/milestone';
 import {
     selectMilestone as selectMilestoneAction,
     clearMilestones as clearMilestonesAction,
-} from '@/redux/milestones/milestoneSlides';
+} from '@/app/redux/milestones/milestoneSlides';
 
 export function useMilestones() {
     const dispatch = useDispatch<AppDispatch>();

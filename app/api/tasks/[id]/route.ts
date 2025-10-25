@@ -1,8 +1,8 @@
 import {
     createErrorResponse,
     createSuccessResponse
-} from '@/lib/utils/apiResponseUtil';
-import { deleteTask, saveTask } from '@/services/taskService';
+} from '@/app/lib/utils/apiResponseUtil';
+import { deleteTask, saveTask } from '@/app/services/taskService';
 
 export async function PUT(
     request: Request,

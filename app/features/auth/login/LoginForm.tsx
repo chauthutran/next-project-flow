@@ -1,9 +1,9 @@
-import SimpleFormFieldSet from '@/components/form/SimpleFormFieldSet';
-import SimpleFormActions from '@/components/form/SimpleFormActions';
-import SimpleFormInput from '@/components/form/SimpleFormInput';
-import { SimpleForm } from '@/components/form/SimpleForm';
-import PrimaryButton from '@/components/buttons/PrimaryButton';
-import useAuth from '@/hooks/useAuth';
+import SimpleFormFieldSet from '@/app/components/form/SimpleFormFieldSet';
+import SimpleFormActions from '@/app/components/form/SimpleFormActions';
+import SimpleFormInput from '@/app/components/form/SimpleFormInput';
+import { SimpleForm } from '@/app/components/form/SimpleForm';
+import PrimaryButton from '@/app/components/buttons/PrimaryButton';
+import useAuth from '@/app/hooks/useAuth';
 
 interface LoginFormProps {
     loading: boolean;

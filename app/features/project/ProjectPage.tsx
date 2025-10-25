@@ -1,15 +1,15 @@
-import { useProjects } from '@/hooks/useProjects';
-import PageTitle from '@/components/PageTitle';
+import { useProjects } from '@/app/hooks/useProjects';
+import PageTitle from '@/app/components/PageTitle';
 import { PiFolderLight } from 'react-icons/pi';
 import { useRouter } from 'next/navigation';
-import SecondButton from '@/components/buttons/SecondButton';
+import SecondButton from '@/app/components/buttons/SecondButton';
 import ProjectList from './list/ProjectList';
-import { deleteProject } from '@/redux/projects/projectThunk';
-import useConfirmDialog from '@/components/dialog/useConfirmDialog';
-import { IProjectDTO } from '@/types/project';
+import { deleteProject } from '@/app/redux/projects/projectThunk';
+import useConfirmDialog from '@/app/components/dialog/useConfirmDialog';
+import { IProjectDTO } from '@/app/types/project';
 import { useEffect } from 'react';
-import useNotifier from '@/hooks/useNotifier';
-import { useAppSelector } from '@/redux/hook';
+import useNotifier from '@/app/hooks/useNotifier';
+import { useAppSelector } from '@/app/redux/hook';
 
 export default function ProjectsPage() {
     const navigate = useRouter();

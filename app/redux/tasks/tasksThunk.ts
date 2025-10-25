@@ -1,4 +1,4 @@
-import { ITaskDTO } from '@/types/task';
+import { ITaskDTO } from '@/app/types/task';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 

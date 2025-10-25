@@ -1,9 +1,8 @@
+import { IBasicDTO } from "./basic";
 import { ProjectStatus } from "./status";
 
-export interface ITaskDTO {
-    _id?: string;
+export interface ITaskDTO extends IBasicDTO {
     projectId: string;
-    name: string;
     description: string;
     startDate: string;
     endDate: string;

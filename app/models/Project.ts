@@ -1,4 +1,4 @@
-import { ProjectStatus, STATUS_KEYS } from '@/types/status';
+import { ProjectStatus, STATUS_KEYS } from '@/app/types/status';
 import mongoose, { Document, Model, Schema, Types } from 'mongoose';
 
 

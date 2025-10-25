@@ -1,7 +1,6 @@
-import { IProjectDTO } from '@/types/project';
+import { IProjectDTO } from '@/app/types/project';
 import ProjectTableHeader from './ProjectTableHeader';
 import ProjectTableRow from './ProjectTableRow';
-import useConfirmDialog from '@/components/dialog/useConfirmDialog';
 
 export default function ProjectList({
     projects,

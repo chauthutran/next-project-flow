@@ -1,17 +1,12 @@
 
-// import { useMainUi } from "@/context/MainUiContext";
-import * as AppStore from "@/lib/appStore";
+import * as AppStore from "@/app/lib/appStore";
 import { MdDoubleArrow } from "react-icons/md";
-import * as Constant from '@/lib/constant';
-import { ImPlus } from "react-icons/im";
 import { MdKeyboardDoubleArrowDown } from "react-icons/md";
 import { MdKeyboardDoubleArrowUp } from "react-icons/md";
 import { useState } from "react";
 
-
 export default function ProjectNavigation() {
 
-    // const { subPage, setSubPage } = useMainUi();
     const [showMenus, setShowMenus] = useState(false);
 
     const renderDetailsOptions = () => {

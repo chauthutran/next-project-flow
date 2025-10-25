@@ -1,8 +1,8 @@
 import {
     createErrorResponse,
     createSuccessResponse
-} from '@/lib/utils/apiResponseUtil';
-import { deleteMeeting, saveMeeting } from '@/services/meetingService';
+} from '@/app/lib/utils/apiResponseUtil';
+import { deleteMeeting, saveMeeting } from '@/app/services/meetingService';
 
 export async function PUT(
     request: Request,

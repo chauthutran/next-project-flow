@@ -1,14 +1,12 @@
-import useAuth from '@/hooks/useAuth';
-import SimpleFormTitle from '@/components/form/SimpleFormTitle';
-import { SimpleForm } from '@/components/form/SimpleForm';
-import SimpleFormInput from '@/components/form/SimpleFormInput';
-import SimpleFormFieldSet from '@/components/form/SimpleFormFieldSet';
-import SimpleFormTextArea from '@/components/form/SimpleFormTextArea';
-import SimpleFormMultipleSelect from '@/components/form/SimpleFormMultipleSelect';
-import AccentButton from '@/components/buttons/AccentButton';
-import PrimaryButton from '@/components/buttons/PrimaryButton';
-import { useRouter } from 'next/navigation';
-import SimpleFormActions from '@/components/form/SimpleFormActions';
+import useAuth from '@/app/hooks/useAuth';
+import { SimpleForm } from '@/app/components/form/SimpleForm';
+import SimpleFormInput from '@/app/components/form/SimpleFormInput';
+import SimpleFormFieldSet from '@/app/components/form/SimpleFormFieldSet';
+import SimpleFormTextArea from '@/app/components/form/SimpleFormTextArea';
+import SimpleFormMultipleSelect from '@/app/components/form/SimpleFormMultipleSelect';
+import AccentButton from '@/app/components/buttons/AccentButton';
+import PrimaryButton from '@/app/components/buttons/PrimaryButton';
+import SimpleFormActions from '@/app/components/form/SimpleFormActions';
 import { useFormikContext } from 'formik';
 import { IMeetingFormDataProps } from './MeetingFormWrapper';
 
@@ -104,7 +102,7 @@ export default function MeetingForm({ loading, onClose, handleReset }: Props) {
                     aria-required="true"
                 />
             </SimpleFormFieldSet>
-            
+
             <SimpleFormActions className="flex justify-between items-center w-full">
                 {/* Left side buttons */}
                 <div className="flex gap-2">

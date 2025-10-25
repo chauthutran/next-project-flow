@@ -1,7 +1,7 @@
 'use client';
 
-import ProtectedLayout from '@/components/ProtectedLayout';
-import ProjectsPage from '@/features/project/ProjectPage';
+import ProtectedLayout from '@/app/components/ProtectedLayout';
+import ProjectsPage from '@/app/features/project/ProjectPage';
 
 export default function Projects() {
     return (

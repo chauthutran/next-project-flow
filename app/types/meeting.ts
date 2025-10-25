@@ -1,7 +1,7 @@
-export interface IMeetingDTO {
-    _id?: string,
+import { IBasicDTO } from "./basic";
+
+export interface IMeetingDTO extends IBasicDTO {
     projectId: string,
-    name: string,
     description: string,
     date: string,
     participants: string[],

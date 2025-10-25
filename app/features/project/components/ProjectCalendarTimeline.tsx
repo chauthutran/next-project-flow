@@ -1,5 +1,5 @@
-import { JSONObject } from "@/lib/definations";
-import * as Utils from "@/lib/utils";
+import { JSONObject } from "@/app/lib/definations";
+import * as Utils from "@/app/lib/utils";
 
 
 export default function ProjectCalendarTimeline({ project, data }: { project: JSONObject, data: JSONObject }) {

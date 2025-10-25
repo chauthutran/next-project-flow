@@ -1,4 +1,4 @@
-import { AppDispatch, RootState } from '@/redux/store';
+import { AppDispatch, RootState } from '@/app/redux/store';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useProjects } from './useProjects';
@@ -7,13 +7,13 @@ import {
     deleteTask,
     fetchTasksByProjectId,
     updateTask
-} from '@/redux/tasks/tasksThunk';
-import { ITaskDTO } from '@/types/task';
-import { useAppSelector } from '@/redux/hook';
+} from '@/app/redux/tasks/tasksThunk';
+import { ITaskDTO } from '@/app/types/task';
+import { useAppSelector } from '@/app/redux/hook';
 import {
     selectTask as selectTaskAction,
     clearTasks as clearTasksAction,
-} from '@/redux/tasks/taskSlides';
+} from '@/app/redux/tasks/taskSlides';
 
 export function useTasks() {
     const dispatch = useDispatch<AppDispatch>();

@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
-import { COOKIES_TOKEN_NAME } from '@/lib/constant';
+import { COOKIES_TOKEN_NAME } from '@/app/lib/constant';
 
 export async function POST() {
     try {

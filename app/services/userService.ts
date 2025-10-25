@@ -1,8 +1,8 @@
 import { JSONObject } from '../lib/definations';
 import connectToDatabase from '../lib/dbService/db';
 import * as Encrypt from '../lib/dbService/encryptPassword';
-import User from '@/models/User';
-import { setAuthCookie } from '@/lib/utils/authUtils';
+import User from '@/app/models/User';
+import { setAuthCookie } from '@/app/lib/utils/authUtils';
 import { ValidationError } from 'yup';
 import { NotFoundError } from './errors';
 import { handleError } from './errorUtils';

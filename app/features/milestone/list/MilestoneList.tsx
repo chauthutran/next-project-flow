@@ -1,7 +1,7 @@
-import { IMilestoneDTO } from '@/types/milestone';
-import { STATUS_DETAILS } from '@/types/status';
-import * as Utils from '@/lib/utils';
-import ExpandableTable from '@/components/ExpandableTable';
+import { IMilestoneDTO } from '@/app/types/milestone';
+import { STATUS_DETAILS } from '@/app/types/status';
+import * as Utils from '@/app/lib/utils';
+import ExpandableTable from '@/app/components/ExpandableTable';
 import { Typography } from '@mui/material';
 
 export default function MilestoneList({

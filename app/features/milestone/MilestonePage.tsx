@@ -1,13 +1,12 @@
 import MilestoneList from './list/MilestoneList';
-import { useState } from 'react';
 import MilestoneFormWrapper from './form/MilestoneFormWrapper';
-import { useMilestones } from '@/hooks/useMilestones';
-import PageTitle from '@/components/PageTitle';
+import { useMilestones } from '@/app/hooks/useMilestones';
+import PageTitle from '@/app/components/PageTitle';
 import { PROJECT_STEPS } from '../project/ProjectWorkspace';
-import SecondButton from '@/components/buttons/SecondButton';
-import useListPage from '@/hooks/useListPage';
-import { IMilestoneDTO } from '@/types/milestone';
-import AccentButton from '@/components/buttons/AccentButton';
+import SecondButton from '@/app/components/buttons/SecondButton';
+import useResourcePage from '@/app/hooks/useResourcePage';
+import { IMilestoneDTO } from '@/app/types/milestone';
+import AccentButton from '@/app/components/buttons/AccentButton';
 
 export default function MilestonePage({ projectId }: { projectId: string }) {
     const { milestones, status, selectMilestone, deleteMilestone } =
@@ -15,12 +14,12 @@ export default function MilestonePage({ projectId }: { projectId: string }) {
 
     const {
         showForm,
-        setShowForm,
+        handleCloseForm,
         handleAddNew,
         handleEdit,
         handleDelete,
         ConfirmDialogComponent
-    } = useListPage<IMilestoneDTO>({
+    } = useResourcePage<IMilestoneDTO>({
         deleteFn: deleteMilestone,
         deleteStatus: status.delete,
         selectFn: selectMilestone
@@ -37,49 +36,39 @@ export default function MilestonePage({ projectId }: { projectId: string }) {
             {ConfirmDialogComponent}
 
             <div className="bg-white px-6">
-                {!showForm && (
-                    <>
-                        <PageTitle
-                            title={projectTitleInfo.label}
-                            subtitle={projectTitleInfo.description}
-                            icon={<IconComponent />}
-                            action={
-                                <SecondButton
-                                    type="button"
-                                    title="+ New Milestone"
-                                    onClick={handleAddNew}
-                                />
-                            }
-                        />
-                        <MilestoneList
-                            milestones={milestones}
-                            handleOnItemEdit={handleEdit}
-                            handleOnDeleteItem={handleDelete}
-                        />
-                    </>
-                )}
+                <PageTitle
+                    title={showForm ? 'Milestone Form' : 'Milestones'}
+                    subtitle={projectTitleInfo.description}
+                    icon={<IconComponent />}
+                    action={
+                        showForm ? (
+                            <AccentButton
+                                type="button"
+                                title="Cancel"
+                                onClick={handleCloseForm}
+                            />
+                        ) : (
+                            <SecondButton
+                                type="button"
+                                title="+ New Milestone"
+                                onClick={handleAddNew}
+                            />
+                        )
+                    }
+                />
 
-                {showForm && (
-                    <>
-                        <PageTitle
-                            title={'Milestone Form'}
-                            subtitle={projectTitleInfo.description}
-                            icon={<IconComponent />}
-                            action={
-                                <AccentButton
-                                    type="button"
-                                    title="Cancel"
-                                    onClick={() => setShowForm(false)}
-                                />
-                            }
-                        />
-
-                        <MilestoneFormWrapper
-                            projectId={projectId}
-                            onClose={() => setShowForm(false)}
-                            afterSubmit={() => {}}
-                        />
-                    </>
+                {showForm ? (
+                    <MilestoneFormWrapper
+                        projectId={projectId}
+                        onClose={handleCloseForm}
+                        afterSubmit={() => {}}
+                    />
+                ) : (
+                    <MilestoneList
+                        milestones={milestones}
+                        handleOnItemEdit={handleEdit}
+                        handleOnDeleteItem={handleDelete}
+                    />
                 )}
             </div>
         </div>

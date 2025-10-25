@@ -1,4 +1,4 @@
-import { IMilestoneDTO } from '@/types/milestone';
+import { IMilestoneDTO } from '@/app/types/milestone';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {
     addMilestone,
@@ -7,7 +7,7 @@ import {
     deleteMilestone,
     deleteMilestonesByProjectId
 } from './milestonesThunk';
-import { ILoadingState } from '@/types/loadingState';
+import { ILoadingState } from '@/app/types/loadingState';
 
 interface MilestoneState {
     milestones: IMilestoneDTO[] | null;

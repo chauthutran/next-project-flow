@@ -1,8 +1,8 @@
-import useAuth from '@/hooks/useAuth';
+import useAuth from '@/app/hooks/useAuth';
 import MeetingForm from './MeetingForm';
-import { IMeetingDTO } from '@/types/meeting';
-import withFormHandler from '@/hoc/formHandler/withFormHandler';
-import { useMeetings } from '@/hooks/useMeetings';
+import { IMeetingDTO } from '@/app/types/meeting';
+import withFormHandler from '@/app/hoc/formHandler/withFormHandler';
+import { useMeetings } from '@/app/hooks/useMeetings';
 import { meetingSchema } from './meetingSchema';
 import { FormikHelpers } from 'formik';
 
@@ -20,6 +20,7 @@ export default function MeetingFormWrapper({
     afterSubmit: () => void;
 }) {
     const { user } = useAuth();
+    
     const {
         selectedMeeting,
         addMeeting,

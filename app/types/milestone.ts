@@ -1,9 +1,8 @@
+import { IBasicDTO } from "./basic";
 import { ProjectStatus } from "./status";
 
-export interface IMilestoneDTO {
-    _id?: string;
+export interface IMilestoneDTO extends IBasicDTO {
     projectId: string;
-    name: string;
     description: string;
     dueDate: string;
     status: ProjectStatus;

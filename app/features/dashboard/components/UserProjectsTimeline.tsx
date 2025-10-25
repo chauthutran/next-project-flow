@@ -1,5 +1,5 @@
-import { JSONObject } from "@/lib/definations";
-import * as Utils from "@/lib/utils";
+import { JSONObject } from "@/app/lib/definations";
+import * as Utils from "@/app/lib/utils";
 import { useEffect } from "react";
 import { VerticalTimeline, VerticalTimelineElement } from "react-vertical-timeline-component";
 

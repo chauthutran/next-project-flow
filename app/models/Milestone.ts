@@ -1,4 +1,4 @@
-import { ProjectStatus } from '@/types/status';
+import { ProjectStatus } from '@/app/types/status';
 import mongoose, { Model, Schema, Types } from 'mongoose';
 
 export interface IMilestone extends Document {

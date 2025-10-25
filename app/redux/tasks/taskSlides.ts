@@ -1,4 +1,4 @@
-import { ITaskDTO } from '@/types/task';
+import { ITaskDTO } from '@/app/types/task';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {
     addTask,
@@ -7,7 +7,7 @@ import {
     deleteTask,
     deleteTasksByProjectId
 } from './tasksThunk';
-import { ILoadingState } from '@/types/loadingState';
+import { ILoadingState } from '@/app/types/loadingState';
 
 interface TaskState {
     tasks: ITaskDTO[] | null;

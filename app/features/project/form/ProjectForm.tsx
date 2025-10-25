@@ -1,16 +1,15 @@
-import PrimaryButton from '@/components/buttons/PrimaryButton';
-import { SimpleForm } from '@/components/form/SimpleForm';
-import SimpleFormFieldSet from '@/components/form/SimpleFormFieldSet';
-import SimpleFormInput from '@/components/form/SimpleFormInput';
-import SimpleFormTextArea from '@/components/form/SimpleFormTextArea';
-import SimpleFormSingleSelect from '@/components/form/SimpleFormSingleSelect';
-import useAuth from '@/hooks/useAuth';
-import SimpleFormMultipleSelect from '@/components/form/SimpleFormMultipleSelect';
-import SimpleFormTitle from '@/components/form/SimpleFormTitle';
-import AccentButton from '@/components/buttons/AccentButton';
+import PrimaryButton from '@/app/components/buttons/PrimaryButton';
+import { SimpleForm } from '@/app/components/form/SimpleForm';
+import SimpleFormFieldSet from '@/app/components/form/SimpleFormFieldSet';
+import SimpleFormInput from '@/app/components/form/SimpleFormInput';
+import SimpleFormTextArea from '@/app/components/form/SimpleFormTextArea';
+import SimpleFormSingleSelect from '@/app/components/form/SimpleFormSingleSelect';
+import useAuth from '@/app/hooks/useAuth';
+import SimpleFormMultipleSelect from '@/app/components/form/SimpleFormMultipleSelect';
+import AccentButton from '@/app/components/buttons/AccentButton';
 import { useRouter } from 'next/navigation';
-import { STATUS_KEYS } from '@/types/status';
-import SimpleFormActions from '@/components/form/SimpleFormActions';
+import { STATUS_KEYS } from '@/app/types/status';
+import SimpleFormActions from '@/app/components/form/SimpleFormActions';
 
 interface ProjectFormProps {
     loading: boolean;

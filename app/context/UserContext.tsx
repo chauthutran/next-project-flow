@@ -1,7 +1,7 @@
 'use client';
 
 import { createContext, ReactNode, useEffect, useState } from 'react';
-import { IUserDTO } from '@/types/user';
+import { IUserDTO } from '@/app/types/user';
 import axios from 'axios';
 
 interface AuthContextProps {

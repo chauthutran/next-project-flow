@@ -1,26 +1,23 @@
 import TaskList from './list/TaskList';
-import { useState } from 'react';
 import TaskFormWrapper from './form/TaskFormWrapper';
-import { useTasks } from '@/hooks/useTasks';
+import { useTasks } from '@/app/hooks/useTasks';
 import { PROJECT_STEPS } from '../project/ProjectWorkspace';
-import PageTitle from '@/components/PageTitle';
-import SecondButton from '@/components/buttons/SecondButton';
-import { ITaskDTO } from '@/types/task';
-import useConfirmDialog from '@/components/dialog/useConfirmDialog';
-import useNotifier from '@/hooks/useNotifier';
-import AccentButton from '@/components/buttons/AccentButton';
-import useListPage from '@/hooks/useListPage';
+import PageTitle from '@/app/components/PageTitle';
+import SecondButton from '@/app/components/buttons/SecondButton';
+import { ITaskDTO } from '@/app/types/task';
+import AccentButton from '@/app/components/buttons/AccentButton';
+import useResourcePage from '@/app/hooks/useResourcePage';
 
 export default function TaskPage({ projectId }: { projectId: string }) {
     const { tasks, status, selectTask, deleteTask } = useTasks();
     const {
         showForm,
-        setShowForm,
+        handleCloseForm,
         handleAddNew,
         handleEdit,
         handleDelete,
         ConfirmDialogComponent
-    } = useListPage<ITaskDTO>({
+    } = useResourcePage<ITaskDTO>({
         deleteFn: deleteTask,
         deleteStatus: status.delete,
         selectFn: selectTask
@@ -37,50 +34,40 @@ export default function TaskPage({ projectId }: { projectId: string }) {
             {ConfirmDialogComponent}
 
             <div className="bg-white px-6">
-                {!showForm && (
-                    <>
-                        <PageTitle
-                            title={projectTitleInfo.label}
-                            subtitle={projectTitleInfo.description}
-                            icon={<IconComponent />}
-                            action={
-                                <SecondButton
-                                    type="button"
-                                    title="+ New Task"
-                                    onClick={handleAddNew}
-                                />
-                            }
-                        />
-                        <TaskList
-                            tasks={tasks}
-                            handleOnItemEdit={handleEdit}
-                            handleOnDeleteItem={handleDelete}
-                        />
-                    </>
-                )}
+                <PageTitle
+                    title={showForm ? 'Task Form' : 'Tasks'}
+                    subtitle={projectTitleInfo.description}
+                    icon={<IconComponent />}
+                    action={
+                        showForm ? (
+                            <AccentButton
+                                type="button"
+                                title="Cancel"
+                                onClick={handleCloseForm}
+                            />
+                        ) : (
+                            <SecondButton
+                                type="button"
+                                title="+ New Task"
+                                onClick={handleAddNew}
+                            />
+                        )
+                    }
+                />
 
-                {showForm && (
-                    <>
-                        <PageTitle
-                            title={'Task Form'}
-                            subtitle={projectTitleInfo.description}
-                            icon={<IconComponent />}
-                            action={
-                                <AccentButton
-                                    type="button"
-                                    title="Cancel"
-                                    onClick={() => setShowForm(false)}
-                                />
-                            }
-                        />
 
-                        <TaskFormWrapper
-                            projectId={projectId}
-                            onClose={() => setShowForm(false)}
-                            afterSubmit={() => {}}
-                        />
-                    </>
-                )}
+                {showForm ?  
+                    <TaskFormWrapper
+                        projectId={projectId}
+                        onClose={handleCloseForm}
+                        afterSubmit={() => {}}
+                    />
+                    :  <TaskList
+                        tasks={tasks}
+                        handleOnItemEdit={handleEdit}
+                        handleOnDeleteItem={handleDelete}
+                    />
+                }
             </div>
         </div>
     );

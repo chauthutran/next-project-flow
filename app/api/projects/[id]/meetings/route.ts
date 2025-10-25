@@ -1,8 +1,12 @@
 import {
     createErrorResponse,
     createSuccessResponse
-} from '@/lib/utils/apiResponseUtil';
-import { deleteMeetingsByProjectId, fetchMeetingsByProjectId, saveMeeting } from '@/services/meetingService';
+} from '@/app/lib/utils/apiResponseUtil';
+import {
+    deleteMeetingsByProjectId,
+    fetchMeetingsByProjectId,
+    saveMeeting
+} from '@/app/services/meetingService';
 
 export async function GET(
     request: Request,
@@ -53,4 +57,3 @@ export async function DELETE(
         return createErrorResponse(error);
     }
 }
-

@@ -2,7 +2,7 @@
 
 import { usePathname, useRouter } from 'next/navigation';
 import Link from 'next/link';
-import useAuth from '@/hooks/useAuth';
+import useAuth from '@/app/hooks/useAuth';
 
 export default function Header() {
     const router = useRouter();

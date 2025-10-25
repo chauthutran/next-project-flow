@@ -1,4 +1,4 @@
-import { IProjectDTO } from '@/types/project';
+import { IProjectDTO } from '@/app/types/project';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {
     addProject,
@@ -7,7 +7,7 @@ import {
     fetchProjectsByUserId,
     updateProject
 } from './projectThunk';
-import { ILoadingState } from '@/types/loadingState';
+import { ILoadingState } from '@/app/types/loadingState';
 
 interface ProjectState {
     projects: IProjectDTO[] | null;

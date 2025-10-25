@@ -1,8 +1,8 @@
 import mongoose from 'mongoose';
 import connectToDatabase from '../lib/dbService/db';
-import Meeting, { IMeeting } from '@/models/Meeting';
+import Meeting, { IMeeting } from '@/app/models/Meeting';
 import { NotFoundError, ValidationError } from './errors';
-import { IMeetingDTO } from '@/types/meeting';
+import { IMeetingDTO } from '@/app/types/meeting';
 import { handleError } from './errorUtils';
 
 export async function fetchMeetingsByProjectIdList(

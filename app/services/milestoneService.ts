@@ -1,8 +1,8 @@
 import mongoose from 'mongoose';
 import connectToDatabase from '../lib/dbService/db';
-import Milestone, { IMilestone } from '@/models/Milestone';
+import Milestone, { IMilestone } from '@/app/models/Milestone';
 import { NotFoundError, ValidationError } from './errors';
-import { IMilestoneDTO } from '@/types/milestone';
+import { IMilestoneDTO } from '@/app/types/milestone';
 import { handleError } from './errorUtils';
 
 export async function fetchMilestonesByProjectIdList(

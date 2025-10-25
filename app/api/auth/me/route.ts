@@ -1,8 +1,8 @@
 // /app/api/auth/me/route.ts
 import { NextRequest, NextResponse } from 'next/server';
-import User from '@/models/User';
-import { authenticateToken } from '@/lib/utils/authUtils';
-import { createErrorResponse, createSuccessResponse } from '@/lib/utils/apiResponseUtil';
+import User from '@/app/models/User';
+import { authenticateToken } from '@/app/lib/utils/authUtils';
+import { createErrorResponse, createSuccessResponse } from '@/app/lib/utils/apiResponseUtil';
 
 export async function GET(request: NextRequest) {
     try {

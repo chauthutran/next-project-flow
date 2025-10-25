@@ -1,10 +1,10 @@
-import useAuth from '@/hooks/useAuth';
-import { useTasks } from '@/hooks/useTasks';
+import useAuth from '@/app/hooks/useAuth';
+import { useTasks } from '@/app/hooks/useTasks';
 import TaskForm from './TaskForm';
-import { ITaskDTO } from '@/types/task';
-import withFormHandler from '@/hoc/formHandler/withFormHandler';
+import { ITaskDTO } from '@/app/types/task';
+import withFormHandler from '@/app/hoc/formHandler/withFormHandler';
 import { taskSchema } from './taskSchema';
-import useNotifier from '@/hooks/useNotifier';
+import useNotifier from '@/app/hooks/useNotifier';
 import { FormikHelpers } from 'formik';
 
 export interface ITaskFormDataProps extends ITaskDTO {

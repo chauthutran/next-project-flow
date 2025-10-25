@@ -1,8 +1,8 @@
 import {
     createErrorResponse,
     createSuccessResponse
-} from '@/lib/utils/apiResponseUtil';
-import { addProject } from '@/services/projectService';
+} from '@/app/lib/utils/apiResponseUtil';
+import { addProject } from '@/app/services/projectService';
 
 export async function POST(request: Request) {
     try {

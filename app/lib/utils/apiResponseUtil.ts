@@ -1,4 +1,4 @@
-import { AppError } from "@/services/errors";
+import { AppError } from "@/app/services/errors";
 
 export function createSuccessResponse(data: any, statusCode = 200): Response {
     return Response.json({ status: 'success', data }, { status: statusCode });

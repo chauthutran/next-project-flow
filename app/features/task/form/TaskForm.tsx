@@ -1,15 +1,14 @@
-import useAuth from '@/hooks/useAuth';
-import SimpleFormTitle from '@/components/form/SimpleFormTitle';
-import { SimpleForm } from '@/components/form/SimpleForm';
-import SimpleFormInput from '@/components/form/SimpleFormInput';
-import SimpleFormFieldSet from '@/components/form/SimpleFormFieldSet';
-import SimpleFormTextArea from '@/components/form/SimpleFormTextArea';
-import SimpleFormSingleSelect from '@/components/form/SimpleFormSingleSelect';
-import { STATUS_KEYS } from '@/types/status';
-import SimpleFormMultipleSelect from '@/components/form/SimpleFormMultipleSelect';
-import AccentButton from '@/components/buttons/AccentButton';
-import PrimaryButton from '@/components/buttons/PrimaryButton';
-import SimpleFormActions from '@/components/form/SimpleFormActions';
+import useAuth from '@/app/hooks/useAuth';
+import { SimpleForm } from '@/app/components/form/SimpleForm';
+import SimpleFormInput from '@/app/components/form/SimpleFormInput';
+import SimpleFormFieldSet from '@/app/components/form/SimpleFormFieldSet';
+import SimpleFormTextArea from '@/app/components/form/SimpleFormTextArea';
+import SimpleFormSingleSelect from '@/app/components/form/SimpleFormSingleSelect';
+import { STATUS_KEYS } from '@/app/types/status';
+import SimpleFormMultipleSelect from '@/app/components/form/SimpleFormMultipleSelect';
+import AccentButton from '@/app/components/buttons/AccentButton';
+import PrimaryButton from '@/app/components/buttons/PrimaryButton';
+import SimpleFormActions from '@/app/components/form/SimpleFormActions';
 import { useFormikContext } from 'formik';
 import { ITaskFormDataProps } from './TaskFormWrapper';
 

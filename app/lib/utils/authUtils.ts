@@ -1,6 +1,6 @@
 import { JWTPayload, jwtVerify, SignJWT } from 'jose';
 import { parse } from 'cookie';
-import * as UserService from '@/services/userService';
+import * as UserService from '@/app/services/userService';
 import connectToDatabase from '../dbService/db';
 import { cookies } from 'next/headers';
 import { COOKIES_TOKEN_NAME } from '../constant';

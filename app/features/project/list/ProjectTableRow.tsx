@@ -1,11 +1,8 @@
-import AccentButton from '@/components/buttons/AccentButton';
-import PrimaryButton from '@/components/buttons/PrimaryButton';
-import useConfirmDialog from '@/components/dialog/useConfirmDialog';
-import { useProjects } from '@/hooks/useProjects';
-import { IProjectDTO } from '@/types/project';
-import { STATUS_DETAILS } from '@/types/status';
+import AccentButton from '@/app/components/buttons/AccentButton';
+import PrimaryButton from '@/app/components/buttons/PrimaryButton';
+import { IProjectDTO } from '@/app/types/project';
+import { STATUS_DETAILS } from '@/app/types/status';
 import { useRouter } from 'next/navigation';
-import { useCallback } from 'react';
 
 interface ProjectTableRowProps {
     project: IProjectDTO;

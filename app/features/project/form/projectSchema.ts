@@ -1,4 +1,4 @@
-import { STATUS_KEYS } from '@/types/status';
+import { STATUS_KEYS } from '@/app/types/status';
 import * as yup from 'yup';
 
 export const projectSchema = yup.object({

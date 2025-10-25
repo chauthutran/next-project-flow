@@ -1,22 +1,18 @@
 "use client";
 
-import { JSONObject } from "@/lib/definations";
-import { useEffect, useState } from "react";
-import * as dbService from "@/lib/dbService";
+import { JSONObject } from "@/app/lib/definations";
+import { useEffect } from "react";
 import ProjectTimeline from "./ProjectTimeline";
-import * as Constant from "@/lib/constant";
-import * as AppStore from "@/lib/appStore";
-import * as Utils from "@/lib/utils";
+import * as Constant from "@/app/lib/constant";
+import * as AppStore from "@/app/lib/appStore";
 import ProjectCalendarTimeline from "./ProjectCalendarTimeline";
 import MilestonePage from "../../milestone/MilestonePage";
-import UserProjectsTimeline from "../../dashboard/components/UserProjectsTimeline";
-import TaskPage from "@/features/task/TaskPage";
-import MeetingPage from "@/features/meeting/MeetingPage";
+import TaskPage from "@/app/features/task/TaskPage";
+import MeetingPage from "@/app/features/meeting/MeetingPage";
 
 
 export default function ProjectDetailsPage({ project }: { project: JSONObject }) {
 
-    const { subPage, setSubPage } = useMainUi();
     const { projectDetails } = useProject();
     
  

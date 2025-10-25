@@ -1,10 +1,10 @@
 import mongoose from 'mongoose';
 import { JSONObject } from '../lib/definations';
 import connectToDatabase from '../lib/dbService/db';
-import { IProjectDTO } from '@/types/project';
+import { IProjectDTO } from '@/app/types/project';
 import { NotFoundError, ValidationError } from './errors';
 import { handleError } from './errorUtils';
-import Project, { IProject } from '@/models/Project';
+import Project, { IProject } from '@/app/models/Project';
 
 export async function fetchProjectsByUserId(
     userId: string

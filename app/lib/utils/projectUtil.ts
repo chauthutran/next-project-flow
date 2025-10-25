@@ -1,5 +1,5 @@
 import { JSONObject } from './../definations';
-import * as Utils from "@/lib/utils";
+import * as Utils from "@/app/lib/utils";
 import { FaMeetup } from "react-icons/fa";
 import { FaTasks } from 'react-icons/fa';
 import { TbTargetArrow } from "react-icons/tb";

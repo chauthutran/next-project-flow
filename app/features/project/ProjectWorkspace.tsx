@@ -1,19 +1,19 @@
-import { useProjects } from '@/hooks/useProjects';
+import { useProjects } from '@/app/hooks/useProjects';
 import { useEffect, useState } from 'react';
 import ProjectFormWrapper from './form/ProjectFormWrapper';
 import ProjectStepper from './components/ProjectStepper';
 import TaskPage from '../task/TaskPage';
 import MeetingPage from '../meeting/MeetingPage';
 import MilestonePage from '../milestone/MilestonePage';
-import useConfirmDialog from '@/components/dialog/useConfirmDialog';
+import useConfirmDialog from '@/app/components/dialog/useConfirmDialog';
 import {
     FaCheckCircle,
     FaClipboardList,
     FaUsers,
     FaFlag
 } from 'react-icons/fa';
-import PageTitle from '@/components/PageTitle';
-import SecondButton from '@/components/buttons/SecondButton';
+import PageTitle from '@/app/components/PageTitle';
+import SecondButton from '@/app/components/buttons/SecondButton';
 
 export const PROJECT_STEPS = [
     {

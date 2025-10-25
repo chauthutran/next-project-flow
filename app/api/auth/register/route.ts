@@ -1,8 +1,8 @@
 import {
     createErrorResponse,
     createSuccessResponse
-} from '@/lib/utils/apiResponseUtil';
-import { register } from '@/services/userService';
+} from '@/app/lib/utils/apiResponseUtil';
+import { register } from '@/app/services/userService';
 
 export async function POST(request: Request) {
     try {
