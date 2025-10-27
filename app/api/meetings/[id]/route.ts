@@ -15,7 +15,7 @@ export async function PUT(
         payload._id = id;
 
         const response = await saveMeeting(payload);
-
+        
         return createSuccessResponse(response);
     } catch (error) {
         return createErrorResponse(error);
@@ -32,6 +32,6 @@ export async function DELETE(
 
         return createSuccessResponse(response);
     } catch (error: any) {
-        createErrorResponse(error);
+        return createErrorResponse(error);
     }
 }

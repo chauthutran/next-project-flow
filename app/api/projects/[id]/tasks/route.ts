@@ -2,8 +2,7 @@ import {
     createErrorResponse,
     createSuccessResponse
 } from '@/app/lib/utils/apiResponseUtil';
-import { deleteMeetingsByProjectId } from '@/app/services/meetingService';
-import { fetchTasksByProjectId, saveTask } from '@/app/services/taskService';
+import { deleteTasksByProjectId, fetchTasksByProjectId, saveTask } from '@/app/services/taskService';
 
 export async function GET(
     request: Request,
@@ -45,10 +44,7 @@ export async function DELETE(
     try {
         const projectId = params.id;
 
-        const payload = await request.json();
-        payload.projectId = projectId;
-
-        const response = await deleteMeetingsByProjectId(projectId);
+        const response = await deleteTasksByProjectId(projectId);
 
         return createSuccessResponse(response);
     } catch (error) {

@@ -122,15 +122,18 @@ export async function deleteTasksByProjectId(
     try {
         await connectToDatabase();
 
-        const deletedTasks = await Task.deleteMany({ projectId }).lean<
-            ITask[]
-        >();
+        // fetch tasks first (lean returns plain objects)
+        const tasks = await Task.find({ projectId }).lean<ITask[]>();
 
-        if (!deletedTasks) {
+        if (!tasks || tasks.length === 0) {
             throw new NotFoundError('Tasks not found');
         }
 
-        return deletedTasks;
+        // perform delete (deleteMany returns a DeleteResult)
+        await Task.deleteMany({ projectId });
+
+        // return the deleted task documents we fetched earlier
+        return tasks;
     } catch (error: any) {
         handleError(error);
     }

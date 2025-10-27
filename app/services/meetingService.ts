@@ -90,8 +90,8 @@ export async function saveMeeting(
             meeting._id,
             meeting,
             { new: true, runValidators: true }
-        );
-
+        ).lean<IMeeting>();
+        
         if (!updatedMeeting) {
             throw new Error('Meeting not found');
         }
@@ -123,6 +123,7 @@ export async function deleteMeeting(id: string): Promise<IMeeting | undefined> {
     }
 }
 
+
 export async function deleteMeetingsByProjectId(
     projectId: string
 ): Promise<IMeeting[] | undefined> {
@@ -131,15 +132,18 @@ export async function deleteMeetingsByProjectId(
     try {
         await connectToDatabase();
 
-        const deletedMeetings = await Meeting.deleteMany({
-            projectId
-        }).lean<IMeeting[]>();
+        // fetch meetings first (lean returns plain objects)
+        const meetings = await Meeting.find({ projectId }).lean<IMeeting[]>();
 
-        if (!deletedMeetings) {
+        if (!meetings || meetings.length === 0) {
             throw new NotFoundError('Meetings not found');
         }
 
-        return deletedMeetings;
+        // perform delete (deleteMany returns a DeleteResult)
+        await Meeting.deleteMany({ projectId });
+
+        // return the deleted meeting documents we fetched earlier
+        return meetings;
     } catch (error: any) {
         handleError(error);
     }

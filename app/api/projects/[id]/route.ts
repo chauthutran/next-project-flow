@@ -18,7 +18,7 @@ export async function GET(
         const response = await fetchProjectById(projectId);
         return createSuccessResponse(response);
     } catch (error: any) {
-        createErrorResponse(error);
+        return createErrorResponse(error);
     }
 }
 
@@ -27,7 +27,6 @@ export async function PUT(
     { params }: { params: { id: string } }
 ) {
     const projectId = params.id;
-
     try {
         const payload = await request.json();
 
@@ -35,7 +34,7 @@ export async function PUT(
 
         return createSuccessResponse(response);
     } catch (error: any) {
-        createErrorResponse(error);
+        return createErrorResponse(error);
     }
 }
 
@@ -47,10 +46,8 @@ export async function DELETE(
     try {
         const response = await deleteProject(projectId);
 
-        createSuccessResponse(response);
-
-        return Response.json(response, { status: 200 });
+        return createSuccessResponse(response);
     } catch (error: any) {
-        createErrorResponse(error);
+        return createErrorResponse(error);
     }
 }

@@ -40,15 +40,13 @@ export async function POST(
         return createErrorResponse(error);
     }
 }
+
 export async function DELETE(
     request: Request,
     { params }: { params: { id: string } }
 ) {
     try {
         const projectId = params.id;
-
-        const payload = await request.json();
-        payload.projectId = projectId;
 
         const response = await deleteMeetingsByProjectId(projectId);
 
