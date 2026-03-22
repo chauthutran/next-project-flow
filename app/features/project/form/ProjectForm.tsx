@@ -79,8 +79,8 @@ export default function ProjectForm({ loading }: ProjectFormProps) {
                     name="teamMembers"
                     options={
                         teammembers.map((member) => ({
-                            label: member,
-                            value: member
+                            label: member.email,
+                            value: member.email
                         })) || []
                     }
                     required

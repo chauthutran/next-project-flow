@@ -80,8 +80,8 @@ export default function MilestoneForm({
                         name="assignedTo"
                         options={
                             teammembers.map((member) => ({
-                                label: member,
-                                value: member
+                                label: member.email,
+                                value: member.email
                             })) || []
                         }
                         required

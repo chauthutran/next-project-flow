@@ -4,6 +4,11 @@ export const STATUS_DETAILS = {
         textColor: "text-gray-800",
         bgColor: "bg-gray-200",
     },
+    pending: {
+        name: "Pending",
+        textColor: "text-white",
+        bgColor: "bg-gray-500",
+    },
     planning: {
         name: "Planning",
         textColor: "text-green-700",

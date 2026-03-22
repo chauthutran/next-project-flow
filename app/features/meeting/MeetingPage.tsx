@@ -33,7 +33,7 @@ export default function MeetingPage({ projectId }: { projectId: string }) {
         <div>
             {ConfirmDialogComponent}
 
-            <div className="bg-white px-6">
+            <div className="bg-white">
                 <PageTitle
                     title={showForm ? 'Meeting Form' : 'Meetings'}
                     subtitle={projectTitleInfo.description}

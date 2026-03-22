@@ -33,7 +33,7 @@ export default function TaskPage({ projectId }: { projectId: string }) {
         <div>
             {ConfirmDialogComponent}
 
-            <div className="bg-white px-6">
+            <div className="bg-white">
                 <PageTitle
                     title={showForm ? 'Task Form' : 'Tasks'}
                     subtitle={projectTitleInfo.description}

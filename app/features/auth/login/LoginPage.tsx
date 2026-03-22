@@ -1,11 +1,14 @@
 import { RiBubbleChartFill } from 'react-icons/ri';
 import LoginForm from './LoginForm';
 import { loginSchema } from './loginForm.schema';
-import { LoginFormValues } from '@/app/lib/definations';
 import withFormHandler from '@/app/hoc/formHandler/withFormHandler';
 import useAuth from '@/app/hooks/useAuth';
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+interface LoginFormValues {
+  email: string;
+  password: string;
+}
 
 export default function LoginPage() {
     const { user, login, loading } = useAuth();
@@ -19,7 +22,7 @@ export default function LoginPage() {
         getLoading: () => !!loading,
         validationSchema: loginSchema,
         onSubmit: async (values) => {
-            await login(values);
+            await login({email: values.email, password: values.password});
         },
     });
 
@@ -27,7 +30,7 @@ export default function LoginPage() {
         if (user) {
             router.push('/pages/dashboard');
         }
-    }, [user]);
+    }, [user, router]);
 
     return (
         <div className="min-h-screen flex flex-col md:flex-row">

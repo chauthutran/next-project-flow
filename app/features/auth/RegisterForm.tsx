@@ -5,13 +5,14 @@
 import { useEffect, useState } from 'react';
 import { FaSpinner } from 'react-icons/fa';
 import { IoKeyOutline } from 'react-icons/io5';
-import * as Constant from '@/app/lib/constant';
 import { GiThreeLeaves } from 'react-icons/gi';
 import useAuth from '@/app/hooks/useAuth';
+import { IUserDTO } from '@/app/types/user';
+import { useRouter } from 'next/navigation';
 
 export default function RegisterForm() {
-    // const { setMainPage } = useMainUi();
     const { loading, error, user, register } = useAuth();
+    const router = useRouter();
 
     const [email, setEmail] = useState('');
 
@@ -21,16 +22,17 @@ export default function RegisterForm() {
     const [role, setRole] = useState<string>('project_manager');
 
     useEffect(() => {
-        // if (user != null) {
-        //     setMainPage(Constant.PAGE_DASHBOARD);
-        // }
+        if (user != null) {
+            router.push('/pages/dashboard');
+        }
     }, [user]);
 
     const handleRegisterBtn = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
 
         if (checkValidUser()) {
-            register({ email, password, role });
+            const userData: IUserDTO = { email, role, password, teamMembers: [] };
+            register({...userData});
         }
     };
 
@@ -68,7 +70,7 @@ export default function RegisterForm() {
             "Are you sure you don't want to register an account ?"
         );
         if (ok) {
-            setMainPage(Constant.PAGE_DASHBOARD);
+            router.push('/pages/dashboard');
         }
     };
 

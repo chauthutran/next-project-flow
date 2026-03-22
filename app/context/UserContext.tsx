@@ -3,6 +3,7 @@
 import { createContext, ReactNode, useEffect, useState } from 'react';
 import { IUserDTO } from '@/app/types/user';
 import axios from 'axios';
+import { DEFAULT_PASSWORD } from '../services/userService';
 
 interface AuthContextProps {
     user: IUserDTO | null;
@@ -11,6 +12,7 @@ interface AuthContextProps {
 
     login: (credentials: { email: string; password: string }) => Promise<void>;
     register: (user: IUserDTO) => Promise<void>;
+    updateTeamMembers: (teamMember: IUserDTO[]) => Promise<void>;
     logout: () => Promise<void>;
 }
 
@@ -21,6 +23,7 @@ export const AuthContext = createContext<AuthContextProps>({
 
     login: async () => {},
     register: async () => {},
+    updateTeamMembers: async () => {},
     logout: async () => {}
 });
 
@@ -80,6 +83,21 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         }
     };
 
+    const updateTeamMembers = async (
+        teamMembers: { email: string; role: string }[]
+    ) => {
+        setLoading(true);
+        setError(null);
+        try {
+            const response = await axios.put('/api/auth/teams', {teamMembers, managerEmail: user!.email});
+            setUser(response.data.data);
+        } catch (error: any) {
+            setError(error.response.data.message);
+        } finally {
+            setLoading(false);
+        }
+    };
+
     return (
         <AuthContext.Provider
             value={{
@@ -88,6 +106,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
                 error,
                 login,
                 register,
+                updateTeamMembers,
                 logout
             }}
         >

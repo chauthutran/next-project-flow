@@ -35,7 +35,7 @@ export default function MilestonePage({ projectId }: { projectId: string }) {
         <div>
             {ConfirmDialogComponent}
 
-            <div className="bg-white px-6">
+            <div className="bg-white">
                 <PageTitle
                     title={showForm ? 'Milestone Form' : 'Milestones'}
                     subtitle={projectTitleInfo.description}

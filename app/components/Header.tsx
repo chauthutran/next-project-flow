@@ -67,6 +67,12 @@ export default function Header() {
                 >
                     Profile
                 </Link>
+                <button
+                    onClick={handleLogout}
+                    className="hover:text-[var(--primary)] transition"
+                >
+                    Logout
+                </button>
             </nav>
 
             {/* Right Section - Actions */}

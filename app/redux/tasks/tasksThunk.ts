@@ -2,6 +2,22 @@ import { ITaskDTO } from '@/app/types/task';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
+// export const fetchTasksByStatusesAndUser = createAsyncThunk<
+//     ITaskDTO[], // return type
+//     { userId: string, statuses: string[] } , // argument type
+//     { rejectValue: string } // type of custom error payload
+// >('tasks/fetchTasksByStatusesAndUser', async (params: { userId: string, statuses: string[] }, { rejectWithValue }) => {
+//     try {
+//         const { userId, statuses } = params;
+//         const reponse = await axios.get(`/api/tasks/user/${userId}`, {
+//             params: { statuses: statuses.join(',') }
+//         });
+//         return reponse.data.data;
+//     } catch (error: any) {
+//         return rejectWithValue(error.response.data.message);
+//     }
+// });
+
 export const fetchTasksByProjectId = createAsyncThunk<
     ITaskDTO[], // return type
     string, // argument type

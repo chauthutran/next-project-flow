@@ -5,12 +5,15 @@ import {
     fetchTasksByProjectId,
     updateTask,
     deleteTask,
-    deleteTasksByProjectId
+    deleteTasksByProjectId,
+    fetchTasksByStatusesAndUser
 } from './tasksThunk';
 import { ILoadingState } from '@/app/types/loadingState';
 
 interface TaskState {
     tasks: ITaskDTO[] | null;
+    activeTasks: ITaskDTO[] | null;
+    completedTasks: ITaskDTO[] | null;
     status: {
         fetch: ILoadingState;
         add: ILoadingState;
@@ -22,6 +25,8 @@ interface TaskState {
 
 const initialState: TaskState = {
     tasks: null,
+    activeTasks: null,
+    completedTasks: null,
     status: {
         fetch: {},
         add: {},
@@ -45,10 +50,34 @@ const taskSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
+            // // Fetch active tasks by userId
+            // .addCase(fetchTasksByStatusesAndUser.pending, (state) => {
+            //     state.status.fetch = {
+            //         loading: 'Fetching tasks ...',
+            //         success: null,
+            //         error: null
+            //     };
+            // })
+            // .addCase(
+            //     fetchTasksByStatusesAndUser.fulfilled,
+            //     (state, action: PayloadAction<ITaskDTO[]>) => {
+            //         state.status.fetch = {
+            //             success: 'Tasks fetched successully!'
+            //         };
+
+            //         state.activeTasks = action.payload || [];
+            //     }
+            // )
+            // .addCase(fetchTasksByStatusesAndUser.rejected, (state, action) => {
+            //     state.status.fetch = {
+            //         error: action.payload ?? 'Fetching tasks failed!'
+            //     };
+            // })
+            
             // Fetch
             .addCase(fetchTasksByProjectId.pending, (state) => {
                 state.status.fetch = {
-                    loading: 'Fetch tasks ...',
+                    loading: 'Fetching tasks ...',
                     success: null,
                     error: null
                 };
@@ -57,7 +86,7 @@ const taskSlice = createSlice({
                 fetchTasksByProjectId.fulfilled,
                 (state, action: PayloadAction<ITaskDTO[]>) => {
                     state.status.fetch = {
-                        success: 'Fetch tasks successully!'
+                        success: 'Tasks fetched successully!'
                     };
 
                     state.tasks = action.payload || [];
@@ -65,7 +94,7 @@ const taskSlice = createSlice({
             )
             .addCase(fetchTasksByProjectId.rejected, (state, action) => {
                 state.status.fetch = {
-                    error: action.payload ?? 'Fetch tasks failed'
+                    error: action.payload ?? 'Fetching tasks failed!'
                 };
             })
             // Create
@@ -90,7 +119,7 @@ const taskSlice = createSlice({
             .addCase(addTask.rejected, (state, action) => {
                 state.status.add.loading = null;
                 state.status.add = {
-                    error: action.payload ?? 'Add tasks failed'
+                    error: action.payload ?? 'Adding tasks failed!'
                 };
             })
             // Update
@@ -115,7 +144,7 @@ const taskSlice = createSlice({
             )
             .addCase(updateTask.rejected, (state, action) => {
                 state.status.update = {
-                    error: action.payload ?? 'Update task failed'
+                    error: action.payload ?? 'Updateing task failed!'
                 };
             })
             // Delete task by ID
@@ -144,7 +173,7 @@ const taskSlice = createSlice({
                     error:
                         action.payload ??
                         action.error.message ??
-                        'Delete task failed'
+                        'Deleting task failed!'
                 };
             })
             // Delete tasks by Project-ID
@@ -173,7 +202,7 @@ const taskSlice = createSlice({
                     error:
                         action.payload ??
                         action.error.message ??
-                        'Delete tasks failed'
+                        'Deleting tasks failed!'
                 };
             });
     }

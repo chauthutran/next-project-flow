@@ -1,5 +1,5 @@
 import { AppDispatch, RootState } from '@/app/redux/store';
-import { useEffect } from 'react';
+import { useEffect, useId } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useProjects } from './useProjects';
 import {
@@ -19,7 +19,7 @@ export function useTasks() {
     const dispatch = useDispatch<AppDispatch>();
     const { selectedProject } = useProjects();
 
-    const { tasks, selectedTask, status} = useAppSelector(
+    const { activeTasks, tasks, selectedTask, status} = useAppSelector(
         (state: RootState) => state.tasks
     );
 
@@ -49,14 +49,25 @@ export function useTasks() {
         dispatch(clearTasksAction());
     };
 
+    // const getAllActiveTasks = (userId: string) => {
+    //     dispatch(fetchTasksByStatusesAndUser({userId, statuses: ['not_started', 'in_progress']}));
+    // }
+    
+    // const getAllCompletedTasks = (userId: string) => {
+    //     dispatch(fetchTasksByStatusesAndUser({userId, statuses: ['completed']}));
+    // }
+    
     return {
         tasks,
+        activeTasks,
         selectedTask,
         status,
         selectTask: handleSelectTask,
         clearTasks: handleClearTasks,
         addTask: handleAddTask,
         updateTask: handleUpdateTask,
-        deleteTask: handleDeleteTask
+        deleteTask: handleDeleteTask,
+        // getAllActiveTasks,
+        // getAllCompletedTasks
     };
 }

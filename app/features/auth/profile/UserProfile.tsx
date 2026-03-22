@@ -1,4 +1,5 @@
 import useAuth from '@/app/hooks/useAuth';
+import Image from 'next/image';
 
 export default function UserProfile() {
     const { user } = useAuth();
@@ -75,15 +76,16 @@ export default function UserProfile() {
                     </h3>
                     <div className="flex -space-x-3">
                         {user!.teamMembers.map((member, idx) => (
-                            <p key={idx}>{member}</p>
-                            //   <img
-                            //     key={idx}
-                            //     src={member.avatarUrl || '/default-avatar.png'}
-                            //     alt={member.name}
-                            //     title={member.name}
-                            //     className="w-10 h-10 rounded-full border-2 border-white shadow-sm"
-                            //   />
-                        ))}
+                            <div key={idx}>
+                              <p >{member.email}</p>
+                                <Image
+                                  src={'/default-avatar.png'}
+                                  alt={member.email}
+                                  title={member.email}
+                                  className="w-10 h-10 rounded-full border-2 border-white shadow-sm"
+                                />
+                            </div>
+                          ))}
                     </div>
                 </div>
             )}

@@ -73,8 +73,8 @@ export default function TaskForm({ loading, handleReset, onClose }: Props) {
                     name="assignedTo"
                     options={
                         teammembers.map((member) => ({
-                            label: member,
-                            value: member
+                            label: member.email,
+                            value: member.email
                         })) || []
                     }
                     required

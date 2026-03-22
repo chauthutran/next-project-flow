@@ -60,8 +60,8 @@ export default function MeetingForm({ loading, onClose, handleReset }: Props) {
                     name="participants"
                     options={
                         teammembers.map((member) => ({
-                            label: member,
-                            value: member
+                            label: member.email,
+                            value: member.email
                         })) || []
                     }
                     required
@@ -73,9 +73,9 @@ export default function MeetingForm({ loading, onClose, handleReset }: Props) {
                     label="Assigned To"
                     name="assignedTo"
                     options={
-                        teammembers.map((member: string) => ({
-                            label: member,
-                            value: member
+                        teammembers.map((member) => ({
+                            label: member.email,
+                            value: member.email
                         })) || []
                     }
                     required

@@ -53,7 +53,7 @@ export default function ProjectWorkspace({
         if(projectId) {
             fetchProjectById(projectId);
         }
-    },[]);
+    },[projectId]);
     
     if (projectStatus.fetch.loading)
         return (

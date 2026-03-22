@@ -23,8 +23,10 @@ export async function fetchProjectsByUserId(
 
         const userIdObj = new mongoose.Types.ObjectId(userId);
         const projects = await Project.find({
-            managedBy: userIdObj
-        }).lean<IProjectDTO[]>();
+                managedBy: userIdObj
+            })
+            .populate("managedBy")
+            .lean<IProjectDTO[]>();
 
         // lean() already gives a plain object ==> Don't need to use cloneJSON(projects)
         return projects;
@@ -75,7 +77,7 @@ export async function addProject(
             ...payload,
             startDate: new Date(payload.startDate),
             endDate: new Date(payload.endDate),
-            managedBy: new mongoose.Types.ObjectId(payload.managedBy)
+            managedBy: new mongoose.Types.ObjectId(payload.managedBy._id)
         };
 
         const savedProject = await Project.create(project);

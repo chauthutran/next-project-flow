@@ -13,15 +13,16 @@ const UserSchema = new Schema<IUser>(
         password: { type: String, required: true },
         role: { type: String, required: true }, // e.g., project_manager, team_member, viewer
         teamMembers: [{
-            type: String,
-            unique: true
+            type: mongoose.Schema.Types.ObjectId,
+            required: false,
+            ref: 'User'
         }]
     },
     {
         timestamps: true,
     }
 )
-// const User = mongoose.models.User || mongoose.model<IUser>('User', UserSchema);
+
 const User: Model<IUser> =
   (mongoose.models && (mongoose.models.User as Model<IUser>)) ||
   mongoose.model<IUser>("User", UserSchema);
