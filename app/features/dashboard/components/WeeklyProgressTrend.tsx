@@ -17,7 +17,7 @@ export default function WeeklyProgressTrend({data} : {data: JSONObject[] | null}
     if(!data) return <div>Loading ...</div>;
     
     const { categories, created, completedData, inProgressData } = convertToBarChart(data);
-console.log("===== chartData:", categories, created, completedData, inProgressData);
+
     const options: Highcharts.Options = {
         chart: {
             type: 'column', // bar chart (vertical)

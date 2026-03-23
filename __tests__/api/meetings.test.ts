@@ -301,7 +301,6 @@ describe('Meetings API - Delete meetings by projectId', () => {
 
         const res = await DELETE(req, { params: { id: dbMeetingA.projectId } });
         const body = await res.json();
-        console.log('====== fasdfasd  BODY', body);
         expect(res.status).toBe(200);
         expect(body.status).toBe('success');
         expect(body.data).toBeDefined();

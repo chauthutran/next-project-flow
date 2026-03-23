@@ -50,8 +50,6 @@ export default function ProjectsPage() {
         );
     };
 
-    console.log('======= projectStatus.update', status.update);
-
     // if (projects === null || loading.fetch)
     if (status.fetch.loading)
         return (
