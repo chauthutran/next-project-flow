@@ -6,7 +6,7 @@ import {
     fetchProjectById
 } from '@/app/redux/projects/projectThunk';
 import { AppDispatch, RootState } from '@/app/redux/store';
-import { IProjectDTO } from '@/app/types/project';
+import { IProjectDTO, IProjectPayload } from '@/app/types/project';
 import { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import useAuth from './useAuth';
@@ -36,11 +36,11 @@ export function useProjects() {
         dispatch(fetchProjectById(projectId));
     };
 
-    const handleAddProject = async (project: IProjectDTO) => {
+    const handleAddProject = async (project: IProjectPayload) => {
         dispatch(addProject(project));
     };
 
-    const handleUpdateProject = async (project: IProjectDTO) => {
+    const handleUpdateProject = async (project: IProjectPayload) => {
         const result = await dispatch(updateProject(project));
     };
 

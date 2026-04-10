@@ -10,3 +10,12 @@ export interface IProjectDTO extends IBasicDTO {
     managedBy: IUserDTO;
     teamMembers: string[],
 }
+
+export interface IProjectPayload extends IBasicDTO {
+    description: string;
+    startDate: string;
+    endDate: string;
+    status: ProjectStatus;
+    managedBy: string;     // userId
+    teamMembers: string[];
+}

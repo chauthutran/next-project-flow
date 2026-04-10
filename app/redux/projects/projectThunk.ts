@@ -1,4 +1,4 @@
-import { IProjectDTO } from '@/app/types/project';
+import { IProjectDTO, IProjectPayload } from '@/app/types/project';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { deleteTasksByProjectId } from '../tasks/tasksThunk';
@@ -23,9 +23,9 @@ export const fetchProjectsByUserId = createAsyncThunk<
 
 export const addProject = createAsyncThunk<
     IProjectDTO, // return type
-    IProjectDTO, // argument type
+    IProjectPayload, // argument type
     { rejectValue: string } // type of custom error payload
->('projects/add', async (project: IProjectDTO, { rejectWithValue }) => {
+>('projects/add', async (project: IProjectPayload, { rejectWithValue }) => {
     try {
         const reponse = await axios.post(`/api/projects`, project);
         return reponse.data.data;
@@ -36,9 +36,9 @@ export const addProject = createAsyncThunk<
 
 export const updateProject = createAsyncThunk<
     IProjectDTO, // return type
-    IProjectDTO, // argument type
+    IProjectPayload, // argument type
     { rejectValue: string } // type of custom error payload
->('projects/update', async (project: IProjectDTO, { rejectWithValue }) => {
+>('projects/update', async (project: IProjectPayload, { rejectWithValue }) => {
     try {
         const reponse = await axios.put(
             `/api/projects/${project._id}`,

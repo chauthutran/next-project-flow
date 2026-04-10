@@ -6,7 +6,6 @@ import {
     updateTask,
     deleteTask,
     deleteTasksByProjectId,
-    fetchTasksByStatusesAndUser
 } from './tasksThunk';
 import { ILoadingState } from '@/app/types/loadingState';
 

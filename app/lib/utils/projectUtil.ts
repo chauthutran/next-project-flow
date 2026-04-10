@@ -36,7 +36,7 @@ export const convertProgramDetails = (details: JSONObject, programs?: JSONObject
         for( var i=0; i<details.tasks.length; i++ ) {
             const task = details.tasks[i];
             let programName = (programs !== undefined ) ? Utils.findItemFromList(programs, task.projectId, "_id")!.name + " - ": "";
-
+console.log("===== task", task);
             const item = { 
                 _id: task._id,
                 date: `${Utils.formatDateTimeObj(task.startDate)} - ${Utils.formatDateTimeObj(task.endDate)}`,

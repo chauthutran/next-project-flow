@@ -1,7 +1,7 @@
 import withFormHandler from '@/app/hoc/formHandler/withFormHandler';
 import useAuth from '@/app/hooks/useAuth';
 import ProjectForm from './ProjectForm';
-import { IProjectDTO } from '@/app/types/project';
+import { IProjectDTO, IProjectPayload } from '@/app/types/project';
 import { projectSchema } from './projectSchema';
 import { useProjects } from '@/app/hooks/useProjects';
 import PageTitle from '@/app/components/PageTitle';
@@ -19,7 +19,7 @@ export default function ProjectFormWrapper({
 
     useNotifier(status.update);
     
-    const ProjectFormBasic = withFormHandler<IProjectDTO>(ProjectForm, {
+    const ProjectFormBasic = withFormHandler<IProjectPayload>(ProjectForm, {
         initialValues: {
             name: selectedProject?.name || '',
             description: selectedProject?.description || '',

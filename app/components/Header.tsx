@@ -62,6 +62,12 @@ export default function Header() {
                     Reports
                 </Link>
                 <Link
+                    href="/pages/calendar"
+                    className="hover:text-[var(--primary)] transition"
+                >
+                    Calendar
+                </Link>
+                <Link
                     href="/pages/profile"
                     className="hover:text-[var(--primary)] transition"
                 >

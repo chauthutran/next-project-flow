@@ -8,9 +8,10 @@ import ErroBoundary from './ErrorBoundary';
 import { AuthProvider } from './context/UserContext';
 import { Toaster } from 'react-hot-toast';
 import ProgressAppPage from './components/ProgressAppPage';
+import 'react-vertical-timeline-component/style.min.css';
 // import "nprogress/nprogress.css"; // Have to import this here to apply styles globally
 
-export const runtime = "nodejs"; // 👈 Need to declare this for nprogress dependencies
+export const runtime = "nodejs"; // Need to declare this for nprogress dependencies
 
 export const metadata: Metadata = {
     title: 'Project FlowMaster',

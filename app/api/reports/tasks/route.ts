@@ -11,17 +11,9 @@ export async function GET(
     { params }: { params: { user: string } }
 ) {
     try {
-        const userId = params.user;
         const { searchParams } = new URL(request.url);
-        const statusesParam = searchParams.get('statuses');
         const programsParam = searchParams.get('programs');
-        if(userId && statusesParam) { // For seaching tasks by userId and statuses, the statuses should be passed as query parameters in the request URL,
-            // comma-separated for each status, e.g., ?statuses=not_started,in_progress,completed
-            const statuses = statusesParam?.split(',') || [];
-            const response = await fetchTasksByStatusesAndUser(userId, statuses);
-            return createSuccessResponse(response); // success
-        }
-        else if(programsParam) { // Get tasks by programIds
+        if(programsParam) { // Get tasks by programIds
             const programs = programsParam?.split(',') || [];
             const response = await fetchTasksByProjectIdList(programs);
             return createSuccessResponse(response); // success
