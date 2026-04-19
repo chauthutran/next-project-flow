@@ -13,6 +13,8 @@ import {
 } from '@mui/material';
 import React, { ReactNode, useState } from 'react';
 import { BiChevronDown, BiChevronUp } from 'react-icons/bi';
+import PrimaryButton from './buttons/PrimaryButton';
+import AccentButton from './buttons/AccentButton';
 
 export interface Column<T> {
     key: keyof T | string;
@@ -48,19 +50,18 @@ export default function ExpandableTable<T>({
     return (
         <TableContainer
             component={Paper}
-            className="rounded-2xl h-[280px] overflow-y-auto"
+            className="rounded-2xl h-[43vh] overflow-y-auto !bg-[var(--table-bg)]"
         >
             <Table stickyHeader>
-                <TableHead className="bg-gray-50">
+                <TableHead>
                     <TableRow>
-                        <TableCell width={30}></TableCell>
+                        <TableCell width={30}  className='!bg-[var(--table-bg)]'></TableCell>
                         {columns.map((col) => (
                             <TableCell
                                 key={String(col.key)}
                                 align={col.align ?? 'left'}
                                 width={col.width}
-                                className="font-bold"
-                                sx={{ fontWeight: 'bold', color: 'rgba(55, 65, 81, 1)' }} // Bold header text
+                                 className='!bg-[var(--table-bg)] !text-[var(--table-text)]'
                             >
                                 {col.label}
                             </TableCell>
@@ -68,8 +69,7 @@ export default function ExpandableTable<T>({
                         {(onEdit || onDelete) && (
                             <TableCell
                                 align="right"
-                                className="font-bold"
-                                sx={{ fontWeight: 'bold', color: 'rgba(55, 65, 81, 1)' }} // Bold header text
+                                className="!bg-[var(--table-bg)] !text-[var(--table-text)]"
                             >
                                 #
                             </TableCell>
@@ -86,14 +86,15 @@ export default function ExpandableTable<T>({
                             <React.Fragment key={id}>
                                 <TableRow
                                     hover
-                                    className="transition-colors duration-150 hover:bg-gray-50"
+                                    className="!transition-colors !duration-150 !bg-[var(--table-row-bg)] !border !border-[var(--table-row-border)]"
                                 >
                                     {/* Expand icon */}
-                                    <TableCell width={30} padding="checkbox">
+                                    <TableCell width={30} padding="checkbox"
+                                        className='!bg-[var(--table-row-bg)] !hover:bg-[var(--table-row-hover)] !border-b !border-[var(--table-row-border)] cursor-pointer'>
                                         <IconButton
                                             size="small"
                                             onClick={() => handleToggle(id)}
-                                            className="text-gray-600 hover:text-blue-500 transition-colors"
+                                            className="!transition-colors !text-[var(--table-text)]"
                                         >
                                             {isOpen ? (
                                                 <BiChevronUp size={16} />
@@ -109,7 +110,7 @@ export default function ExpandableTable<T>({
                                             key={String(col.key)}
                                             align={col.align ?? 'left'}
                                             onClick={() => handleToggle(id)}
-                                            className="cursor-pointer"
+                                            className="!transition-colors !bg-[var(--table-row-bg)] !hover:bg-[var(--table-row-hover)] !border-b !border-[var(--table-row-border)] !text-[var(--table-text)] cursor-pointer"
                                         >
                                             {col.render
                                                 ? col.render(row)
@@ -121,24 +122,21 @@ export default function ExpandableTable<T>({
 
                                     {/* Action buttons */}
                                     {(onEdit || onDelete) && (
-                                        <TableCell align="right">
+                                        <TableCell align="right" className="!transition-colors !bg-[var(--table-row-bg)] !hover:bg-[var(--table-row-hover)] !border-b !border-[var(--table-row-border)] !text-[var(--table-text)] cursor-pointer space-x-2">
                                             {onEdit && (
-                                                <button
+                                                <PrimaryButton
                                                     onClick={() => onEdit(row)}
-                                                    className="px-3 py-1 text-sm text-white bg-blue-500 rounded-lg hover:bg-blue-600 transition-colors"
-                                                >
-                                                    Edit
-                                                </button>
+                                                    title="Edit"
+                                                    className="px-3 py-1 text-sm text-[var(--table-button-text)] bg-[var(--table-button-bg)] rounded-lg hover:bg-[var(--table-button-text-hover)] transition-colors"
+                                                />
                                             )}
                                             {onDelete && (
-                                                <button
+                                                <AccentButton
                                                     onClick={() =>
                                                         onDelete(row)
                                                     }
-                                                    className="ml-2 px-3 py-1 text-sm text-white bg-red-500 rounded-lg hover:bg-red-600 transition-colors"
-                                                >
-                                                    Delete
-                                                </button>
+                                                    title="Delete"
+                                                />
                                             )}
                                         </TableCell>
                                     )}
@@ -146,7 +144,7 @@ export default function ExpandableTable<T>({
 
                                 {/* Expanded row */}
                                 {renderExpandedContent && (
-                                    <TableRow className=" bg-gray-50">
+                                    <TableRow className=" bg-[var(--table-row-bg)]">
                                         <TableCell
                                             style={{
                                                 paddingBottom: 0,
@@ -162,7 +160,7 @@ export default function ExpandableTable<T>({
                                                 <Box
                                                     marginY={1.5}
                                                     marginX={2}
-                                                    className="py-2 border-l-2 border-blue-300"
+                                                    className="py-2 border-l-2 border-[var(--table-row-border)]"
                                                 >
                                                     {renderExpandedContent(row)}
                                                 </Box>

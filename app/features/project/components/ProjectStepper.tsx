@@ -13,34 +13,43 @@ type ProjectStepperProps = {
     setActiveStep: (step: number) => void;
 };
 
-export const CustomStepIcon = (props: StepIconProps) => {
-    const { active, completed, icon } = props;
-    const IconComponent = PROJECT_STEPS[(icon as number) - 1].icon;
+type CustomStepIconProps = StepIconProps & {
+    activeStep: number;
+};
 
+const CustomStepIcon = (props: CustomStepIconProps) => {
+    const { active, completed, icon, activeStep } = props;
+    const stepIndex = (icon as number) - 1;
+    const isPast = stepIndex < activeStep;
+    const isCurrent = stepIndex === activeStep;
+    const IconComponent = PROJECT_STEPS[(icon as number) - 1].icon;
+    
     return (
         <div className="relative flex items-center justify-center w-10 h-10 transition-all duration-200 group-hover:scale-105">
             {/* Outer ring for active */}
             {active && !completed && (
-                <div className="absolute w-full h-full rounded-full ring-4 ring-blue-300" />
+                <div className="absolute w-full h-full rounded-full ring-4 ring-[var(--primary-ring)]" />
             )}
 
             {/* Inner circle */}
             <div
                 className={`
-          flex items-center justify-center rounded-full transition-all duration-200
-          ${
-              completed
-                  ? 'bg-green-500 border-green-500 text-white w-10 h-10'
-                  : ''
-          }
-          ${active && !completed ? 'bg-blue-500 text-white w-8 h-8' : ''}
-          ${
-              !active && !completed
-                  ? 'border-gray-300 bg-white text-gray-400 border-2 w-10 h-10'
-                  : ''
-          }
-          group-hover:bg-blue-100 group-hover:border-blue-300 group-hover:text-blue-600
-        `}
+                    flex items-center justify-center rounded-full transition-all duration-200
+                    group-hover:bg-[var(--primary-hover)] group-hover:border-[var(--primary-ring)] group-hover:text-[var(--primary-hover)]
+                    
+                    ${
+                    isPast
+                        ? 'bg-[var(--primary)] text-[var(--primary-text)] w-8 h-8'
+                        : ''
+                    }
+                    ${isCurrent ? 'bg-[var(--primary)] text-[var(--primary-text)] w-8 h-8' : ''}
+                    
+                    ${
+                        !isPast && !isCurrent
+                            ? 'border-[var(--btn-disabled-border)] bg-[var(--btn-disabled-bg)] text-[var(--feature-info-sub-text)] border-2 w-10 h-10'
+                            : ''
+                    }
+                `}
             >
                 <IconComponent size={active && !completed ? 16 : 20} />
             </div>
@@ -52,25 +61,30 @@ export default function ProjectStepper({
     activeStep,
     setActiveStep
 }: ProjectStepperProps) {
+    
     return (
         <div className="flex flex-col w-full px-6 space-y-5">
             {/* <Stepper activeStep={activeStep} orientation="vertical" > */}
             <Stepper activeStep={activeStep}>
                 {PROJECT_STEPS.map((step, i) => (
                     <Step key={step.label} onClick={() => setActiveStep(i)}>
-                        <StepLabel StepIconComponent={CustomStepIcon}>
+                        <StepLabel
+                            StepIconComponent={(props) => (
+                                <CustomStepIcon {...props} activeStep={activeStep} />
+                            )}
+                        >
                             <div className="group flex items-center cursor-pointer">
                                 {/* Label + description */}
                                 <div className="ml-3">
                                     <Typography
                                         variant="body1"
-                                        className="font-bold text-gray-900 group-hover:text-blue-600 transition-colors"
+                                        className="font-bold text-[var(--feature-info-text)] group-hover:text-[var(--primary-hover)] transition-colors"
                                     >
                                         {step.label}
                                     </Typography>
                                     <Typography
                                         variant="body2"
-                                        className="text-xs text-gray-500 group-hover:text-blue-500 transition-colors"
+                                        className="text-xs text-[var(--feature-info-sub-text)] group-hover:text-[var(--primary-hover)] transition-colors"
                                     >
                                         {step.description}
                                     </Typography>
@@ -86,47 +100,27 @@ export default function ProjectStepper({
                 <button
                     onClick={() => setActiveStep(activeStep - 1)}
                     disabled={activeStep === 0}
-                    className="flex items-center gap-2 px-6 py-2.5 rounded-full bg-gray-100 text-gray-700 font-medium hover:bg-gray-200 transition disabled:opacity-50"
+                    className="flex items-center gap-2 px-4 py-1 rounded-md bg-[var(--secondary)] hover:bg-[var(--secondary-hover)] text-[var(--secondary-text)] transition disabled:opacity-80 text-sm"
                 >
                     <FaArrowLeft /> Previous
                 </button>
 
                 {activeStep === PROJECT_STEPS.length - 1 ? (
                     <button
-                        onClick={() => alert('Project Created!')}
-                        className="flex items-center gap-2 px-6 py-2.5 rounded-full bg-green-600 text-white font-medium hover:bg-green-700 transition"
+                        onClick={() => alert('Project saved !')}
+                        className="flex items-center gap-2 px-4 py-1 rounded-md bg-green-600 text-white hover:bg-green-500 transition text-sm"
                     >
                         <FaCheck /> Finish
                     </button>
                 ) : (
                     <button
                         onClick={() => setActiveStep(activeStep + 1)}
-                        className="flex items-center gap-2 px-6 py-2.5 rounded-full bg-blue-600 text-white font-medium hover:bg-blue-700 transition"
+                        className="flex items-center gap-2 px-4 py-1 rounded-md bg-[var(--primary)] text-[var(--primary-text)] hover:bg-[var(--primary-hover)] transition text-sm"
                     >
                         Next <FaArrowRight />
                     </button>
                 )}
             </div>
-
-            {/* <div className="flex justify-between my-3">
-                <Button
-                    disabled={activeStep === 0}
-                    onClick={() => setActiveStep(activeStep - 1)}
-                >
-                    Back
-                </Button>
-                <Button
-                    onClick={() =>
-                        setActiveStep(
-                            Math.min(activeStep + 1, PROJECT_STEPS.length - 1)
-                        )
-                    }
-                >
-                    {activeStep === PROJECT_STEPS.length - 1
-                        ? 'Finish'
-                        : 'Next'}
-                </Button>
-            </div> */}
         </div>
     );
 }

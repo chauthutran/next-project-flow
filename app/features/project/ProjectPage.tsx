@@ -18,14 +18,6 @@ export default function ProjectsPage() {
         title: 'Warning'
     });
 
-    //// Monitor update status changes
-    // const statusUpdate = useAppSelector(
-    //     (state) => state.projects.status.update
-    // );
-    // useEffect(() => {
-    //     console.log('Update status changed:', status);
-    // }, [status]);
-
     const statusUpdate = useAppSelector(
         (state) => state.projects.status.update
     );
@@ -35,8 +27,6 @@ export default function ProjectsPage() {
     }, [statusUpdate]);
 
     // ===================================
-
-    // useNotifier(projectStatus.update);
 
     const handleOpenNewForm = () => {
         selectProject(null);
@@ -90,7 +80,7 @@ export default function ProjectsPage() {
                     action={
                         <SecondButton
                             type="button"
-                            title="+ New Project"
+                            title="Add"
                             onClick={handleOpenNewForm}
                         />
                     }

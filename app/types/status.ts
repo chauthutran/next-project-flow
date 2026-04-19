@@ -1,7 +1,7 @@
 export const STATUS_DETAILS = {
     not_started: {
         name: "Not Started",
-        textColor: "text-gray-800",
+        textColor: "text-gray-700",
         bgColor: "bg-gray-200",
     },
     pending: {
@@ -31,8 +31,8 @@ export const STATUS_DETAILS = {
     },
     cancelled: {
         name: "Cancelled",
-        textColor: "text-gray-700",
-        bgColor: "bg-gray-300",
+        textColor: "bg-[var(--feature-info-text)]",
+        bgColor: "bg-[var(--feature-info-sub-text)]",
     },
     delayed: {
         name: "Delayed",

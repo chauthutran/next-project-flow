@@ -39,7 +39,7 @@ export default function TeamForm({
                     validateAndAddTeam();
                 }}
                 disabled={!email}
-                className="bg-blue-600 text-white px-4 rounded text-sm"
+                className="bg-[var(--primary)] text-[var(--primary-text)] px-4 rounded text-sm"
             >
                 Add
             </button>

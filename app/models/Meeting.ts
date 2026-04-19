@@ -30,8 +30,8 @@ const MeetingSchema = new Schema<IMeeting>(
         meetingNotes: { type: String, required: false },
         assignedTo: [
             {
-                type: String,
-                required: true
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'User'
             }
         ],
         createdBy: {

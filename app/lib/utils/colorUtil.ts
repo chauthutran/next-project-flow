@@ -25,3 +25,24 @@ export const getMilestoneColor = (): string => {
     // return "#e91e63";
     return "#ff8ba7";
 }
+
+export const getAvatarColor = (email: string) => {
+  let hash = 0;
+
+  for (let i = 0; i < email.length; i++) {
+    hash = email.charCodeAt(i) + ((hash << 5) - hash);
+  }
+
+  const hue = Math.abs(hash) % 360;
+
+  const bg = `hsl(${hue}, 70%, 85%)`;   // light background
+  const text = `hsl(${hue}, 70%, 30%)`; // darker same color
+
+  return { bg, text };
+}
+
+export const getVarColor = (name: string): string => {
+    return getComputedStyle(document.documentElement)
+        .getPropertyValue(name)
+        .trim();
+};

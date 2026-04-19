@@ -10,9 +10,9 @@ export default function ProjectList({
     handleOnDeleteItem: (project: IProjectDTO) => void;
 }) {
     return (
-        <div className="overflow-hidden border border-[var(--border)] bg-[var(--card)]">
-            <div className="h-[68vh] overflow-y-auto">
-                <table className="min-w-full border-collapse">
+        <div className="overflow-hidden bg-[var(--card)]">
+            <div className="h-[65vh] w-[calc(100vw-10px)] overflow-y-auto">
+                <table className="w-[calc(100vw-50px)] border-collapse m-3 text-[var(--table-text)] border border-[var(--table-bg-border)]">
                     <ProjectTableHeader />
                     <tbody className="divide-y divide-[var(--border)]">
                         {projects.map((project: IProjectDTO) => (

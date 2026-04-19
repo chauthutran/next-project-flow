@@ -23,7 +23,7 @@ export default function ProjectTableRow({
     return (
         <tr
             key={project._id}
-            className="transition-colors hover:bg-[var(--primary-hover-light)]"
+            className="transition-colors bg-[var(--table-row-bg)] hover:bg-[var(--table-row-hover)] border-b border-[var(--table-row-border)]"
         >
             <td className="px-4 py-2">
                 <span
@@ -36,7 +36,7 @@ export default function ProjectTableRow({
             </td>
             <td className="px-4 py-2 flex flex-col">
                 <div>{project.name}</div>
-                <div className="text-[var(--muted)] text-sm">
+                <div className="text-[var(--table-sub-text)] text-sm">
                     {new Date(project.startDate).toLocaleDateString()} →{' '}
                     {new Date(project.endDate).toLocaleDateString()}
                 </div>

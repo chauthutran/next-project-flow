@@ -60,7 +60,7 @@ export default function AboutUsPage() {
 
             {/* Core Features */}
             <section>
-                <h2 className="text-3xl font-semibold text-gray-800 mb-6 border-b-2 border-blue-500 inline-block pb-2">
+                <h2 className="text-3xl font-semibold text-[var(--feature-info-text)] mb-6 border-b-2 border-blue-500 inline-block pb-2">
                     🚀 Core Features
                 </h2>
 
@@ -115,10 +115,10 @@ export default function AboutUsPage() {
                             key={feature.title}
                             className="p-5 bg-blue-50 border border-blue-200 rounded-xl hover:shadow-md transition"
                         >
-                            <h3 className="font-semibold text-gray-800 mb-2">
+                            <h3 className="font-semibold text-[var(--feature-info-text)] mb-2">
                                 {feature.title}
                             </h3>
-                            <p className="text-gray-700 text-sm leading-relaxed">
+                            <p className="bg-[var(--feature-info-text)] text-sm leading-relaxed">
                                 {feature.desc}
                             </p>
                         </div>
@@ -128,10 +128,10 @@ export default function AboutUsPage() {
 
             {/* Vision */}
             <section className="bg-gray-50 p-6 rounded-2xl border border-gray-100 shadow-sm">
-                <h2 className="text-2xl font-semibold text-gray-800 mb-3">
+                <h2 className="text-2xl font-semibold text-[var(--feature-info-text)] mb-3">
                     🧠 Our Vision
                 </h2>
-                <p className="text-gray-700 leading-relaxed">
+                <p className="bg-[var(--feature-info-text)] leading-relaxed">
                     At ProjectFlow, our mission is to simplify project management
                     without sacrificing flexibility. We empower teams with
                     intuitive, data-driven tools that enable them to collaborate
@@ -141,10 +141,10 @@ export default function AboutUsPage() {
 
             {/* About Developer */}
             <section className="">
-                <h2 className="text-2xl font-semibold text-gray-800 mb-3 border-b pb-2 inline-block">
+                <h2 className="text-2xl font-semibold text-[var(--feature-info-text)] mb-3 border-b pb-2 inline-block">
                     👨‍💻 About the Developer
                 </h2>
-                <p className="text-gray-700 mb-4">
+                <p className="bg-[var(--feature-info-text)] mb-4">
                     Hi, I’m <strong className="text-gray-900">Chau Thu Tran</strong>,
                     the developer behind ProjectFlow. This application showcases
                     my passion for creating clean, efficient, and user-friendly web

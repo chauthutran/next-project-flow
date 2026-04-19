@@ -14,7 +14,7 @@ export default function TeamList({
     return (
         <>
             {teamMembers.length === 0 && (
-                <p className="text-gray-500">You have no team members yet.</p>
+                <p className="text-[var(--feature-info-sub-text)]">You have no team members yet.</p>
             )}
 
             {teamMembers.length > 0 && (

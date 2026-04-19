@@ -76,9 +76,9 @@ export default function RegisterForm() {
 
     return (
         <div className="justify-center">
-            <div className="relative w-full bg-opacity-20 bg-royal-blue h-full pb-10">
+            <div className="relative w-full bg-opacity-20 bg-[var(--login-bg)] h-full pb-10">
                 <div className="absolute inset-0 flex m-95">
-                    <GiThreeLeaves className="text-pale-blue size-96 opacity-60" />
+                    <GiThreeLeaves className="size-96 opacity-60" />
                 </div>
 
                 <div className="relative max-w-md mx-auto p-8">
@@ -91,14 +91,14 @@ export default function RegisterForm() {
 
                     <div className="mb-4">
                         <label
-                            className="block text-xs font-medium text-gray-900"
+                            className="block text-xs font-medium text-[var(--login-text)]"
                             htmlFor="email"
                         >
                             Email
                         </label>
                         <div className="relative">
                             <input
-                                className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
+                                className="peer block w-full rounded-md border border-[var(--input-border)] py-[9px] pl-10 text-sm outline-2 placeholder:text-[var(--input-placeholder)]"
                                 id="email"
                                 type="text"
                                 name="email"
@@ -110,10 +110,10 @@ export default function RegisterForm() {
                                     setEmail(e.target.value);
                                 }}
                             />
-                            <IoKeyOutline className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
+                            <IoKeyOutline className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-[var(--feature-info-sub-text)] peer-focus:text-gray-900" />
 
                             {email === '' && (
-                                <span className="text-red-500 italic text-sm">
+                                <span className="text-[var(--error)] italic text-sm">
                                     * This field is required
                                 </span>
                             )}
@@ -122,14 +122,14 @@ export default function RegisterForm() {
 
                     <div className="mb-4">
                         <label
-                            className="block text-xs font-medium text-gray-900"
+                            className="block text-xs font-medium text-[var(--login-text)]"
                             htmlFor="password"
                         >
                             Password
                         </label>
                         <div className="relative">
                             <input
-                                className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
+                                className="peer block w-full rounded-md border border-[var(--input-border)] py-[9px] pl-10 text-sm outline-2 placeholder:text-[var(--input-placeholder)]"
                                 id="password"
                                 type="password"
                                 name="password"
@@ -139,10 +139,10 @@ export default function RegisterForm() {
                                 placeholder="Enter your password"
                                 onChange={handlePasswordChange}
                             />
-                            <IoKeyOutline className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
+                            <IoKeyOutline className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-[var(--feature-info-sub-text)] peer-focus:text-gray-900" />
 
                             {password === '' && (
-                                <span className="text-red-500 italic text-sm">
+                                <span className="text-[var(--error)] italic text-sm">
                                     * This field is required
                                 </span>
                             )}
@@ -151,14 +151,14 @@ export default function RegisterForm() {
 
                     <div className="mb-4">
                         <label
-                            className="block text-xs font-medium text-gray-900"
+                            className="block text-xs font-medium text-[var(--login-text)]"
                             htmlFor="confirmPassword"
                         >
                             Confirm Password
                         </label>
                         <div className="relative">
                             <input
-                                className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
+                                className="peer block w-full rounded-md border border-[var(--input-border)] py-[9px] pl-10 text-sm outline-2 placeholder:text-[var(--input-placeholder)]"
                                 id="confirmPassword"
                                 type="password"
                                 name="confirmPassword"
@@ -168,10 +168,10 @@ export default function RegisterForm() {
                                 placeholder="Confirm Password"
                                 onChange={handleConfirmPasswordChange}
                             />
-                            <IoKeyOutline className="pointer-events-none absolute left-3 top-1/3 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
+                            <IoKeyOutline className="pointer-events-none absolute left-3 top-1/3 h-[18px] w-[18px] -translate-y-1/2 text-[var(--feature-info-sub-text)] peer-focus:text-gray-900" />
 
                             {errorMsg !== null && (
-                                <span className="text-red-500 italic text-sm">
+                                <span className="text-[var(--error)] italic text-sm">
                                     {errorMsg}
                                 </span>
                             )}
@@ -180,14 +180,14 @@ export default function RegisterForm() {
 
                     <div className="mb-4">
                         <label
-                            className="block text-xs font-medium text-gray-900"
+                            className="block text-xs font-medium text-[var(--login-text)]"
                             htmlFor="role"
                         >
                             Role
                         </label>
                         <div className="relative">
                             <select
-                                className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
+                                className="peer block w-full rounded-md border border-[var(--input-border)] py-[9px] pl-10 text-sm outline-2 placeholder:text-[var(--input-placeholder)]"
                                 id="role"
                                 name="role"
                                 value={role}
@@ -199,7 +199,7 @@ export default function RegisterForm() {
                                 <option value="team_member">Team Member</option>
                             </select>
                             {errorMsg !== null && (
-                                <span className="text-red-500 italic text-sm">
+                                <span className="text-[var(--error)] italic text-sm">
                                     {errorMsg}
                                 </span>
                             )}
@@ -208,13 +208,13 @@ export default function RegisterForm() {
 
                     <div className="mb-4">
                         <button
-                            className="flex w-full flex-row bg-blue-navy px-4 py-2 rounded hover:bg-bg-blue-800 text-white"
+                            className="flex w-full flex-row bg-blue-navy px-4 py-2 rounded hover:bg-bg-blue-800 text-[var-(--primary-text)] font-medium transition disabled:cursor-not-allowed disabled:bg-gray-400 disabled:text-gray-200"
                             onClick={(e) => handleRegisterBtn(e)}
                         >
                             <span className="flex-1">Register</span>
                             {loading && (
                                 <FaSpinner
-                                    className="ml-auto h-5 text-gray-50"
+                                    className="ml-auto h-5 text-[var(--login-text)]"
                                     size={20}
                                 />
                             )}

@@ -12,6 +12,7 @@ interface AuthContextProps {
 
     login: (credentials: { email: string; password: string }) => Promise<void>;
     register: (user: IUserDTO) => Promise<void>;
+    changePassword: ({email, oldPassword, newPassword}: { email: string; oldPassword: string; newPassword: string }) => Promise<void>;
     updateTeamMembers: (teamMember: IUserDTO[]) => Promise<void>;
     logout: () => Promise<void>;
 }
@@ -23,6 +24,7 @@ export const AuthContext = createContext<AuthContextProps>({
 
     login: async () => {},
     register: async () => {},
+    changePassword: async () => {},
     updateTeamMembers: async () => {},
     logout: async () => {}
 });
@@ -82,6 +84,19 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
             setLoading(false);
         }
     };
+    
+     const changePassword = async (payload: { email: string; oldPassword: string; newPassword: string }) => {
+        setLoading(true);
+        setError(null);
+        try {
+            const response = await axios.post('/api/auth/change-password', payload);
+            setUser(response.data.data);
+        } catch (error: any) {
+            setError(error.response.data.message);
+        } finally {
+            setLoading(false);
+        }
+    };
 
     const updateTeamMembers = async (
         teamMembers: { email: string; role: string }[]
@@ -106,6 +121,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
                 error,
                 login,
                 register,
+                changePassword,
                 updateTeamMembers,
                 logout
             }}

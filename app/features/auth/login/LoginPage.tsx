@@ -49,17 +49,18 @@ export default function LoginPage() {
             </div>
 
             {/* Right section */}
-            <div className="flex-1 bg-slate-50 flex items-center justify-center p-10">
-                <div className="bg-white/80 backdrop-blur-md rounded-2xl shadow-2xl p-8 w-full max-w-md">
-                    <h2 className="text-2xl font-bold text-slate-800 mb-6 text-center">
+            <div className="flex-1 bg-[var(--login-bg)] flex items-center justify-center p-10">
+                {/* <div className="bg-white/80 backdrop-blur-md rounded-2xl shadow-2xl p-8 w-full max-w-md"> */}
+                 <div className="backdrop-blur-md rounded-2xl shadow-2xl p-8 w-full max-w-md">
+                    <h2 className="text-2xl font-bold text-[var(--login-text)] mb-6 text-center">
                         Welcome Back 👋
                     </h2>
                     <LoginFormBasic />
-                    <div className="mt-6 text-center text-sm text-slate-500">
+                    <div className="mt-6 text-center text-sm text-[var(--login-sub-text)]">
                         Don’t have an account?{' '}
                         <a
                             href="/register"
-                            className="text-blue-600 hover:underline"
+                            className="text-[var(--login-primary-button)] hover:underline"
                         >
                             Sign up
                         </a>

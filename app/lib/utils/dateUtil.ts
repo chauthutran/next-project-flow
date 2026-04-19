@@ -93,3 +93,10 @@ export const convertToLocalDateStrForDateInputField = (utcDateStr: string): stri
 
     return localDateTimeStr;
 }
+
+export const formatTime = (dateStr: Date): string => {
+    return new Date(dateStr).toLocaleTimeString([], {
+        hour: "2-digit",
+        minute: "2-digit",
+    })
+}

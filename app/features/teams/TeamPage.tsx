@@ -2,11 +2,8 @@ import useAuth from '@/app/hooks/useAuth';
 import { IUserDTO } from '@/app/types/user';
 import TeamList from './list/TeamList';
 import PageTitle from '@/app/components/PageTitle';
-import useResourcePage from '@/app/hooks/useResourcePage';
 import { useState } from 'react';
 import { GiTeamIdea } from 'react-icons/gi';
-import AccentButton from '@/app/components/buttons/AccentButton';
-import SecondButton from '@/app/components/buttons/SecondButton';
 import TeamForm from './form/TeamForm';
 import PrimaryButton from '@/app/components/buttons/PrimaryButton';
 
@@ -16,7 +13,7 @@ export default function TeamPage() {
         user?.teamMembers || []
     );
     const [isDirty, setIsDirty] = useState(false);
-
+    
     const handleOnAddMember = (newMember: { email: string; role: string }) => {
         const _teamMembers = [...teamMembers];
         _teamMembers.push({ ...newMember, teamMembers: [] });
@@ -47,7 +44,7 @@ export default function TeamPage() {
     };
     
     return (
-        <div className="bg-white px-6 py-3 space-y-3">
+        <div className="bg-[var(--bg)] px-6 py-3 space-y-3">
             <PageTitle
                 title="Team Management"
                 subtitle="Manage your team members, assign roles, and control access to your projects."

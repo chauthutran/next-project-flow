@@ -11,7 +11,7 @@ export default function SecondButton({
     return (
         <button
             type={type}
-            className="bg-[var(--secondary)] hover:bg-[var(--secondary-hover)] text-[var(--secondary-text)] px-4 py-2 rounded-md cursor-pointer"
+            className="whitespace-nowrap bg-[var(--secondary)] hover:bg-[var(--secondary-hover)] text-[var(--secondary-text)] px-2 py-1 rounded-md cursor-pointer"
             {...rest} // pass all other props like onClick, type, disabled, etc.
         >
             {title}

@@ -29,7 +29,7 @@ export default function ReportPage() {
     if( !projects || !details ) return <div>Loading ...</div>;
     
     return(
-        <>
+        <div className="bg-[var(--bg)] px-6 py-3 space-y-3">
             <PageTitle
             title="Reports"
             subtitle="View insights into your projects with detailed reports on task progress, completion status, and team performance over time."
@@ -37,6 +37,6 @@ export default function ReportPage() {
         />
             
             <UserProjectsTimeline projects={projects} details={details} />
-        </>
+        </div>
     )
 }

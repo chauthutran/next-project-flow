@@ -11,18 +11,24 @@ import { IUserDTO } from '../types/user';
 
 export const DEFAULT_PASSWORD = '1234';
 
-export async function login({ email, password }: JSONObject) {
+export async function login(
+    { email, password }: JSONObject,
+    isSetCookie = true
+) {
     if (!email || !password) {
         throw new ValidationError('Email/password is missing');
     }
 
     try {
         await connectToDatabase();
-        const user = await User.findOne({ email }).populate("teamMembers");
+        const user = await User.findOne({ email }).populate(
+            'teamMembers',
+            '_id email role'
+        );
         if (!user) {
             throw new NotFoundError('Invalid email or password');
         }
-        
+
         // Compare password securely
         const isMatch = await Encrypt.comparePassword(password, user.password);
         if (!isMatch) {
@@ -31,8 +37,8 @@ export async function login({ email, password }: JSONObject) {
         // const teamMembers = await User.find({
         //     email: { $in: user.teamMembers }
         // })
-            // .select('_id email role')
-            // .lean();
+        // .select('_id email role')
+        // .lean();
         const userDTO = {
             _id: user._id,
             email: user.email,
@@ -41,11 +47,13 @@ export async function login({ email, password }: JSONObject) {
         };
 
         // Generate token on login
-        await setAuthCookie({
-            id: userDTO._id!.toString(),
-            email: userDTO.email,
-            role: userDTO.role
-        });
+        if (isSetCookie) {
+            await setAuthCookie({
+                id: userDTO._id!.toString(),
+                email: userDTO.email,
+                role: userDTO.role
+            });
+        }
 
         // user.toJSON() ==> need to do it so that I can avoid the issue "Warning: Only plain objects can be passed to Client Components from Server Components"
         return userDTO;
@@ -66,6 +74,33 @@ export async function register(userData: JSONObject) {
     } catch (error: any) {
         handleError(error);
         throw error; // re-throw the error after handling it, so that the caller can also catch it if needed
+    }
+}
+export async function changePassword({
+    email,
+    oldPassword,
+    newPassword
+}: {
+    email: string;
+    oldPassword: string;
+    newPassword: string;
+}) {
+    try {
+        // Check the username and oldPassword
+        await login({ email, password: oldPassword }, false); // validate old password
+        
+        // If valid, hash the new password and update in DB
+        await connectToDatabase();
+        const hashedPassword = await Encrypt.hashPassword(newPassword);
+        const updatedUser = await User.findOneAndUpdate(
+            { email },
+            { $set: { password: hashedPassword } },
+            { new: true }
+        );
+        return updatedUser;
+    } catch (error: any) {
+        handleError(error);
+        throw error;
     }
 }
 
@@ -108,14 +143,14 @@ export async function updateTeamMember({
 
     // 3. Update manager with ObjectIds (NOT emails)
     const updatedManager = await User.findOneAndUpdate(
-            { email: managerEmail },
-            {
-                $set: {
-                    teamMembers: memberIds
-                }
-            },
-            { new: true }
-        )
+        { email: managerEmail },
+        {
+            $set: {
+                teamMembers: memberIds
+            }
+        },
+        { new: true }
+    )
         .populate('teamMembers', 'email role') // 👈 now this will work
         .select('-password')
         .lean();
@@ -130,27 +165,9 @@ const updateUserRole = async ({
     email: string;
     role: string;
 }) => {
-    return await User.findOneAndUpdate({ email }, { $set: { role } }, { new: true });
+    return await User.findOneAndUpdate(
+        { email },
+        { $set: { role } },
+        { new: true }
+    );
 };
-
-// export async function linkTeamMembers() {
-//     try {
-//         await connectToDatabase();
-
-//         // Find all users with the "team_member" role
-//         const teamMembers = await User.find({ role: 'team_member' });
-
-//         // Iterate over each team member and link them to other team members
-//         for (let user of teamMembers) {
-//             user.teamMembers = teamMembers
-//                 .filter(member => member._id.toString() !== user._id.toString()) // Exclude the user from their own teamMembers array
-//                 .map(member => member._id); // Map to ObjectId
-
-//             await user.save();
-//         }
-
-//         console.log('Team members linked successfully.');
-//     } catch (error) {
-//         console.error('Error linking team members:', error);
-//     }
-// }

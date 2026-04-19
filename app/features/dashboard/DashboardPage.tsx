@@ -33,9 +33,7 @@ export default function DashboardPage() {
     const [completedTasks, setCompletedTasks] = useState<
         ITaskDTO[] | string | null
     >(null);
-    const [weeklyTasks, setWeeklyTasks] = useState<JSONObject[] | null>(
-        null
-    );
+    const [weeklyTasks, setWeeklyTasks] = useState<JSONObject[] | null>(null);
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
@@ -93,7 +91,7 @@ export default function DashboardPage() {
     const recentProjects = projects ? projects.slice(0, 3) : [];
 
     return (
-        <div className="flex min-h-screen bg-gray-50 text-gray-900">
+        <div className="flex min-h-screen bg-[var(--bg)] text-[var(--text)]">
             {/* ============= SIDEBAR ============= */}
             {/* <aside className="fixed h-screen w-64 bg-gray-900 text-white flex flex-col justify-between">
         <div className="p-6">
@@ -106,7 +104,7 @@ export default function DashboardPage() {
             <SidebarLink icon={<FaCog />} label="Settings" />
           </nav>
         </div>
-        <div className="p-4 border-t border-gray-700 text-sm text-gray-400 flex items-center space-x-2 cursor-pointer hover:text-white">
+        <div className="p-4 border-t border-gray-700 text-sm bg-[var(--feature-info-sub-text)] flex items-center space-x-2 cursor-pointer hover:text-white">
           <AiOutlineLogout className="text-lg" />
           <span>Logout</span>
         </div>
@@ -116,23 +114,13 @@ export default function DashboardPage() {
             {/* <main className="flex-1 ml-64 p-6"> */}
             <main className="flex-1 p-6">
                 {/* Header */}
-                <header className="flex justify-between items-center bg-white p-4 rounded-xl shadow-sm sticky top-0 z-10">
+                {/* <header className="flex justify-between items-center bg-[var(--feature-info-text)] p-4 rounded-xl shadow-sm sticky top-0 z-10">
                     <input
                         type="text"
                         placeholder="Search projects or tasks..."
                         className="border rounded-md px-3 py-2 w-1/3 focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
-                    {/* <div className="flex items-center space-x-4">
-            <FaBell className="text-gray-600 text-lg" />
-            <Image
-              src="/avatar.png"
-              alt="User Avatar"
-              width={32}
-              height={32}
-              className="rounded-full"
-            />
-          </div> */}
-                </header>
+                </header> */}
 
                 {/* Quick Stats */}
                 <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 my-8">
@@ -160,7 +148,7 @@ export default function DashboardPage() {
                     />
                     <StatCard
                         title="Not Started Tasks"
-                        color="text-gray-600"
+                        color="text-[var(--feature-info-text)]"
                         value={
                             notStartedTasks
                                 ? `${notStartedTasks.length}`
@@ -170,7 +158,7 @@ export default function DashboardPage() {
                 </section>
 
                 {/* Charts Section */}
-                <section className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                <section className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8 ">
                     <ChartCard title="Task Completion Overview">
                         <TaskCompletionOverview
                             completedTasks={completedTasks as ITaskDTO[]}
@@ -178,36 +166,38 @@ export default function DashboardPage() {
                             notStartedTasks={notStartedTasks as ITaskDTO[]}
                         />
                     </ChartCard>
-                    <ChartCard title="Weekly Progress Trend">
+                    <ChartCard title="Weekly Task Progress">
                         <WeeklyProgressTrend data={weeklyTasks} />
                     </ChartCard>
                 </section>
 
                 {/* Recent Projects Table */}
-                <section className="bg-white rounded-xl shadow p-6">
+                <section className="bg-[var(--card)] rounded-xl shadow p-6">
                     <h3 className="text-lg font-semibold mb-4">
                         Recent Projects
                     </h3>
-                    <table className="w-full text-left">
+                    <table className="w-full text-left bg-[var(--table-bg)]">
                         <thead>
-                            <tr className="border-b text-sm text-gray-600">
-                                <th className="py-2">Project</th>
-                                <th>Owner</th>
-                                <th>Status</th>
-                                <th>Deadline</th>
+                            <tr className="font-semibold border-b text-sm bg-[var(--table-header-bg)]">
+                                <th className="py-2 px-2">Project</th>
+                                <th className="py-2 px-2">Owner</th>
+                                <th className="py-2 px-2">Status</th>
+                                <th className="py-2 px-2">Deadline</th>
                             </tr>
                         </thead>
                         <tbody>
                             {recentProjects.map((project) => (
                                 <tr
                                     key={project._id}
-                                    className="border-b hover:bg-gray-50"
+                                    className="bg-[var(--table-row-bg)] border-b hover:bg-[var(--table-row-hover)]"
                                 >
-                                    <td className="py-3 font-medium">
+                                    <td className="px-2 py-3 font-medium">
                                         {project.name}
                                     </td>
-                                    <td>{project.managedBy.email}</td>
-                                    <td>
+                                    <td className="px-2 py-3">
+                                        {project.managedBy.email}
+                                    </td>
+                                    <td className="px-2 py-3">
                                         <span
                                             className={`px-3 py-1 rounded-full text-xs font-medium
                             ${STATUS_DETAILS[project.status].bgColor} ${STATUS_DETAILS[project.status].textColor}
@@ -233,30 +223,6 @@ export default function DashboardPage() {
     );
 }
 
-/* ----------------- Helper Components ----------------- */
-function SidebarLink({
-    icon,
-    label,
-    active = false
-}: {
-    icon: React.ReactNode;
-    label: string;
-    active?: boolean;
-}) {
-    return (
-        <a
-            className={`flex items-center space-x-3 p-2 rounded-md cursor-pointer ${
-                active
-                    ? 'bg-gray-700 text-white'
-                    : 'text-gray-300 hover:bg-gray-700 hover:text-white'
-            }`}
-        >
-            <span className="text-lg">{icon}</span>
-            <span>{label}</span>
-        </a>
-    );
-}
-
 function StatCard({
     title,
     value,
@@ -267,9 +233,11 @@ function StatCard({
     color?: string;
 }) {
     return (
-        <div className="bg-white shadow rounded-xl p-5">
-            <h4 className="text-gray-500 text-sm">{title}</h4>
-            <p className={`text-2xl font-bold ${color || 'text-gray-800'}`}>
+        <div className="bg-[var(--card)] shadow rounded-xl p-5">
+            <h4 className="text-[var(--card-text)] text-sm">{title}</h4>
+            <p
+                className={`text-2xl font-bold ${color || 'text-[var(--feature-info-text)]'}`}
+            >
                 {value}
             </p>
         </div>
@@ -284,9 +252,11 @@ function ChartCard({
     children: ReactNode;
 }) {
     return (
-        <div className="bg-white shadow rounded-xl p-5 flex flex-col justify-center items-center h-fit">
-            <h4 className="text-gray-600 mb-4 font-semibold">{title}</h4>
-            <div className="text-gray-400 text-sm">{children}</div>
+        <div className="bg-[var(--card)] rounded-xl shadow p-6 flex flex-col justify-center items-center h-fit">
+            <h4 className="text-[var(--feature-info-text)] mb-4 font-semibold">
+                {title}
+            </h4>
+            <div className="text-sm">{children}</div>
         </div>
     );
 }

@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
+/* :root {
     --foreground-rgb: 0, 0, 0;
     --background-start-rgb: 214, 219, 220;
     --background-end-rgb: 255, 255, 255;
@@ -14,12 +14,12 @@
         --background-start-rgb: 0, 0, 0;
         --background-end-rgb: 0, 0, 0;
     }
-}
+} */
 
-body {
+/* body {
     color: rgb(var(--foreground-rgb));
-}
-
+} */
+/* 
 @layer utilities {
     .text-balance {
         text-wrap: balance;
@@ -27,7 +27,7 @@ body {
 }
 
 /* Change the color of the vertical timeline line */
-.vertical-timeline::before {
+/* .vertical-timeline::before {
     background-color: #0053af !important;
 }
 .vertical-timeline-element-date {
@@ -36,13 +36,13 @@ body {
 
 .text-shadow {
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-}
+} */
 
-.animate-shake {
+/* .animate-shake {
     animation: shake 0.5s ease-in-out;
-}
+} */
 
-@keyframes shake {
+/* @keyframes shake {
     0% {
         transform: translateX(0);
     }
@@ -58,9 +58,9 @@ body {
     100% {
         transform: translateX(0);
     }
-}
+}  */
 
-button:disabled,
+/* button:disabled,
 input:disabled {
     background-color: silver;
 }
@@ -68,116 +68,229 @@ input:disabled {
 button:disabled:hover,
 input:disabled:hover {
     background-color: silver;
-}
+} */
 
 .theme-light {
     /* Background & Text */
-    --bg: #f7f9fc; /* very light, soft gray-blue */
-    --text: #1e293b; /* dark slate, easy on the eyes */
+    --bg: #f8fafc; /* softer, more modern than f7f9fc */
+    --bg-hover: #f1f5f9;
+    --text: #0f172a; /* slightly deeper for better contrast */
+    --border: #bfc2c4;
+    --icon-text: #ffffff;
 
-    /* Gradient for hero/login sections */
-    --gradient-from: #3b82f6; /* bright blue */
-    --gradient-via: #60a5fa; /* sky blue */
-    --gradient-to: #93c5fd; /* soft pastel blue */
+    /* Gradient */
+    --gradient-via: #3b82f6;
+    --gradient-to: #60a5fa;
     --gradient-text: #ffffff;
 
-    /* Primary color - headers, buttons */
-    --primary: #3b82f6; /* bright blue */
+    /* Primary (Blue system) */
+    --primary: #3b82f6;
     --primary-hover: #2563eb;
-    --primary-hover-light: rgba(37, 99, 235, 0.2);
-    --primary-active: #1e40af;
-    --primary-border: #60a5fa;
+    --primary-hover-light: rgba(59, 130, 246, 0.15);
+    --primary-active: #1d4ed8;
+    --primary-border: #93c5fd;
     --primary-text: #ffffff;
-    --primary-subtext: #060707;
+    --primary-subtext: #dbeafe;
+    --primary-ring: rgba(59, 130, 246, 0.4);
 
-    /* Secondary color - links, secondary buttons */
-    --secondary: #10b981; /* teal green for contrast */
-    --secondary-hover: #059669;
-    --secondary-active: #047857;
-    --secondary-border: #34d399;
+    /* Secondary */
+    --secondary: #64748b; /* slate */
+    --secondary-hover: #475569;
+    --secondary-active: #334155;
+    --secondary-border: #cbd5f5;
     --secondary-text: #ffffff;
-    --secondary-subtext: #d1fae5;
+    --secondary-subtext: #e2e8f0;
 
-    /* Accent - highlights, notifications */
-    --accent: #fbbf24; /* golden yellow */
-    --accent-hover: #f59e0b;
-    --accent-active: #d97706;
+    /* Accent (Keep ONE strong accent → red) */
+    --accent: #ef4444;
+    --accent-hover: #dc2626;
+    --accent-active: #b91c1c;
+    --accent-text: #ffffff;
 
-    /* Cards & borders */
-    --card: #ffffff; /* clean white cards */
-    --card-text: #000000;
-    --border: #e5e7eb; /* light neutral borders */
-    --muted: #6b7280; /* secondary text, placeholders */
+    /* Buttons */
+    --btn-disabled-bg: #f1f5f9;
+    --btn-disabled-border: #e2e8f0;
+
+    /* Cards */
+    --card: #ffffff;
+    --card-text: #0f172a;
+    --card-border: #e2e8f0;
+    --muted: #64748b;
 
     /* Status */
-    /* Status */
-    --success: #10b981;
-    --success-light: rgba(16, 185, 129, 0.2); /* 20% opacity */
     --error: #ef4444;
-    --error-light: rgba(239, 68, 68, 0.2); /* 20% opacity */
-    --warning: #f59e0b;
-    --warning-light: rgba(245, 158, 11, 0.2); /* 20% opacity */
-    --info: #3b82f6;
-    --info-light: rgba(59, 130, 246, 0.2); /* 20% opacity */
+    --error-light: rgba(239, 68, 68, 0.15);
 
     /* Inputs */
-    --input-bg: #ffffff; /* White input background */
-    --input-border: #d1d5db; /* Light gray border */
-    --input-focus-border: #3b82f6; /* Bright blue when focused */
-    --input-focus-ring: rgba(59, 130, 246, 0.4); /* Soft blue ring on focus */
+    --input-bg: #ffffff;
+    --input-border: #cbd5e1;
+    --input-focus-border: #3b82f6;
+    --input-focus-ring: rgba(59, 130, 246, 0.25);
+    --input-placeholder: #94a3b8;
 
-    /* Select menu */
-    --select-menu-bg: #ffffff; /* Default menu background */
-    --select-option-hover-bg: #eff6ff; /* Light blue on hover */
-    --select-option-selected-bg: #3b82f6; /* Blue background for selected option */
-    --select-option-text: #111827; /* Dark text for options */
-    --select-option-selected-text: #ffffff; /* White text for selected option */
+    /* Select */
+    --select-menu-bg: #ffffff;
+    --select-option-hover-bg: #eff6ff;
+    --select-option-selected-bg: #3b82f6;
+    --select-option-text: #0f172a;
+    --select-option-selected-text: #ffffff;
 
-    /* Multi-value pills */
-    --select-multi-bg: #3b82f6; /* Blue pill background */
-    --select-multi-text: #ffffff; /* White pill text */
+    /* Multi-value */
+    --select-multi-bg: #dbeafe;
+    --select-multi-text: #1d4ed8;
+
+    /* Info */
+    --feature-info-text: #121213;
+    --feature-info-sub-text: #64748b;
+
+    /* Dialog */
+    --bg-dialog: rgba(0, 0, 0, 0.5); /* better UX than pure black */
+
+    /* Table */
+    --table-bg: #ffffff;
+    --table-bg-border: #f1f5f9;
+    --table-header-bg: #f1f5f9;
+    --table-header-text: #0f172a;
+    --table-header-border: #e2e8f0;
+    --table-row-bg: #ffffff;
+    --table-row-hover: #eff6ff; /* light blue */
+    --table-row-alt-bg: #f8fafc; /* zebra striping */
+    --table-row-border: #f1f5f9;
+    --table-text: #374151;
+    --table-sub-text: #64748b;
+
+    --table-text: #374151;
+    --table-icon-hover: #3b82f6;
+    --table-button-bg: #3b82f6;
+    --table-button-bg-hover: #eff6ff;
+    --table-button-text: #ffffff;
+    --table-button-text-hover: #2563eb;
+    --table-row-bg: #ffffff;
+    --table-row-border: #e2e8f0;
+
+    /* Progress */
+    --progress-bar-bg: #e2e8f0;
+    --progress-bar-percent-red: #ef4444;
+    --progress-bar-percent-blue: #3b82f6;
+
+    /* Login */
+    --login-bg: #f8fafc;
+    --login-text: #0f172a;
+    --login-sub-text: #64748b;
+    --login-primary-button: #2563eb;
+    
+    --chart-text: #374151;
+    --chart-subtext: #6b7280;
+    --chart-grid: #e2e8f0;
 }
 
 .theme-dark {
     /* Background & Text */
-    --bg: #121212; /* deep dark gray, reduces eye strain */
-    --text: #f1f5f9; /* light gray for readability */
+    --bg: #0f172a; /* deep slate (not pure black) */
+    --bg-hover: #1e293b;
+    --text: #e2e8f0; /* soft white */
+    --border: #334155;
+    --icon-text: #ffffff;
 
-    /* Gradient for hero/login sections */
-    --gradient-from: #4c3575; /* primary purple */
-    --gradient-via: #5a3f8d;
-    --gradient-to: #b07aff;
+    /* Gradient */
+    --gradient-via: #2563eb;
+    --gradient-to: #3b82f6;
     --gradient-text: #ffffff;
 
-    /* Primary color - headers, buttons */
-    --primary: #8b63d2; /* lighter purple for contrast on dark bg */
-    --primary-hover: #a07ee5;
-    --primary-active: #6b3ea8;
-    --primary-border: #9b7bd6;
+    /* Primary (Blue system stays strong) */
+    --primary: #3b82f6;
+    --primary-hover: #60a5fa;
+    --primary-hover-light: rgba(59, 130, 246, 0.2);
+    --primary-active: #1d4ed8;
+    --primary-border: #3b82f6;
     --primary-text: #ffffff;
-    --primary-subtext: #d9c4f5;
+    --primary-subtext: #bfdbfe;
+    --primary-ring: rgba(59, 130, 246, 0.5);
 
-    /* Secondary color - info, links, less important buttons */
-    --secondary: #3b82f6; /* same professional blue */
-    --secondary-hover: #2563eb;
-    --secondary-active: #1d4ed8;
-    --secondary-border: #2563eb;
-    --secondary-text: #ffffff;
-    --secondary-subtext: #a5c8ff;
+    /* Secondary (slate) */
+    --secondary: #475569;
+    --secondary-hover: #64748b;
+    --secondary-active: #334155;
+    --secondary-border: #475569;
+    --secondary-text: #f1f5f9;
+    --secondary-subtext: #cbd5f5;
 
-    /* Accent - highlights, status, success */
-    --accent: #22c55e; /* green for success/completed */
-    --accent-hover: #16a34a;
-    --accent-active: #15803d;
+    /* Accent */
+    --accent: #ef4444;
+    --accent-hover: #f87171;
+    --accent-active: #dc2626;
+    --accent-text: #ffffff;
 
-    /* Cards & borders */
-    --card: #1e1e2f; /* slightly lighter than background for contrast */
-    --border: #33354a; /* subtle borders for cards and tables */
-    --muted: #94a3b8; /* for secondary text, placeholders */
+    /* Buttons */
+    --btn-disabled-bg: #1e293b;
+    --btn-disabled-border: #334155;
+
+    /* Cards */
+    --card: #1e293b;
+    --card-text: #e2e8f0;
+    --card-border: #334155;
+    --muted: #94a3b8;
 
     /* Status */
-    --success: #22c55e;
     --error: #ef4444;
-    --warning: #f59e0b;
-    --info: #3b82f6;
+    --error-light: rgba(239, 68, 68, 0.2);
+
+    /* Inputs */
+    --input-bg: #1e293b;
+    --input-border: #334155;
+    --input-focus-border: #3b82f6;
+    --input-focus-ring: rgba(59, 130, 246, 0.3);
+    --input-placeholder: #64748b;
+
+    /* Select */
+    --select-menu-bg: #1e293b;
+    --select-option-hover-bg: #1e3a8a; /* subtle blue hover */
+    --select-option-selected-bg: #3b82f6;
+    --select-option-text: #e2e8f0;
+    --select-option-selected-text: #ffffff;
+
+    /* Multi-value */
+    --select-multi-bg: #1e40af;
+    --select-multi-text: #dbeafe;
+
+    /* Info */
+    --feature-info-text: #e4ebf5;
+    --feature-info-sub-text: #94a3b8;
+
+    /* Dialog */
+    --bg-dialog: rgba(0, 0, 0, 0.7);
+
+    /* Table */
+    --table-bg: #1e293b;
+    --table-bg-border: #334155;
+    --table-header-bg: #0f172a;
+    --table-header-text: #e2e8f0;
+    --table-header-border: #334155;
+    --table-row-bg: #1e293b;
+    --table-row-alt-bg: #172033; /* subtle zebra */
+    --table-row-hover: #1e3a8a; /* blue hover */
+    --table-row-border: #334155;
+    --table-text: #e2e8f0;
+    --table-sub-text: #94a3b8;
+
+    --table-icon-hover: #60a5fa;
+    --table-button-bg: #3b82f6;
+    --table-button-bg-hover: #2563eb;
+    --table-button-text: #ffffff;
+    --table-button-text-hover: #93c5fd;
+
+    /* Progress */
+    --progress-bar-bg: #334155;
+    --progress-bar-percent-red: #ef4444;
+    --progress-bar-percent-blue: #3b82f6;
+
+    /* Login */
+    --login-bg: #0f172a;
+    --login-text: #e2e8f0;
+    --login-sub-text: #94a3b8;
+    --login-primary-button: #3b82f6;
+    
+    --chart-text: #e2e8f0;
+    --chart-subtext: #94a3b8;
+    --chart-grid: #334155;
 }

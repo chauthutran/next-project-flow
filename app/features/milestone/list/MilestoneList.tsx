@@ -15,7 +15,7 @@ export default function MilestoneList({
 }) {
     if (!milestones.length) {
         return (
-            <div className="text-gray-500">
+            <div className="text-[var(--feature-info-sub-text)]">
                 No milestones yet. Click <strong>+ New milestone</strong> to
                 create one.
             </div>
@@ -56,25 +56,27 @@ export default function MilestoneList({
                 <div className="flex flex-col gap-1 space-y-2  pl-3">
                     <Typography
                         variant="body2"
-                        className="text-gray-700"
                         component="p"
                     >
-                        <span className="font-medium text-blue-600">
+                        <span className="font-medium text-[var(--feature-info-text)]">
                             📝 Description:
                         </span>{' '}
-                        {milestone.description}
+                        <span className="text-[var(--feature-info-sub-text)]">
+                            {milestone.description}
+                        </span>
                     </Typography>
 
                     {milestone.assignedTo.length > 0 && (
                         <Typography
                             variant="body2"
-                            className="text-gray-700"
                             component="p"
                         >
-                            <span className="font-medium text-blue-600">
+                            <span className="font-medium text-[var(--feature-info-text)]">
                                 👥 Assigned To:
                             </span>{' '}
-                            {milestone.assignedTo.join(', ')}
+                            <span className="text-[var(--feature-info-sub-text)]">
+                                {milestone.assignedTo.join(', ')}
+                            </span>
                         </Typography>
                     )}
                 </div>

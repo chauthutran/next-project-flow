@@ -114,7 +114,7 @@ export default function ProjectWorkspace({
                     setActiveStep={setCurrentStep}
                 />
 
-                <div className="p-6 bg-[var(--card)] text-[var(--card-text)] border border-[var(--border)]">
+                <div className="p-6 bg-[var(--card)] text-[var(--card-text)] border border-[var(--card-border)]">
                     {renderStepForm()}
                 </div>
             </div>

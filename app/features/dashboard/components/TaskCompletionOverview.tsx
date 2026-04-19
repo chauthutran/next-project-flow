@@ -1,3 +1,4 @@
+import { getVarColor } from '@/app/lib/utils';
 import { ISeries } from '@/app/types/chart';
 import { ITaskDTO } from '@/app/types/task';
 import Highcharts from 'highcharts';
@@ -22,10 +23,6 @@ const transformDoughnutData = ({
    
     return { series, totalSum };
 };
-
-const getVarColor = (name: string) => {
-  return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
-}
 
 export default function TaskCompletionOverview({
     completedTasks,
@@ -60,13 +57,13 @@ export default function TaskCompletionOverview({
             verticalAlign: 'middle',
             y: 20,
             style: {
-                color: getVarColor('--axis-text'), // dynamic theme
+                color: getVarColor('--chart-text'), // dynamic theme
                 fontSize: '16px'
             }
         },
         tooltip: {
             pointFormat:
-                '{series.name}: <b>${point.y:.2f}</b> ({point.percentage:.1f}%)'
+                '{series.name}: <b>{point.y:.0f}</b> ({point.percentage:.1f}%)'
         },
         plotOptions: {
             pie: {
@@ -75,7 +72,7 @@ export default function TaskCompletionOverview({
                     enabled: true,
                     format: '{point.name}: {point.percentage:.1f} %',
                     style: {
-                        color: getVarColor('--axis-text'),
+                        color: getVarColor('--chart-text'),
                         textOutline: 'none'
                     }
                 }
@@ -84,7 +81,7 @@ export default function TaskCompletionOverview({
         series: [
             {
                 type: 'pie',
-                name: 'Expenses',
+                name: 'Events',
                 data: series
             }
         ]

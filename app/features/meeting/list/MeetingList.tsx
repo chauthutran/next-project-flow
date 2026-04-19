@@ -15,7 +15,7 @@ export default function MeetingList({
 }) {
     if (!meetings.length) {
         return (
-            <div className="text-gray-500">
+            <div className="text-[var(--feature-info-sub-text)]">
                 No meetings yet. Click <strong>+ New Meeting</strong> to create
                 one.
             </div>
@@ -37,45 +37,43 @@ export default function MeetingList({
             getRowId={(m) => m._id!}
             columns={[
                 { key: 'name', label: 'Name' },
-                { key: 'date', label: 'Date', render:(meeting: IMeetingDTO) => new Date(meeting.date).toLocaleDateString() }
+                {
+                    key: 'date',
+                    label: 'Date',
+                    render: (meeting: IMeetingDTO) =>
+                        new Date(meeting.date).toLocaleDateString()
+                }
             ]}
             renderExpandedContent={(meeting) => (
                 <div className="flex flex-col gap-1 space-y-2  pl-3">
-                  
-                        <Typography
-                            variant="body2"
-                            className="text-gray-700"
-                            component="p"
-                        >
-                            <span className="font-medium text-blue-600">
-                                📝 Description:
-                            </span>{' '}
+                    <Typography variant="body2" component="p">
+                        <span className="font-medium text-[var(--feature-info-text)]">
+                            📝 Description:
+                        </span>{' '}
+                        <span className="text-[var(--feature-info-sub-text)]">
                             {meeting.description}
-                        </Typography>
-                    
+                        </span>
+                    </Typography>
+
                     {meeting.meetingNotes && (
-                        <Typography
-                            variant="body2"
-                            className="text-gray-700"
-                            component="p"
-                        >
-                            <span className="font-medium text-blue-600">
+                        <Typography variant="body2" component="p">
+                            <span className="font-medium text-[var(--feature-info-text)]">
                                 📝 Note:
                             </span>{' '}
-                            {meeting.meetingNotes}
+                            <span className="text-[var(--feature-info-sub-text)]">
+                                {meeting.meetingNotes}
+                            </span>
                         </Typography>
                     )}
 
                     {meeting.participants.length > 0 && (
-                        <Typography
-                            variant="body2"
-                            className="text-gray-700"
-                            component="p"
-                        >
-                            <span className="font-medium text-blue-600">
+                        <Typography variant="body2" component="p">
+                            <span className="font-medium text-[var(--feature-info-text)]">
                                 👥 Participants:
                             </span>{' '}
-                            {meeting.participants.join(', ')}
+                            <span className="text-[var(--feature-info-sub-text)]">
+                                {meeting.participants.join(', ')}
+                            </span>
                         </Typography>
                     )}
                 </div>

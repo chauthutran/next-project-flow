@@ -1,3 +1,4 @@
+import AccentButton from '@/app/components/buttons/AccentButton';
 import { IUserDTO } from '@/app/types/user';
 
 export default function TeamListRow({
@@ -10,7 +11,7 @@ export default function TeamListRow({
     onRemove: (email: string) => void;
 }) {
     return (
-        <div className="grid grid-cols-3 items-center p-3 border-b pr-10">
+        <div className="grid grid-cols-3 items-center p-3 border-b pr-10 gap-4">
             <span className="text-sm">{member.email}</span>
 
             <select
@@ -23,12 +24,11 @@ export default function TeamListRow({
                 <option value="viewer">Viewer</option>
             </select>
 
-            <button
+            <AccentButton
                 onClick={() => onRemove(member.email)}
-                className="text-red-500 text-sm hover:underline w-fit pl-4"
-            >
-                Remove
-            </button>
+                title="Remove"
+                className='w-fit'
+            />
         </div>
     );
 }

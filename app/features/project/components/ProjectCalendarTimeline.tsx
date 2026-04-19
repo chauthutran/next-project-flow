@@ -80,12 +80,12 @@ export default function ProjectCalendarTimeline({ project, data }: { project: JS
         <div>
             {/* Project Timeline */}
             <div className="relative w-full mb-4">
-                <div className="flex justify-between text-sm text-gray-700">
+                <div className="flex justify-between text-sm text-[var(--feature-info-text)]">
                     <span>{Utils.formatDateTimeObj(project.startDate)}</span>
                     <span>Project Timeline</span>
                     <span>{Utils.formatDateTimeObj(project.endDate)}</span>
                 </div>
-                <div className="h-1 bg-gray-300 my-2"></div>
+                <div className="h-1 bg-[var(--feature-info-sub-text)] my-2"></div>
             </div>
 
             <div className="space-y-4">
@@ -97,7 +97,7 @@ export default function ProjectCalendarTimeline({ project, data }: { project: JS
 
                     return (
                         <div key={event._id} className="relative">
-                            <div className="mt-2 text-gray-700 text-sm font-semibold">
+                            <div className="mt-2 bg-[var(--feature-info-text)] text-sm font-semibold">
                                  {event.name}
                              </div>
 
@@ -125,7 +125,7 @@ export default function ProjectCalendarTimeline({ project, data }: { project: JS
 
                     return (
                         <div key={task._id} className="relative">
-                            <div className="mt-2 text-gray-700 text-sm font-semibold">
+                            <div className="mt-2 bg-[var(--feature-info-text)] text-sm font-semibold">
                                  {task.name}
                              </div>
 

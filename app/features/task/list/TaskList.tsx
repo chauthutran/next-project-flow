@@ -16,7 +16,7 @@ export default function TaskList({
 }) {
     if (!tasks.length) {
         return (
-            <div className="text-gray-500">
+            <div className="text-[var(--feature-info-sub-text)]">
                 No tasks yet. Click <strong>+ New Task</strong> to create one.
             </div>
         );
@@ -53,17 +53,17 @@ export default function TaskList({
                 }
             ]}
             renderExpandedContent={(task) => (
-                <div className="flex flex-col gap-1 space-y-2  pl-3">
+                <div className="flex flex-col gap-1 space-y-2 pl-3">
                     <Typography
                         variant="body2"
-                        className="text-gray-700 flex space-x-1"
+                        className="flex space-x-1"
                         component="div"
                     >
                         <div className="flex space-x-1 font-medium">
                             <BiCalendar size={20} />
-                            <span className="text-blue-600">Date Range:</span>
+                            <span className="text-[var(--feature-info-text)]">Date Range:</span>
                         </div>{' '}
-                        <div>
+                        <div className="text-[var(--feature-info-sub-text)]">
                             {new Date(task.startDate).toLocaleDateString()} →{' '}
                             {new Date(task.endDate).toLocaleDateString()}
                         </div>
@@ -71,25 +71,27 @@ export default function TaskList({
 
                     <Typography
                         variant="body2"
-                        className="text-gray-700"
                         component="p"
                     >
-                        <span className="font-medium text-blue-600">
+                        <span className="font-medium text-[var(--feature-info-text)]">
                             📝 Description:
                         </span>{' '}
-                        {task.description}
+                        <span className="text-[var(--feature-info-sub-text)]">
+                            {task.description}
+                        </span>
                     </Typography>
 
                     {task.assignedTo.length > 0 && (
                         <Typography
                             variant="body2"
-                            className="text-gray-700"
                             component="p"
                         >
-                            <span className="font-medium text-blue-600">
+                            <span className="font-medium text-[var(--feature-info-text)]">
                                 👥 Assigned To:
                             </span>{' '}
-                            {task.assignedTo.join(', ')}
+                            <span className="text-[var(--feature-info-sub-text)]">
+                                {task.assignedTo.join(', ')}
+                            </span>
                         </Typography>
                     )}
                 </div>
