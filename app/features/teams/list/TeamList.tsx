@@ -14,12 +14,14 @@ export default function TeamList({
     return (
         <>
             {teamMembers.length === 0 && (
-                <p className="text-[var(--feature-info-sub-text)]">You have no team members yet.</p>
+                <p className="text-[var(--feature-info-text)]">
+                    You have no team members yet.
+                </p>
             )}
 
             {teamMembers.length > 0 && (
                 <div className="border rounded">
-                    <div className="grid grid-cols-3 font-medium text-sm bg-gray-50 px-3 py-2">
+                    <div className="grid grid-cols-3 font-medium text-sm bg-[var(--table-header-bg)] text-[var(--table-header-text)] border-b border-[var(--table-header-border)] px-3 py-2">
                         <span>Email</span>
                         <span>Role</span>
                         <span>Actions</span>

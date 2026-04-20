@@ -38,7 +38,7 @@ export const metadata: Metadata = {
 
 export default function AboutUsPage() {
     return (
-        <main className="max-w-5xl mx-auto p-6 md:p-12 bg-[var(--card)] space-y-12">
+        <main className="max-w-5xl mx-auto p-6 md:p-12 space-y-12">
             {/* Header */}
             <header>
                 <h1 className="text-4xl md:text-5xl font-bold mb-4 text-center">
@@ -60,7 +60,7 @@ export default function AboutUsPage() {
 
             {/* Core Features */}
             <section>
-                <h2 className="text-3xl font-semibold text-[var(--feature-info-text)] mb-6 border-b-2 border-blue-500 inline-block pb-2">
+                <h2 className="text-3xl font-semibold text-[var(--feature-info-text)] mb-6 border-b-2 border-[var(--card-border)] inline-block pb-2">
                     🚀 Core Features
                 </h2>
 
@@ -113,12 +113,12 @@ export default function AboutUsPage() {
                     ].map((feature) => (
                         <div
                             key={feature.title}
-                            className="p-5 bg-blue-50 border border-blue-200 rounded-xl hover:shadow-md transition"
+                            className="p-5 bg-[var(--card)] border border-[var(--card-border)] rounded-xl hover:shadow-md transition"
                         >
                             <h3 className="font-semibold text-[var(--feature-info-text)] mb-2">
                                 {feature.title}
                             </h3>
-                            <p className="bg-[var(--feature-info-text)] text-sm leading-relaxed">
+                            <p className="text-[var(--feature-info-text)] text-sm leading-relaxed">
                                 {feature.desc}
                             </p>
                         </div>
@@ -127,11 +127,11 @@ export default function AboutUsPage() {
             </section>
 
             {/* Vision */}
-            <section className="bg-gray-50 p-6 rounded-2xl border border-gray-100 shadow-sm">
+            <section className="bg-[var(--card)] p-6 rounded-2xl border border-[var(--card-border)] shadow-sm">
                 <h2 className="text-2xl font-semibold text-[var(--feature-info-text)] mb-3">
                     🧠 Our Vision
                 </h2>
-                <p className="bg-[var(--feature-info-text)] leading-relaxed">
+                <p className="text-[var(--feature-info-text)] leading-relaxed">
                     At ProjectFlow, our mission is to simplify project management
                     without sacrificing flexibility. We empower teams with
                     intuitive, data-driven tools that enable them to collaborate
@@ -144,8 +144,8 @@ export default function AboutUsPage() {
                 <h2 className="text-2xl font-semibold text-[var(--feature-info-text)] mb-3 border-b pb-2 inline-block">
                     👨‍💻 About the Developer
                 </h2>
-                <p className="bg-[var(--feature-info-text)] mb-4">
-                    Hi, I’m <strong className="text-gray-900">Chau Thu Tran</strong>,
+                <p className="text-[var(--feature-info-text)] mb-4">
+                    Hi, I’m <strong className="text-[var(--card-text)]">Chau Thu Tran</strong>,
                     the developer behind ProjectFlow. This application showcases
                     my passion for creating clean, efficient, and user-friendly web
                     tools that blend design and functionality seamlessly.

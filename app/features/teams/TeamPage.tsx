@@ -13,7 +13,7 @@ export default function TeamPage() {
         user?.teamMembers || []
     );
     const [isDirty, setIsDirty] = useState(false);
-    
+
     const handleOnAddMember = (newMember: { email: string; role: string }) => {
         const _teamMembers = [...teamMembers];
         _teamMembers.push({ ...newMember, teamMembers: [] });
@@ -42,28 +42,30 @@ export default function TeamPage() {
         updateTeamMembers(teamMembers);
         setIsDirty(false);
     };
-    
+
     return (
-        <div className="bg-[var(--bg)] px-6 py-3 space-y-3">
+        <div className="p-6">
             <PageTitle
                 title="Team Management"
                 subtitle="Manage your team members, assign roles, and control access to your projects."
                 icon={<GiTeamIdea />}
             />
+            <div className="flex flex-col gap-4 bg-[var(--card)] p-4 border border-[var(--card-border)]">
+                <TeamForm onAdd={handleOnAddMember} />
 
-            <TeamForm onAdd={handleOnAddMember} />
+                <TeamList
+                    teamMembers={teamMembers}
+                    itemRoleOnChange={itemRoleOnChange}
+                    itemOnRemove={itemOnRemove}
+                />
 
-            <TeamList
-                teamMembers={teamMembers}
-                itemRoleOnChange={itemRoleOnChange}
-                itemOnRemove={itemOnRemove}
-            />
-
-            <PrimaryButton
-                disabled={!isDirty}
-                title="Save Changes"
-                onClick={updateList}
-            />
+                <PrimaryButton
+                    disabled={!isDirty}
+                    title="Save Changes"
+                    onClick={updateList}
+                    className="width-fit self-baseline"
+                />
+            </div>
         </div>
     );
 }
